@@ -3,9 +3,9 @@ const Discord = require('discord.js');
 const {Client, Attachment, Collection, MessageEmbed} = require('discord.js');
 const bot = new Discord.Client();
 
-const  token = 'NzQzOTMxOTM5MDM5MzQ2ODEx.Xzb2mw.YUcpU_dyqDzcnkMyxlkwRh8qxxs';
+
 const PREFIX = '/'
-const ms = require('ms')
+
 
 
 
@@ -180,4 +180,4 @@ bot.on('ready', () =>{
   
 
  });
-bot.login(token);
+bot.login(process.env.token);
