@@ -61,10 +61,9 @@ bot.on('ready', () =>{
      if(message.content.startsWith(PREFIX +'help')){
         const helpEmbed2 = new Discord.MessageEmbed()
         .setAuthor('Help')
-        .addField('Moderation Commands','Use /Moderation to receive a list of moderation commands!')
-        .addField('Fun Commands','Use /Fun to receibe a list of fun commands!')
+        .addField('Moderation Commands','Details + Commands for Moderation.{Type /Mod to view.}')
+        .addField('Fun Commands','Fun commands to use when your bored.{Type /Fun to view.}')
         .addField('Music Commands', 'Use /Music to receive a list of commands related to music!')
-        .addField('All commands','Use /All to receive a list of all the commands in the bot.' )
         .setColor(15158332)
          message.channel.send(helpEmbed2) 
      };
@@ -72,12 +71,12 @@ bot.on('ready', () =>{
         const HelpEmbed = new Discord.MessageEmbed()
         .setAuthor('Moderation Commands')
         .setColor(15158332)
-        .addField('ban', "This command is used to  ban the mentionned user.")
-        .addField('kick', "This command is used for kicking the mentionned user.")
-        .addField('mute','This command can mute a person **forever** however you can always unmute them from our command called "unmute @user"')
-        .addField('tempmute','This command will mute a person for a certain amount of time.')
+        .addField('ban', "The command will ban the mentionned user.")
+        .addField('kick', "Used to kick a member out of the guild.")
+        .addField('mute','Used for muting certain members who broke the rules.')
+        .addField('tempmute','Mutes the person for 3hours.')
         .addField('giverole','This command will give the mentionned role to the persom.(Ex : dgiverole @user Member')
-        .addField('warn','This command will warn the mentionned user, however if they get 3 warns they will be **kicked** from the group.')
+        .addField('warn','This command will warn the mentionned user.')
         .addField('roleinfo','This command will give some informations about the mentionned role.')
         if(message.member.hasPermission('ADMINISTRATOR')) return message.author.send(HelpEmbed)
         
@@ -89,7 +88,6 @@ bot.on('ready', () =>{
         .setAuthor('Fun Commands')
         .addField('Memes','memes will send you a funny meme for you to laugh and enjoy!')
         .addField('8ball','not done yet')
-        .addField('Quotes','Quotes will give you lovely good quotes for you!')
         .setColor(15158332)
         message.channel.send(Fun)
      };
