@@ -8,7 +8,6 @@ const PREFIX = '/'
 
 
 
-
 bot.on('guildMemberAdd', member =>{
  const SJoined = new Discord.MessageEmbed()
  .setTitle('Greetings & Information')
@@ -20,9 +19,30 @@ bot.on('guildMemberAdd', member =>{
  .addField('Member Count','Currently 12 members.')
  .addField('Developpers','There are 5 developpers in the group.You can find them with the role "Developpers".')
 
+ const SJoined2 = new Discord.MessageEmbed()
+  .setTitle('Member Joined')
+  .addField('Member Name', member)
+  .addField('Joined', member.joinedAt)
+  .addField('Roles', member.roles)
+  .setFooter('Please welcome this member.')
+  .setColor(15158332)
+  let LeftChannel2 = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
+   if(!LeftChannel2) return message.channel.send('Please create a channel named "welcome-goodbye".');
    member.send(SJoined)
-  
+   
+  LeftChannel2.send(SJoined2)
 });
+bot.on('guildMemberRemove', member =>{
+   let LeftChannel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
+   if(!LeftChannel) return message.channel.send('Please create a channel named "welcome-goodbye".');
+   const LeftEmbed = new Discord.MessageEmbed()
+   .setColor(15158332)
+   .setAuthor('Member Left')
+   .addField('Member Name', member)
+   .addField('Last message', member.lastMessage)
+   .addField('Channel ID', member.lastMessageChannelID) 
+   LeftChannel.send(LeftEmbed)
+})
 
 
 
@@ -93,10 +113,8 @@ bot.on('ready', () =>{
 
       const BanEmbed = new Discord.MessageEmbed()
       .setColor(15158332)
-      .addField("Banned", `${Buser} ID : ${Buser.id}`)
+      .addField("Banned", `${Buser}`)
       .addField("User banned by", `<@${message.author.id}>`)
-      .addField("Banned in", message.channel)
-      .addField("Banned At", message.createdAt)
       .addField("Reason", bReason);
 
       let BanChannel = message.guild.channels.cache.find(channel => channel.name === "incidents");
@@ -111,7 +129,7 @@ bot.on('ready', () =>{
     
      if(message.content.startsWith(PREFIX + 'kick')){
       const Kick = new Discord.MessageEmbed()
-      .setTitle('❌Error❌')
+      .setTitle('ERROR')
       .addField('*I cant find that user.*','Here is an exemple on how to kick a user.')
       .addField('You can do /kick @Dream {Reason if needed}.','If that doesnt work')
       .addField('You can use our command /whois @Dream','Which will check if the user is in the guild.')
@@ -124,17 +142,15 @@ bot.on('ready', () =>{
       if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
       const KickMod = new Discord.MessageEmbed()
       .setColor(15158332)
-      .setTitle('❌Error❌')
+      .setTitle('ERROR')
       .setDescription('I cant kick that person.')
       .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")
       if(Kuser.hasPermission("ADMINISTRATOR")) return message.channel.send(KickMod);
 
       const KickedEmbed = new Discord.MessageEmbed()
       .setColor(15158332)
-      .addField("Kicked", `${Kuser} ID : ${Kuser.id}`)
+      .addField("Kicked", `${Kuser}`)
       .addField("User kicked by", `<@${message.author.id}>`)
-      .addField("Kicked in", message.channel)
-      .addField("Kicked At", message.createdAt)
       .addField("Reason", kReason);
 
       let KickChannel = message.guild.channels.cache.find(channel => channel.name === "incidents");
@@ -176,7 +192,22 @@ bot.on('ready', () =>{
 
 
     }
-
+    if(message.content.startsWith(PREFIX + 'info')){
+      const Info = new Discord.MessageEmbed()
+      .setColor(15158332)
+      .addField('Manager','Manager is a bot made for the group SP.It offers moderation commands to music commands and much more.')
+      .addFields(
+      { name: 'Library', value: 'discord.js', inline: true },
+      {name: 'Bot-Date', value: 'Sunday, June 28, 2020', inline: true}
+      )
+      .addFields({name: 'Guilds', value: 'SP', inline:true},
+      {name: 'Server Support', value: 'https://discord.gg/kacqxwc', inline:true},
+      {name: 'Version', value: '2.0', inline:true},
+      {name: 'Invite', value: 'Not available.', inline:true})
+      .setImage('https://i.gyazo.com/d075ff081a37b973879b8de121b36746.png')
+      
+      message.channel.send(Info)
+   };
   
 
  });
