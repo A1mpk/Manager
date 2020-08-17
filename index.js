@@ -5,6 +5,7 @@ const bot = new Discord.Client();
 
 
 const PREFIX = '/'
+const ms = require("ms")
 
 
 
@@ -187,11 +188,22 @@ bot.on('ready', () =>{
     if(message.content.startsWith(PREFIX + 'warn')){ 
 
     };
-    if(message.content.startsWith(PREFIX + 'giveRole')){
+    if(message.content.startsWith(PREFIX + 'uptime')){
+      let days = Math.floor(bot.uptime / 86400000);
+      let hours = Math.floor(bot.uptime / 3600000) % 24;
+      let minutes = Math.floor(bot.uptime / 60000) % 60;
+      let seconds = Math.floor(bot.uptime / 1000) % 60;
+      const Uptime = new Discord.MessageEmbed()
+      .setColor(15158332)
+      .setTitle('Uptime')
+      .setDescription(`The bot has been running for\n${days}d ${hours}h ${minutes}m ${seconds}s.`)
+   
+      
 
-
-
-    }
+      message.channel.send(Uptime);
+    };
+ 
+    
     if(message.content.startsWith(PREFIX + 'info')){
       const Info = new Discord.MessageEmbed()
       .setColor(15158332)
