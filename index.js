@@ -62,7 +62,7 @@ bot.on('ready', () =>{
         const helpEmbed2 = new Discord.MessageEmbed()
         .setAuthor('Help')
         .addField('Moderation Commands','Details + Commands for Moderation.{Type /Mod to view.}')
-        .addField('Fun Commands','Fun commands to use when your bored.{Type /Fun to view.}')
+        .addField('Fun Commands','Fun commands to use when your bored.{Type /funs to view.}')
         .addField('Music Commands', 'Use /Music to receive a list of commands related to music!')
         .setColor(15158332)
          message.channel.send(helpEmbed2) 
@@ -86,8 +86,7 @@ bot.on('ready', () =>{
      if(message.content.startsWith(PREFIX + 'funs')){
         const Fun = new Discord.MessageEmbed()
         .setAuthor('Fun Commands')
-        .addField('Memes','memes will send you a funny meme for you to laugh and enjoy!')
-        .addField('8ball','not done yet')
+        .setDescription('Oops!Something went wrong.')
         .setColor(15158332)
         message.channel.send(Fun)
      };
