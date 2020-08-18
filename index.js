@@ -86,7 +86,7 @@ bot.on('ready', () =>{
      if(message.content.startsWith(PREFIX + 'funs')){
         const Fun = new Discord.MessageEmbed()
         .setAuthor('Fun Commands')
-        .setDescription('Oops!Something went wrong.')
+        .addField('8ball','8ball is a simple command to use.{Ex./8ball are you okay?}')
         .setColor(15158332)
         message.channel.send(Fun)
      };
@@ -179,7 +179,35 @@ bot.on('ready', () =>{
      if(message.content.startsWith(PREFIX + 'roleinfo')){
 
     };
-    if(message.content.startsWith(PREFIX + 'Modlogs')){
+    if(message.content.startsWith(PREFIX + '8ball')){
+      var res = [
+         "Yes.",
+         "No.",
+         "Maybe.",
+         "Probably.",
+         "Probably not.",
+         "What the heck dude?"
+      ]
+      if(message.author.bot) return;
+	if(message.channel.type === "dm") return;
+	
+	let messageArray = message.content.split(" ");
+	let command = messageArray[0];
+	let args = messageArray.slice(1);
+	let com = command.toLowerCase();
+	var sender = message.author;
+       // Runs if user doesn't ask a question
+    if(!args[0]){
+       message.channel.send('Please ask a question.')
+       return;
+    }
+    // Creates an ambed and picks a random answer from the answer array
+  
+       message.channel.send((res[Math.floor(Math.random() * res.length)]))
+       return console.log(`> 8ball command used by ${message.author.username}`);
+    // Displays a message in the console if the command was used
+    
+
 
     };
     if(message.content.startsWith(PREFIX + 'warn')){ 
