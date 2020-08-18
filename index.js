@@ -186,7 +186,10 @@ bot.on('ready', () =>{
          "Maybe.",
          "Probably.",
          "Probably not.",
-         "What the heck dude?"
+         "What the heck dude?",
+         "No u.",
+         "Ok",
+         "Damn thats rude."
       ]
       if(message.author.bot) return;
 	if(message.channel.type === "dm") return;
