@@ -26,13 +26,13 @@ bot.on('guildMemberAdd', member =>{
     .addField('Account ID', member.id)
     .setFooter('Please welcome this member.')
     .setColor(15158332)
-    let LeftChannel2 = member.guild.channels.cache.find(channel => channel.id === "649016111324594186");
+    let LeftChannel2 = member.guild.channels.cache.find(channel => channel.name=== "👋🏼-joins");
      member.send(SJoined)
      
     LeftChannel2.send(SJoined2)
   });
   bot.on('guildMemberRemove', member =>{
-     let LeftChannel = member.guild.channels.cache.find(channel => channel.id === "649016111324594186");
+     let LeftChannel = member.guild.channels.cache.find(channel => channel.name === "👋🏼-joins");
      const LeftEmbed = new Discord.MessageEmbed()
      .setColor(15158332)
      .setAuthor('Member Left')
