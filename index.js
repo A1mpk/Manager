@@ -8,42 +8,41 @@ const PREFIX = '/'
 const ms = require("ms")
 
 
-
 bot.on('guildMemberAdd', member =>{
- const SJoined = new Discord.MessageEmbed()
- .setTitle('Greetings & Information')
- .setDescription('Welcome to SP! This is a server where we make games on the popular platform ROBLOX. Please be respectful to eachother and be responsible with your behaviour. Thank you for joining!')
- .setColor(15158332)
- .addField('Information','Sp Studios is a roblox developer group that obviously make games.They also sometimes makes clothing!')
- .addField('Date','The group was orignally made in 2018.')
- .addField('Type of games','Adventure & FPS games')
- .addField('Member Count','Currently 12 members.')
- .addField('Developpers','There are 5 developpers in the group.You can find them with the role "Developpers".')
-
- const SJoined2 = new Discord.MessageEmbed()
-  .setTitle('Member Joined')
-  .addField('Member Name', member)
-  .addField('Joined', member.joinedAt)
-  .addField('Roles', member.roles)
-  .setFooter('Please welcome this member.')
-  .setColor(15158332)
-  let LeftChannel2 = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
-   if(!LeftChannel2) return message.channel.send('Please create a channel named "welcome-goodbye".');
-   member.send(SJoined)
-   
-  LeftChannel2.send(SJoined2)
-});
-bot.on('guildMemberRemove', member =>{
-   let LeftChannel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
-   if(!LeftChannel) return message.channel.send('Please create a channel named "welcome-goodbye".');
-   const LeftEmbed = new Discord.MessageEmbed()
+   const SJoined = new Discord.MessageEmbed()
+   .setTitle('Greetings & Information')
+   .setDescription('Welcome to SP! This is a server where we make games on the popular platform ROBLOX. Please be respectful to eachother and be responsible with your behaviour. Thank you for joining!')
    .setColor(15158332)
-   .setAuthor('Member Left')
-   .addField('Member Name', member)
-   .addField('Last message', member.lastMessage)
-   .addField('Channel ID', member.lastMessageChannelID) 
-   LeftChannel.send(LeftEmbed)
-})
+   .addField('Information','Sp Studios is a roblox developer group that obviously make games.They also sometimes makes clothing!')
+   .addField('Date','The group was orignally made in 2018.')
+   .addField('Type of games','Adventure & FPS games')
+   .addField('Member Count','Currently 12 members.')
+   .addField('Developpers','There are 5 developpers in the group.You can find them with the role "Developpers".')
+  
+   const SJoined2 = new Discord.MessageEmbed()
+    .setTitle('Member Joined')
+    .addField('Member Name', member)
+    .addField('Joined', member.joinedAt)
+    .addField('Account ID', member.id)
+    .setFooter('Please welcome this member.')
+    .setColor(15158332)
+    let LeftChannel2 = member.guild.channels.cache.find(channel => channel.id === "649016111324594186");
+     member.send(SJoined)
+     
+    LeftChannel2.send(SJoined2)
+  });
+  bot.on('guildMemberRemove', member =>{
+     let LeftChannel = member.guild.channels.cache.find(channel => channel.id === "649016111324594186");
+     const LeftEmbed = new Discord.MessageEmbed()
+     .setColor(15158332)
+     .setAuthor('Member Left')
+     .addField('Member Name', member)
+     .addField('Account ID',member.id)
+     .addField('Last message', member.lastMessage) 
+     .addField('Channel ID', member.lastMessageChannelID)
+     LeftChannel.send(LeftEmbed)
+  })
+  
 
 
 
@@ -181,15 +180,16 @@ bot.on('ready', () =>{
     };
     if(message.content.startsWith(PREFIX + '8ball')){
       var res = [
-         "Yes.",
-         "No.",
-         "Maybe.",
-         "Probably.",
-         "Probably not.",
-         "What the heck dude?",
-         "No u.",
+         "Yeah",
+         "Singing",
+         "Is",
+         "Really",
+         "Really ",
+         "Goddamn",
+         "goood",
          "Ok",
-         "Damn thats rude."
+         "Damn thats rude.",
+         "Repeat it again."
       ]
       if(message.author.bot) return;
 	if(message.channel.type === "dm") return;
