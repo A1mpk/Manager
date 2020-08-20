@@ -252,7 +252,7 @@ bot.on('ready', () =>{
          message.channel.bulkDelete(args[1]); 
       
          return message.channel.send(`I have deleted some messages.`) 
-       }
+       };
         if(message.content.startsWith(PREFIX + 'sp')){
          const Info2 = new Discord.MessageEmbed()
          .setColor(15158332)
