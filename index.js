@@ -180,16 +180,16 @@ bot.on('ready', () =>{
     };
     if(message.content.startsWith(PREFIX + '8ball')){
       var res = [
-         "Yeah",
-         "Singing",
-         "Is",
-         "Really",
-         "Really ",
-         "Goddamn",
-         "goood",
+         "Yeah.",
+         "No.",
+         "I dont know.",
+         "Repeat it again.",
+         "Oh. ",
+         "Maybe.",
+         "I cant tell.",
          "Ok",
-         "Damn thats rude.",
-         "Repeat it again."
+         "What the...",
+         "k"
       ]
       if(message.author.bot) return;
 	if(message.channel.type === "dm") return;
@@ -250,10 +250,9 @@ bot.on('ready', () =>{
   
    };
    if(message.content.startsWith(PREFIX + 'clear')){
-      if(!args[1]) return message.channel.send ('Enter an amount of message you want me to clear.')
-      message.channel.bulkDelete(args[1]); 
-   
-      return message.channel.send(`I have deleted some messages.`) 
+     if(!message.member.hasPermission("MANAGE_MESSAGES")) {
+        return message.channel.send()
+     }
     };
      if(message.content.startsWith(PREFIX + 'sp')){
       const Info2 = new Discord.MessageEmbed()
