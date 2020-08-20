@@ -247,27 +247,28 @@ bot.on('ready', () =>{
       .setImage('https://i.gyazo.com/d075ff081a37b973879b8de121b36746.png')
       
       message.channel.send(Info)
-      if(message.content.startsWith(PREFIX + 'clear')){
-         if(!args[1]) return message.channel.send ('Enter an amount of message you want me to clear.')
-         message.channel.bulkDelete(args[1]); 
-      
-         return message.channel.send(`I have deleted some messages.`) 
-       };
-        if(message.content.startsWith(PREFIX + 'sp')){
-         const Info2 = new Discord.MessageEmbed()
-         .setColor(15158332)
-         .addField('Sp','SP Studios is a upcoming ROBLOX developing group.')
-         .addFields(
-         { name: 'Group Date', value: '2018', inline: true },
-         {name: 'Type of games', value: 'Adventure & FPS', inline: true}
-         )
-         .addFields({name: 'Alies', value: 'No alies found.', inline:true},
-         {name: 'Ennemies', value: 'No ennemies found.', inline:true},
-         {name: 'Member Count', value: '18 {With bots}', inline:true},
-         {name: 'Developpers', value: '5 developers', inline:true})
-        message.channel.send(Info2)
-        }
+  
    };
+   if(message.content.startsWith(PREFIX + 'clear')){
+      if(!args[1]) return message.channel.send ('Enter an amount of message you want me to clear.')
+      message.channel.bulkDelete(args[1]); 
+   
+      return message.channel.send(`I have deleted some messages.`) 
+    };
+     if(message.content.startsWith(PREFIX + 'sp')){
+      const Info2 = new Discord.MessageEmbed()
+      .setColor(15158332)
+      .addField('Sp','SP Studios is a upcoming ROBLOX developing group.')
+      .addFields(
+      { name: 'Group Date', value: '2018', inline: true },
+      {name: 'Type of games', value: 'Adventure & FPS', inline: true}
+      )
+      .addFields({name: 'Alies', value: 'No alies found.', inline:true},
+      {name: 'Ennemies', value: 'No ennemies found.', inline:true},
+      {name: 'Member Count', value: '18 {With bots}', inline:true},
+      {name: 'Developpers', value: '5 developers', inline:true})
+     message.channel.send(Info2)
+     }
   
 
  });
