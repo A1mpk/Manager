@@ -56,6 +56,9 @@ bot.on('ready', () =>{
     
 });
  bot.on('message', message => {
+    if(message.content){
+       console.log(message.content)
+    }
    const args = message.content.substring(PREFIX.length).split(" ");
      if(message.content.startsWith(PREFIX +'help')){
         const helpEmbed2 = new Discord.MessageEmbed()
