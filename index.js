@@ -86,12 +86,25 @@ bot.on('ready', () =>{
         
      };
      if(message.content.startsWith(PREFIX + 'funs')){
-        const Fun = new Discord.MessageEmbed()
-        .setAuthor('Fun Commands')
-        .addField('8ball','8ball is a simple command to use.{Ex./8ball are you okay?}')
-        .setColor(15158332)
-        message.channel.send(Fun)
-     };
+      const Fun = new Discord.MessageEmbed()
+      .setAuthor('Fun Commands')
+      .addField('DM','/Help dm for information.')
+      .addField('8ball','/h 8ball for information.')
+      .setColor(15158332)
+      message.channel.send(Fun)
+   };
+   if(message.content.startsWith(PREFIX + 'Help dm')){
+      const helpdm = new Discord.MessageEmbed()
+      .setColor(15158332)
+      .addField('Usage','/dm @User {YOUR_MESSAGE}')
+      message.channel.send(helpdm)
+   };
+   if(message.content.startsWith(PREFIX + 'h 8ball')){
+      const help8ball = new Discord.MessageEmbed()
+      .setColor(15158332)
+      .addField('Usage','/8ball {YOUR_MESSAGE}')
+      message.channel.send(help8ball)
+   };
      if(message.content.startsWith(PREFIX + 'ban')){
       const Ban = new Discord.MessageEmbed()
       .setAuthor('ERROR')
@@ -183,16 +196,10 @@ bot.on('ready', () =>{
     };
     if(message.content.startsWith(PREFIX + '8ball')){
       var res = [
-         "Yeah.",
+         "Yes.",
          "No.",
-         "I dont know.",
-         "Repeat it again.",
-         "Oh. ",
-         "Maybe.",
-         "I cant tell.",
-         "Ok",
-         "What the...",
-         "k"
+         "Uh, repeat nob.",
+         "Good, wbu"
       ]
       if(message.author.bot) return;
 	if(message.channel.type === "dm") return;
@@ -213,11 +220,22 @@ bot.on('ready', () =>{
        return console.log(`> 8ball command used by ${message.author.username}`);
     // Displays a message in the console if the command was used
     
-
-
-    };
+   };
     if(message.content.startsWith(PREFIX + 'warn')){ 
 
+    };
+    if(message.content.startsWith(PREFIX + 'dm')){
+      let dUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+      if (!dUser) return message.channel.send("Can't find user!")
+      let dMessage = args.join(" ").slice(24);
+      if(dMessage.length < 1) return message.reply('Write your message.')
+  
+      dUser.send(`${dMessage} by Anonymous.`)
+      
+   
+  
+      message.author.send(`${message.author} Your message has been sent to ${dUser}`) 
+    
     };
     if(message.content.startsWith(PREFIX + 'uptime')){
       let days = Math.floor(bot.uptime / 86400000);
@@ -227,7 +245,7 @@ bot.on('ready', () =>{
       const Uptime = new Discord.MessageEmbed()
       .setColor(15158332)
       .setTitle('Uptime')
-      .setDescription(`The bot has been running for\n${days}d ${hours}h ${minutes}m ${seconds}s.`)
+      .setDescription(`The bot has been running for\n${hours}h ${minutes}m ${seconds}s.`)
    
       
 
