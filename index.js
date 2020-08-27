@@ -49,13 +49,16 @@ bot.on('guildMemberAdd', member =>{
 
 bot.on('ready', () =>{
     console.log('Manager is now set to run.');
-    bot.user.setActivity('/help', {
+    bot.user.setActivity('Downtime', {
         type: 'LISTENING'
         
     }).catch(console.error);
     
 });
  bot.on('message', message => {
+    if(message.content === "downtime?"){
+       message.channel.send("The bot has a downtime, please wait until the Owner fixes it.")
+    }
 
    const args = message.content.substring(PREFIX.length).split(" ");
      if(message.content.startsWith(PREFIX +'help')){
