@@ -1,111 +1,139 @@
-
 const Discord = require('discord.js');
 const {Client, Attachment, Collection, MessageEmbed} = require('discord.js');
 const bot = new Discord.Client();
-
-
 const PREFIX = '/'
-const ms = require("ms")
 
 
-bot.on('guildMemberAdd', member =>{
-   const SJoined = new Discord.MessageEmbed()
-   .setTitle('Greetings & Information')
-   .setDescription('Welcome to SP! This is a server where we make games on the popular platform ROBLOX. Please be respectful to eachother and be responsible with your behaviour. Thank you for joining!')
-   .setColor(15158332)
-   .addField('Information','Sp Studios is a roblox developer group that obviously make games.They also sometimes makes clothing!')
-   .addField('Date','The group was orignally made in 2018.')
-   .addField('Type of games','Adventure & FPS games')
-   .addField('Member Count','Currently 12 members.')
-   .addField('Developpers','There are 5 developpers in the group.You can find them with the role "Developpers".')
-  
-   const SJoined2 = new Discord.MessageEmbed()
-    .setTitle('Member Joined')
-    .addField('Member Name', member)
-    .addField('Joined', member.joinedAt)
-    .addField('Account ID', member.id)
-    .setFooter('Please welcome this member.')
-    .setColor(15158332)
-    let LeftChannel2 = member.guild.channels.cache.find(channel => channel.name=== "👋🏼-joins");
-     member.send(SJoined)
-     
-    LeftChannel2.send(SJoined2)
-  });
-  bot.on('guildMemberRemove', member =>{
-     let LeftChannel = member.guild.channels.cache.find(channel => channel.name === "👋🏼-joins");
-     const LeftEmbed = new Discord.MessageEmbed()
-     .setColor(15158332)
-     .setAuthor('Member Left')
-     .addField('Member Name', member)
-     .addField('Account ID',member.id)
-     .addField('Last message', member.lastMessage) 
-     .addField('Channel ID', member.lastMessageChannelID)
-     LeftChannel.send(LeftEmbed)
-  })
-  
+console.log("Hello.")
+
 
 
 
 
 bot.on('ready', () =>{
-    console.log('Manager is now set to run.');
-    bot.user.setActivity('Downtime', {
-        type: 'LISTENING'
+    console.log('No errors found in code.');
+    
+    bot.user.setActivity('Uptime', {
+        type: 'PLAYING'
         
     }).catch(console.error);
     
 });
  bot.on('message', message => {
-    if(message.content === "downtime?"){
-       message.channel.send("The bot has a downtime, please wait until the Owner fixes it.")
-    }
-
    const args = message.content.substring(PREFIX.length).split(" ");
+   const  messageArray1 = message.content.split(" ");
+    if(message.content.startsWith(PREFIX + 'config_joinmessage')){
+       
+       
+       console.log('No errors on joinmessage.')
+       if(message.member.hasPermission("MANAGE_CHANNELS")){
+         let LeftChannel = message.guild.channels.cache.find(channel => args[1] === channel.id )
+         if(!LeftChannel) return message.channel.send(`Cant find channel id.`) 
+         bot.on('guildBanAdd', member =>{
+            const BannedMem = new Discord.MessageEmbed()
+            .setColor(15158332)
+            .setAuthor("Member Banned")
+            .addField('User', name)
+            .addField('Date', BannedMem.timestamp)
+            .addField('Last message', member.lastMessage)
+            LeftChannel.send(BannedMem)
+         })
+         bot.on('guildMemberAdd', member =>{
+            const SJoined = new Discord.MessageEmbed()
+            .setTitle('Greetings & Information')
+            .setDescription('Welcome to SP! This is a server where we make games on the popular platform ROBLOX. Please be respectful to eachother and be responsible with your behaviour. Thank you for joining!')
+            .setColor(15158332)
+            .addField('Information','Sp Studios is a roblox developer group that obviously make games.They also sometimes makes clothing!')
+            .addField('Date','The group was orignally made in 2018.')
+            .addField('Type of games','Adventure & FPS games')
+            .addField('Member Count','Currently 12 members.')
+            .addField('Developpers','There are 5 developpers in the group.You can find them with the role "Developpers".')
+           
+            const SJoined2 = new Discord.MessageEmbed()
+             .setTitle('Member Joined')
+             .addField('Member Name', member)
+             .addField('Joined', member.joinedAt)
+             .addField('Account ID', member.id)
+             .setFooter('Please welcome this member.')
+             .setColor(15158332)
+              member.send(SJoined)
+              
+             LeftChannel.send(SJoined2)
+           });
+         bot.on('guildMemberRemove', member =>{
+            const LeftEmbed = new Discord.MessageEmbed()
+            .setColor(15158332)
+            .setAuthor('Member Left')
+            .addField('Member Name', member)
+            .addField('Account ID',member.id)
+            .addField('Last message', member.lastMessage) 
+            .addField('Channel ID', member.lastMessageChannelID)
+            LeftChannel.send(LeftEmbed)
+         })
+         return message.channel.send(`Join message is now fixed for ${LeftChannel}`)
+         
+       }
+       return message.channel.send('You dont have permission to do that.')
+    }
+     if(message.content.startsWith("** **")){
+        if(message.member.hasPermission('MANAGE_CHANNELS')){
+         let messageArray = message.content.split(" ");
+         let args3 = messageArray.slice(1);
+           const custom_message = new Discord.MessageEmbed()
+           .setColor(15158332)
+           .setAuthor('Announcement')
+           .setDescription(message)
+         message.channel.send(custom_message)
+        }
+        else message.channel.send('You do not have permissions to use this command.')
+     };
      if(message.content.startsWith(PREFIX +'help')){
         const helpEmbed2 = new Discord.MessageEmbed()
         .setAuthor('Help')
-        .addField('Moderation Commands','Details + Commands for Moderation.{Type /Mod to view.}')
-        .addField('Fun Commands','Fun commands to use when your bored.{Type /funs to view.}')
+        .addField('Moderation Commands','Use /Moderation to receive a list of moderation commands!')
+        .addField('Fun Commands','Use /Fun to receibe a list of fun commands!')
         .addField('Music Commands', 'Use /Music to receive a list of commands related to music!')
+        .addField('All commands','Use /All to receive a list of all the commands in the bot.' )
         .setColor(15158332)
          message.channel.send(helpEmbed2) 
      };
-     if(message.content.startsWith(PREFIX + 'Moderation')) {
+     if(message.content.startsWith(PREFIX + 'Mod')) {
         const HelpEmbed = new Discord.MessageEmbed()
         .setAuthor('Moderation Commands')
         .setColor(15158332)
-        .addField('ban', "The command will ban the mentionned user.")
-        .addField('kick', "Used to kick a member out of the guild.")
-        .addField('mute','Used for muting certain members who broke the rules.')
+        .addField('ban', "Used to ban a member.")
+        .addField('kick', "The command will kick a user.")
+        .addField('mute','This will mute a member in this guild.')
         .addField('tempmute','Mutes the person for 3hours.')
         .addField('giverole','This command will give the mentionned role to the persom.(Ex : dgiverole @user Member')
-        .addField('warn','This command will warn the mentionned user.')
+        .addField('warn','Warns the user who broke a rule.')
         .addField('roleinfo','This command will give some informations about the mentionned role.')
+        .addField(`.`,'This is for custom message!')
         if(message.member.hasPermission('ADMINISTRATOR')) return message.author.send(HelpEmbed)
         
         return message.channel.send('no')
         
      };
      if(message.content.startsWith(PREFIX + 'funs')){
-      const Fun = new Discord.MessageEmbed()
-      .setAuthor('Fun Commands')
-      .addField('DM','/Help dm for information.')
-      .addField('8ball','/h 8ball for information.')
-      .setColor(15158332)
-      message.channel.send(Fun)
-   };
-   if(message.content.startsWith(PREFIX + 'Help dm')){
-      const helpdm = new Discord.MessageEmbed()
-      .setColor(15158332)
-      .addField('Usage','/dm @User {YOUR_MESSAGE}')
-      message.channel.send(helpdm)
-   };
-   if(message.content.startsWith(PREFIX + 'h 8ball')){
-      const help8ball = new Discord.MessageEmbed()
-      .setColor(15158332)
-      .addField('Usage','/8ball {YOUR_MESSAGE}')
-      message.channel.send(help8ball)
-   };
+        const Fun = new Discord.MessageEmbed()
+        .setAuthor('Fun Commands')
+        .addField('DM','/Help dm for information.')
+        .addField('8ball','/h 8ball for information.')
+        .setColor(15158332)
+        message.channel.send(Fun)
+     };
+     if(message.content.startsWith(PREFIX + 'Help dm')){
+        const helpdm = new Discord.MessageEmbed()
+        .setColor(15158332)
+        .addField('Usage','/dm @User {YOUR_MESSAGE}')
+        message.channel.send(helpdm)
+     };
+     if(message.content.startsWith(PREFIX + 'h 8ball')){
+        const help8ball = new Discord.MessageEmbed()
+        .setColor(15158332)
+        .addField('Usage','/8ball {YOUR_MESSAGE}')
+        message.channel.send(help8ball)
+     };
      if(message.content.startsWith(PREFIX + 'ban')){
       const Ban = new Discord.MessageEmbed()
       .setAuthor('ERROR')
@@ -131,7 +159,7 @@ bot.on('ready', () =>{
       .addField("User banned by", `<@${message.author.id}>`)
       .addField("Reason", bReason);
 
-      let BanChannel = message.guild.channels.cache.find(channel => channel.name === "incidents");
+      let BanChannel = message.guild.channels.cache.find(channel => channel.id === "649018122476584991");
       if(!BanChannel) return message.channel.send('Please create a channel named "incidents".');
 
        message.guild.member(Buser).ban(bReason);
@@ -167,7 +195,7 @@ bot.on('ready', () =>{
       .addField("User kicked by", `<@${message.author.id}>`)
       .addField("Reason", kReason);
 
-      let KickChannel = message.guild.channels.cache.find(channel => channel.name === "incidents");
+      let KickChannel = message.guild.channels.cache.find(channel => channel.id === "649018122476584991");
       if(!KickChannel) return message.channel.send('Create a incidents channel.')
 
        message.guild.member(Kuser).kick(kReason);
@@ -189,7 +217,7 @@ bot.on('ready', () =>{
       // define the reason and mute em
         let mutee = message.mentions.members.first();
         if(!mutee) return message.channel.send('Mention someone to mute.')
-
+ 
 
      };
      if(message.content.startsWith(PREFIX + 'roleinfo')){
@@ -221,25 +249,9 @@ bot.on('ready', () =>{
        return console.log(`> 8ball command used by ${message.author.username}`);
     // Displays a message in the console if the command was used
     
-   };
-    if(message.content.startsWith(PREFIX + 'warn')){ 
 
     };
-    if(message.content.startsWith(PREFIX + 'dm')){
-      let dUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-      if (!dUser) return message.channel.send("Can't find user!")
-      let dMessage = args.join(" ").slice(24);
-      if(dMessage.length < 1) return message.reply('Write your message.')
-  
-      dUser.send(`${dMessage} by Anonymous.`)
-      
-   
-  
-      message.author.send(`${message.author} Your message has been sent to ${dUser}`) 
-    
-    };
     if(message.content.startsWith(PREFIX + 'uptime')){
-      let days = Math.floor(bot.uptime / 86400000);
       let hours = Math.floor(bot.uptime / 3600000) % 24;
       let minutes = Math.floor(bot.uptime / 60000) % 60;
       let seconds = Math.floor(bot.uptime / 1000) % 60;
@@ -266,31 +278,23 @@ bot.on('ready', () =>{
       {name: 'Server Support', value: 'https://discord.gg/kacqxwc', inline:true},
       {name: 'Version', value: '2.0', inline:true},
       {name: 'Invite', value: 'Not available.', inline:true})
-      .setImage('https://i.gyazo.com/d075ff081a37b973879b8de121b36746.png')
+      
       
       message.channel.send(Info)
-  
    };
-   if(message.content.startsWith(PREFIX + 'clear')){
-     if(!message.member.hasPermission("MANAGE_MESSAGES")) {
-        return message.channel.send()
-     }
-    };
-     if(message.content.startsWith(PREFIX + 'sp')){
-      const Info2 = new Discord.MessageEmbed()
-      .setColor(15158332)
-      .addField('Sp','SP Studios is a upcoming ROBLOX developing group.')
-      .addFields(
-      { name: 'Group Date', value: '2018', inline: true },
-      {name: 'Type of games', value: 'Adventure & FPS', inline: true}
-      )
-      .addFields({name: 'Alies', value: 'No alies found.', inline:true},
-      {name: 'Ennemies', value: 'No ennemies found.', inline:true},
-      {name: 'Member Count', value: '18 {With bots}', inline:true},
-      {name: 'Developpers', value: '5 developers', inline:true})
-     message.channel.send(Info2)
-     }
-  
+ 
 
+
+
+ 
+
+
+  
  });
+
+
+
+
+
+
 bot.login(process.env.token);
