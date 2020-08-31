@@ -20,6 +20,10 @@ bot.on('ready', () =>{
     
 });
  bot.on('message', message => {
+    if(message.content.startsWith(PREFIX + 'current_jm')){
+       message.channel.send(`The current channel for join message is ${LeftChannel}`)
+    }
+   let LeftChannel = message.guild.channels.cache.find(channel => args[1] === channel.id )
    const args = message.content.substring(PREFIX.length).split(" ");
    const  messageArray1 = message.content.split(" ");
     if(message.content.startsWith(PREFIX + 'config_joinmessage')){
@@ -27,8 +31,7 @@ bot.on('ready', () =>{
        
        console.log('No errors on joinmessage.')
        if(message.member.hasPermission("MANAGE_CHANNELS")){
-         let LeftChannel = message.guild.channels.cache.find(channel => args[1] === channel.id )
-         if(!LeftChannel) return message.channel.send(`Cant find channel id.`) 
+         if(!LeftChannel) return message.channel.send(`Cant find channel id.`)
          bot.on('guildBanAdd', member =>{
             const BannedMem = new Discord.MessageEmbed()
             .setColor(15158332)
@@ -71,6 +74,8 @@ bot.on('ready', () =>{
             LeftChannel.send(LeftEmbed)
          })
          return message.channel.send(`Join message is now fixed for ${LeftChannel}`)
+         
+         
          
        }
        return message.channel.send('You dont have permission to do that.')
@@ -282,6 +287,15 @@ bot.on('ready', () =>{
       
       message.channel.send(Info)
    };
+   if(message.content.startsWith(PREFIX + 'clear')){
+      if(message.deletable){
+         message.delete()
+      }
+      if(message.member.hasPermission("MANAGE_MESSAGES")){
+         message.channel.bulkDelete(args[1])
+      } 
+      else message.channel.send("You dont have enough permission.")
+   }
  
 
 
