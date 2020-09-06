@@ -2,8 +2,7 @@ const { Client, Collection } = require('discord.js');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const client = new Client();
-const token = 'NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.nqK5ag7ePlXxTu2Wjj80Mjep6kc'
-const prefix = '/'
+const prefix = '/';
 
 client.commands = new Collection();
 client.aliases = new Collection();
