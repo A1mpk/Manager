@@ -1,9 +1,8 @@
 const { Client, Collection } = require('discord.js');
 const fs = require('fs');
 const mongoose = require('mongoose');
+const avatar = require('./commands/normal/avatar');
 const client = new Client();
-const prefix = '/';
-
 client.commands = new Collection();
 client.aliases = new Collection();
 client.mongoose = require('./utils/mongoose');
@@ -34,6 +33,7 @@ for(const file of commandFiles){
 }
 
 
+const prefix = '/'
 
 
 client.on('message', message =>{
@@ -41,20 +41,39 @@ client.on('message', message =>{
  
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+   
+    
  
-    if(command === 'ban'){
-        client.commands.get('ban').execute(message, args);
-    };
     if(command === 'kick'){
         client.commands.get('kick').execute(message, args)
     };
-    if(command === 'uptime'){
-      client.commands.get('uptime').execute(message, args, client)
-  };
+  if(command === 'exemple'){
+    client.commands.get('exemple').execute(message, args)
+};
+if(command === 'help'){
+    client.commands.get('help').execute(message, args)
+};
+if(command === 'report'){
+    client.commands.get('report').execute(message, args)
+};
+if(command === 'lock'){
+    client.commands.get('lock').execute(message, args)
+};
+if(command === 'unlock'){
+    client.commands.get('unlock').execute(message, args)
+};
+if(command === 'announce'){
+    client.commands.get('announce').execute(message, args)
+};
+if(command === 'avatar'){
+    client.commands.get('avatar').execute(message, args)
+};
+
+
 
 });
 
 
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login(token);

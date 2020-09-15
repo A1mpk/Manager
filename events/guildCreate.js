@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Guild = require('../commands/model/guild');
-const guild = require('../commands/model/guild')
+const guild = require('../commands/model/guild');
+const Discord = require('discord.js');
+
 
 module.exports = async (client, guild) => {
     guild = new Guild({
@@ -14,4 +16,5 @@ module.exports = async (client, guild) => {
     .catch( err => console.error(err));
 
     console.log(`I have joined a guild.`)
+    message.channel.send(`${guild}`)
 };

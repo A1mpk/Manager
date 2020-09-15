@@ -1,8 +1,10 @@
 const Discord = require('discord.js')
 module.exports = {
     name: 'ban',
-    description: "bans a member",
-    execute(message, args){
+    category: 'Moderation',
+    description: 'Bans a member',
+    usage: `ban <user> <reason>`,
+    run: async (client, message, args) => {
         const Ban = new Discord.MessageEmbed()
          .setAuthor('ERROR')
          .setDescription('Please check if you mentionned a user.')
