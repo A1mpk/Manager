@@ -3,11 +3,6 @@ module.exports = client => {
     
         client.user.setPresence({
             status: 'dnd',
-            activity: {
-                name: 'VISIT THE ALL',
-                type: 'STREAMING',
-                url: 'https://www.twitch.tv/theallwastaken',
-                
-            }
+           
         });
 }

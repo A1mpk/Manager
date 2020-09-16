@@ -1,10 +1,8 @@
 const Discord = require('discord.js')
 module.exports = {
     name: 'ban',
-    category: 'Moderation',
-    description: 'Bans a member',
-    usage: `ban <user> <reason>`,
-    run: async (client, message, args) => {
+    description: "BANS A MEMBER BRUH",
+    execute(message, args){
         const Ban = new Discord.MessageEmbed()
          .setAuthor('ERROR')
          .setDescription('Please check if you mentionned a user.')
@@ -14,7 +12,7 @@ module.exports = {
          const Buser = message.guild.member(message.mentions.users.first())
          if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send('no');
          if(!Buser) return message.channel.send(Ban); 
-         let bReason = args.join(" ").slice(26);
+         let bReason = args.join(" ").slice(22);
          if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('You need to be an Admin to use this command.');
          const BanMod = new Discord.MessageEmbed()
          .setColor(15158332)
@@ -29,12 +27,11 @@ module.exports = {
          .addField("User banned by", `<@${message.author.id}>`)
          .addField("Reason", bReason);
    
-         let BanChannel = message.guild.channels.cache.find(channel => channel.id === "649018122476584991");
-         if(!BanChannel) return message.channel.send('Please create a channel named "incidents".');
+         
    
           message.guild.member(Buser).ban(bReason);
-   
-          BanChannel.send(BanEmbed)
+          message.channel.send(`I have banned the member ${Buser} for ${bReason}`)
+          message.author.send(`You have banned the member ${Buser} for ${bReason}`)
    
           return;
     }

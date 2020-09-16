@@ -33,19 +33,22 @@ for(const file of commandFiles){
 }
 
 
-const prefix = '/'
 
+const x = '/'
 
 client.on('message', message =>{
-    if(!message.content.startsWith(prefix) || message.author.bot) return;
+    if(!message.content.startsWith(x) || message.author.bot) return;
  
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
    
     
  
     if(command === 'kick'){
         client.commands.get('kick').execute(message, args)
+    };
+    if(command === 'ban'){
+        client.commands.get('ban').execute(message, args)
     };
   if(command === 'exemple'){
     client.commands.get('exemple').execute(message, args)
@@ -59,15 +62,16 @@ if(command === 'report'){
 if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
 };
-if(command === 'unlock'){
-    client.commands.get('unlock').execute(message, args)
-};
 if(command === 'announce'){
     client.commands.get('announce').execute(message, args)
 };
 if(command === 'avatar'){
     client.commands.get('avatar').execute(message, args)
 };
+if(command === 'christmas'){
+    client.commands.get('christmas').execute(message, args)
+};
+
 
 
 

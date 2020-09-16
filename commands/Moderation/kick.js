@@ -14,7 +14,7 @@ const Kick = new Discord.MessageEmbed()
          const Kuser = message.guild.member(message.mentions.users.first())
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('no');
          if(!Kuser) return message.channel.send(Kick); 
-         let kReason = args.join(" ").slice(26);
+         let kReason = args.join(" ").slice(22);
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
          const KickMod = new Discord.MessageEmbed()
          .setColor(15158332)
@@ -23,19 +23,10 @@ const Kick = new Discord.MessageEmbed()
          .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")
          if(Kuser.hasPermission("ADMINISTRATOR")) return message.channel.send(KickMod);
    
-         const KickedEmbed = new Discord.MessageEmbed()
-         .setColor(15158332)
-         .addField("Kicked", `${Kuser}`)
-         .addField("User kicked by", `<@${message.author.id}>`)
-         .addField("Reason", kReason);
-   
-         let KickChannel = message.guild.channels.cache.find(channel => channel.id === "649018122476584991");
-         if(!KickChannel) return message.channel.send('Create a incidents channel.')
-   
           message.guild.member(Kuser).kick(kReason);
-         Kuser.send('You were kicked from the server.')
-          KickChannel.send(KickedEmbed)
-          
+         Kuser.send(`You were kicked from the server! Reason : ${`kReason`}`)
+         message.author.send(`You kicked ${`Kuser`} with the reason of ${`kReason`}`)
+          message.channel.send(`I have kicked ${`Kuser`} with the reason of : ${`kReason`}`)
            return;
     }
 }
