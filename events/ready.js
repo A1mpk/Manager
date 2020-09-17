@@ -1,8 +1,19 @@
 module.exports = client => {
     console.log('Manager is now online and running!');
-    
-        client.user.setPresence({
-            status: 'dnd',
-           
-        });
-}
+
+
+
+    let statuses = [
+        `${client.guilds.cache.size} guilds`,
+        "/help",
+        `over ${client.users.cache.size} users`,
+    ]
+
+    setInterval(function() {
+        let status = statuses[Math.floor(Math.random() * statuses.length)];
+        client.user.setActivity(status, {type: "WATCHING"});
+
+    }, 25000)
+    }
+
+

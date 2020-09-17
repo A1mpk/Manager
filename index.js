@@ -6,10 +6,7 @@ const client = new Client();
 client.commands = new Collection();
 client.aliases = new Collection();
 client.mongoose = require('./utils/mongoose');
-
 client.categories = fs.readdirSync('./commands/');
-
-
 
 ['command'].forEach(handler => {
     require(`./handlers/${handler}`)(client);
@@ -37,6 +34,38 @@ for(const file of commandFiles){
 const x = '/'
 
 client.on('message', message =>{
+    if(message.content.match('fuck')){
+        message.delete()
+        message.author.send('😡Do not say that word ever again!')
+    }
+    if(message.content.match('bitch')){
+        message.delete()
+        message.author.send('😡Do not say that word ever again!')
+    }
+    if(message.content.match('pussy')){
+        message.delete()
+        message.author.send('😡Do not say that word ever again!')
+    }
+    if(message.content.match('nigga')){
+        message.delete()
+        message.author.send('😡Do not say that word ever again!')
+    }
+    if(message.content.match('sex')){
+        message.delete()
+        message.author.send('😡Do not say that word ever again!')
+    }
+    if(message.content.match('retard')){
+        message.delete()
+        message.author.send('😡Do not say that word ever again!')
+    }
+    if(message.content.match('retarted')){
+        message.delete()
+        message.author.send('😡Do not say that word ever again!')
+    }
+    if(message.content.match('nigger')){
+        message.delete()
+        message.author.send('😡Do not say that word ever again!')
+    }
     if(!message.content.startsWith(x) || message.author.bot) return;
  
     const args = message.content.slice(x.length).split(/ +/);
@@ -70,6 +99,9 @@ if(command === 'avatar'){
 };
 if(command === 'christmas'){
     client.commands.get('christmas').execute(message, args)
+};
+if(command === 'say'){
+    client.commands.get('say').execute(message, args)
 };
 
 
