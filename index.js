@@ -97,11 +97,12 @@ if(command === 'announce'){
 if(command === 'avatar'){
     client.commands.get('avatar').execute(message, args)
 };
-if(command === 'christmas'){
-    client.commands.get('christmas').execute(message, args)
-};
+
 if(command === 'say'){
     client.commands.get('say').execute(message, args)
+};
+if(command === 'invite'){
+    client.commands.get('invite').execute(message, args)
 };
 
 

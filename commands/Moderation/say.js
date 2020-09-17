@@ -8,7 +8,7 @@ module.exports = {
         const say = new Discord.MessageEmbed()
         .setAuthor('SAY COMMAND -')
         .setDescription('The correct usage of this command is `/say your message`.')
-       
+        .setColor(15158332)
       if(!args2){
           message.channel.send(say)
       };
