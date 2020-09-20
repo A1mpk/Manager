@@ -31,7 +31,7 @@ for(const file of commandFiles){
     client.commands.set(command.name, command);
 }
 
-
+const token = 'NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.Npqlsx868vmDsMkDQCj9JWP0_Zo';
 
 const x = '/';
 client.on('guildCreate', guild => {
@@ -79,7 +79,7 @@ guild.channels.cache.forEach((channel) => {
 })
 client.on('message', message =>{
   
-   if(message.content === '/help'){
+   if(message.content === "/help"){
       message.channel.send({
         embed:{
             title: '`List of commands [32]`',
@@ -154,9 +154,7 @@ client.on('message', message =>{
   if(command === 'exemple'){
     client.commands.get('exemple').execute(message, args)
 };
-if(command === 'help'){
-    client.commands.get('help').execute(message, args)
-};
+
 if(command === 'report'){
     client.commands.get('report').execute(message, args)
 };
@@ -185,4 +183,4 @@ if(command === 'invite'){
 
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login(token);
