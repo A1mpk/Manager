@@ -95,7 +95,7 @@ client.on('message', message =>{
     if(message.content === '/rank'){
        
         const RankInfo = new Discord.MessageEmbed()
-        .setAuthor(`<@${message.member.id}>`, message.member.user.avatarURL())
+        .setAuthor(`<@${message.member.id}>`)
         .addField('User Created', message.member.user.createdAt)
         .addField('User Joined', message.member.joinedAt)
         .setColor(16580705)
