@@ -98,7 +98,7 @@ client.on('message', message =>{
         .setAuthor(`<@${message.member.id}>`, message.member.user.avatarURL())
         .addField('User Created', message.member.user.createdAt)
         .addField('User Joined', message.member.joinedAt)
-        
+        .setColor(16580705)
         message.channel.send(RankInfo)
     }
     
