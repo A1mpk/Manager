@@ -31,7 +31,6 @@ for(const file of commandFiles){
     client.commands.set(command.name, command);
 }
 
-const token = 'NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.Npqlsx868vmDsMkDQCj9JWP0_Zo';
 
 const x = '/';
 client.on('guildCreate', guild => {
@@ -124,7 +123,7 @@ client.on('message', message =>{
         .addField('Channels', message.guild.channels.cache.size)
         .addField('Roles', message.guild.roles.cache.size)
         .setThumbnail(message.guild.iconURL)
-        .setFooter(`Command raised by <@${message.member.user.tag}>`)
+        .setFooter(`Command raised by ${message.member.user.tag}`)
         .setColor(1752220)
         message.channel.send(GuildInfo)
     }
@@ -183,4 +182,4 @@ if(command === 'invite'){
 
 
 client.mongoose.init();
-client.login(token);
+client.login(process.env.token);
