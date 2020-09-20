@@ -72,12 +72,48 @@ guild.channels.cache.forEach((channel) => {
         ],
         
         footer: {
-            text: `${guild.name}`
+            text: `https://top.gg/servers/756254215923564694`
         }
     }
   });
 })
 client.on('message', message =>{
+  
+   if(message.content === '/help'){
+      message.channel.send({
+        embed:{
+            title: '`List of commands [32]`',
+            color: 16580705, 
+            fields:[
+                {
+                    name: '`😴 Moderation [8]`',
+                    value: 'ban,kick,warn,tempban,tempmute,mute,lock,announce'
+                },     
+                {
+                    name: '`🤩 Fun [3]`',
+                    value: 'say,8ball,roast,'
+                },
+                {
+                    name: '`🔊 Music [8]`',
+                    value: 'play,skip,pause,stop,resume,queue,clearqueue,search,'
+                },
+                {
+                    name: '`💸 Currency [8]`',
+                    value: 'daily,shop,inventory,work,cash,balance,currency,buy,'
+                },
+                {
+                    name: '`🛠️ Utilities [4]`',
+                    value: 'help,invite,guild,rank'
+                }
+            ],
+            
+            footer: {
+                text: `https://top.gg/servers/756254215923564694`
+            }
+        }
+        })
+   }
+
     
     if(message.content === '/guild'){
         const GuildInfo = new Discord.MessageEmbed()
@@ -88,14 +124,14 @@ client.on('message', message =>{
         .addField('Channels', message.guild.channels.cache.size)
         .addField('Roles', message.guild.roles.cache.size)
         .setThumbnail(message.guild.iconURL)
-        .setFooter(`Command raised by <@${message.member.id}>`)
+        .setFooter(`Command raised by <@${message.member.user.tag}>`)
         .setColor(1752220)
         message.channel.send(GuildInfo)
     }
     if(message.content === '/rank'){
        
         const RankInfo = new Discord.MessageEmbed()
-        .setAuthor(`<@${message.member.id}>`)
+        .setAuthor(message.member.user.tag)
         .addField('User Created', message.member.user.createdAt)
         .addField('User Joined', message.member.joinedAt)
         .setColor(16580705)
