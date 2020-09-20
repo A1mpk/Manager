@@ -1,12 +1,13 @@
 module.exports = client => {
     console.log('Manager is now online and running!');
 
-
+   
 
     let statuses = [
         `${client.guilds.cache.size} guilds`,
         "/help",
         `over ${client.users.cache.size} users`,
+        "FriendlyUser is typing..."
     ]
 
     setInterval(function() {

@@ -24,9 +24,9 @@ const Kick = new Discord.MessageEmbed()
          if(Kuser.hasPermission("ADMINISTRATOR")) return message.channel.send(KickMod);
    
           message.guild.member(Kuser).kick(kReason);
-         Kuser.send(`You were kicked from the server! Reason : ${`kReason`}`)
-         message.author.send(`You kicked ${`Kuser`} with the reason of ${`kReason`}`)
-          message.channel.send(`I have kicked ${`Kuser`} with the reason of : ${`kReason`}`)
+         Kuser.send(`You were kicked from the server! Reason : ${kReason}`)
+         message.author.send(`You kicked ${Kuser} with the reason of ${kReason}`)
+          message.channel.send(`I have kicked ${Kuser} with the reason of : ${kReason}`)
            return;
     }
 }

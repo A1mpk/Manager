@@ -1,4 +1,5 @@
-const { Client, Collection } = require('discord.js');
+const { Client, Collection, Structures, DiscordAPIError } = require('discord.js');
+const Discord = require('discord.js')
 const fs = require('fs');
 const mongoose = require('mongoose');
 const avatar = require('./commands/normal/avatar');
@@ -7,6 +8,7 @@ client.commands = new Collection();
 client.aliases = new Collection();
 client.mongoose = require('./utils/mongoose');
 client.categories = fs.readdirSync('./commands/');
+
 
 ['command'].forEach(handler => {
     require(`./handlers/${handler}`)(client);
@@ -31,11 +33,75 @@ for(const file of commandFiles){
 
 
 
-const x = '/'
-
+const x = '/';
+client.on('guildCreate', guild => {
+    let defaultChannel = "";
+guild.channels.cache.forEach((channel) => {
+  if(channel.type == "text" && defaultChannel == "") {
+    if(channel.permissionsFor(guild.me).has("SEND_MESSAGES")) {
+      defaultChannel = channel;
+    }
+  }
+})
+  defaultChannel.send(`Hello im ${client.user.username}, a bot that brings you variety of commands, here is a list of them : `, {
+    embed:{
+        title: '`✅ Prefix`',
+        color: 16580705, 
+        description: "Prefix : `/`",
+        fields:[
+            {
+                name: '`😴 Moderation [8]`',
+                value: 'ban,kick,warn,tempban,tempmute,mute,lock,announce'
+            },     
+            {
+                name: '`🤩 Fun [3]`',
+                value: 'say,8ball,roast,'
+            },
+            {
+                name: '`🔊 Music [8]`',
+                value: 'play,skip,pause,stop,resume,queue,clearqueue,search,'
+            },
+            {
+                name: '`💸 Currency [8]`',
+                value: 'daily,shop,inventory,work,cash,balance,currency,buy,'
+            },
+            {
+                name: '`🛠️ Utilities [4]`',
+                value: 'help,invite,guild,rank'
+            }
+        ],
+        
+        footer: {
+            text: `${guild.name}`
+        }
+    }
+  });
+})
 client.on('message', message =>{
-  
- 
+    
+    if(message.content === '/guild'){
+        const GuildInfo = new Discord.MessageEmbed()
+        .setTitle(message.guild.name)
+        .addField('Owner', `<@${message.guild.ownerID}>`)
+        .addField('Members', message.guild.memberCount)
+        .addField('Created', message.guild.createdAt)
+        .addField('Channels', message.guild.channels.cache.size)
+        .addField('Roles', message.guild.roles.cache.size)
+        .setThumbnail(message.guild.iconURL)
+        .setFooter(`Command raised by <@${message.member.id}>`)
+        .setColor(1752220)
+        message.channel.send(GuildInfo)
+    }
+    if(message.content === '/rank'){
+       
+        const RankInfo = new Discord.MessageEmbed()
+        .setAuthor(`<@${message.member.id}>`, message.member.user.avatarURL())
+        .addField('User Created', message.member.user.createdAt)
+        .addField('User Joined', message.member.joinedAt)
+        
+        message.channel.send(RankInfo)
+    }
+    
     if(!message.content.startsWith(x) || message.author.bot) return;
  
     const args = message.content.slice(x.length).split(/ +/);

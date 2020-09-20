@@ -13,8 +13,8 @@ module.exports = {
           message.channel.send(say)
       };
       if(message.content === "/say @everyone"){
-          message.channel.send("AN ERROR OCCURED : **User tried to mention everyone.**")
-      } else
+          message.channel.send("Here take a cookie with milk.🍪🥛");
+      } else 
 
       if(args2){
           message.delete()

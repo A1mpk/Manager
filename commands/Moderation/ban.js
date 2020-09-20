@@ -10,7 +10,7 @@ module.exports = {
          
         
          const Buser = message.guild.member(message.mentions.users.first())
-         if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send('no');
+         if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send('ERROR : Missing Permissions');
          if(!Buser) return message.channel.send(Ban); 
          let bReason = args.join(" ").slice(22);
          if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('You need to be an Admin to use this command.');
@@ -21,17 +21,14 @@ module.exports = {
          .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")
          if(Buser.hasPermission("ADMINISTRATOR")) return message.channel.send(BanMod);
    
-         const BanEmbed = new Discord.MessageEmbed()
-         .setColor(15158332)
-         .addField("Banned", `${Buser}`)
-         .addField("User banned by", `<@${message.author.id}>`)
-         .addField("Reason", bReason);
+        
    
          
    
-          message.guild.member(Buser).ban(bReason);
+        
           message.channel.send(`I have banned the member ${Buser} for ${bReason}`)
           message.author.send(`You have banned the member ${Buser} for ${bReason}`)
+          message.guild(Buser).ban(bReason)
    
           return;
     }
