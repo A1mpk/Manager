@@ -2,7 +2,6 @@ const { Client, Collection, Structures, DiscordAPIError } = require('discord.js'
 const Discord = require('discord.js')
 const fs = require('fs');
 const mongoose = require('mongoose');
-const { send } = require('process');
 const guild = require('./commands/Moderation/guild');
 const avatar = require('./commands/normal/avatar');
 const client = new Client();
@@ -95,7 +94,7 @@ client.on('message', message =>{
                         voiceChannel.leave();
                     });
                 }).catch(err => console.log(err))
-    }
+    };
     if(!message.content.startsWith(x) || message.author.bot) return;
     const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
