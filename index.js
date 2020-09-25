@@ -81,6 +81,7 @@ guild.channels.cache.forEach((channel) => {
   });
 })
 
+<<<<<<< HEAD
 client.on('message', message =>{
     if(message.content === "/play"){
         const ytdl = require('ytdl-core');
@@ -96,6 +97,32 @@ client.on('message', message =>{
                     });
                 }).catch(err => console.log(err))
     };
+=======
+    
+    if(message.content === '/guild'){
+        const GuildInfo = new Discord.MessageEmbed()
+        .setTitle(message.guild.name)
+        .addField('Owner', `<@${message.guild.ownerID}>`)
+        .addField('Members', message.guild.memberCount)
+        .addField('Created', message.guild.createdAt)
+        .addField('Channels', message.guild.channels.cache.size)
+        .addField('Roles', message.guild.roles.cache.size)
+        .setThumbnail(message.guild.iconURL)
+        .setFooter(`Command raised by <@${message.member.user.tag}>`)
+        .setColor(1752220)
+        message.channel.send(GuildInfo)
+    }
+    if(message.content === '/rank'){
+       
+        const RankInfo = new Discord.MessageEmbed()
+        .setAuthor(message.member.user.tag)
+        .addField('User Created', message.member.user.createdAt)
+        .addField('User Joined', message.member.joinedAt)
+        .setColor(16580705)
+        message.channel.send(RankInfo)
+    }
+    
+>>>>>>> parent of 0b1ef05... Update index.js
     if(!message.content.startsWith(x) || message.author.bot) return;
     const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
