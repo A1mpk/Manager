@@ -2,12 +2,15 @@ const { Client, Collection, Structures, DiscordAPIError } = require('discord.js'
 const Discord = require('discord.js')
 const fs = require('fs');
 const mongoose = require('mongoose');
+const { send } = require('process');
+const guild = require('./commands/Moderation/guild');
 const avatar = require('./commands/normal/avatar');
 const client = new Client();
 client.commands = new Collection();
 client.aliases = new Collection();
 client.mongoose = require('./utils/mongoose');
-client.categories = fs.readdirSync('./commands/');
+client.categories = fs.readdirSync('./commands/');;
+
 
 
 ['command'].forEach(handler => {
@@ -33,6 +36,7 @@ for(const file of commandFiles){
 
 
 const x = '/';
+
 client.on('guildCreate', guild => {
     let defaultChannel = "";
 guild.channels.cache.forEach((channel) => {
@@ -42,11 +46,11 @@ guild.channels.cache.forEach((channel) => {
     }
   }
 })
-  defaultChannel.send(`Hello im ${client.user.username}, a bot that brings you variety of commands, here is a list of them : `, {
+  defaultChannel.send({
     embed:{
-        title: '`✅ Prefix`',
+        title: `Server Prefix : ${x}`,
         color: 16580705, 
-        description: "Prefix : `/`",
+        description: "Thanks for inviting me to your server! Here is a list of all my commands.",
         fields:[
             {
                 name: '`😴 Moderation [8]`',
@@ -76,74 +80,25 @@ guild.channels.cache.forEach((channel) => {
     }
   });
 })
-client.on('message', message =>{
-  
-   if(message.content === "/help"){
-      message.channel.send({
-        embed:{
-            title: '`List of commands [32]`',
-            color: 16580705, 
-            fields:[
-                {
-                    name: '`😴 Moderation [8]`',
-                    value: 'ban,kick,warn,tempban,tempmute,mute,lock,announce'
-                },     
-                {
-                    name: '`🤩 Fun [3]`',
-                    value: 'say,8ball,roast,'
-                },
-                {
-                    name: '`🔊 Music [8]`',
-                    value: 'play,skip,pause,stop,resume,queue,clearqueue,search,'
-                },
-                {
-                    name: '`💸 Currency [8]`',
-                    value: 'daily,shop,inventory,work,cash,balance,currency,buy,'
-                },
-                {
-                    name: '`🛠️ Utilities [4]`',
-                    value: 'help,invite,guild,rank'
-                }
-            ],
-            
-            footer: {
-                text: `https://top.gg/servers/756254215923564694`
-            }
-        }
-        })
-   }
 
-    
-    if(message.content === '/guild'){
-        const GuildInfo = new Discord.MessageEmbed()
-        .setTitle(message.guild.name)
-        .addField('Owner', `<@${message.guild.ownerID}>`)
-        .addField('Members', message.guild.memberCount)
-        .addField('Created', message.guild.createdAt)
-        .addField('Channels', message.guild.channels.cache.size)
-        .addField('Roles', message.guild.roles.cache.size)
-        .setThumbnail(message.guild.iconURL)
-        .setFooter(`Command raised by ${message.member.user.tag}`)
-        .setColor(1752220)
-        message.channel.send(GuildInfo)
+client.on('message', message =>{
+    if(message.content === "/play"){
+        const ytdl = require('ytdl-core');
+        const streamOptions = { seek: 0, volume: 1 }
+        var voiceChannel = message.member.voice.channel.join()
+                voiceChannel.then(connection => {
+                    console.log("joined channel");
+                    const stream = ytdl('https://www.youtube.com/watch?v=rC8f4-E7ZnA', { filter : 'audioonly' });
+                    const dispatcher = connection.play(stream, streamOptions)
+                    dispatcher.on("end", end => {
+                        console.log("left channel");
+                        voiceChannel.leave();
+                    });
+                }).catch(err => console.log(err))
     }
-    if(message.content === '/rank'){
-       
-        const RankInfo = new Discord.MessageEmbed()
-        .setAuthor(message.member.user.tag)
-        .addField('User Created', message.member.user.createdAt)
-        .addField('User Joined', message.member.joinedAt)
-        .setColor(16580705)
-        message.channel.send(RankInfo)
-    }
-    
     if(!message.content.startsWith(x) || message.author.bot) return;
- 
     const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
-   
-    
- 
     if(command === 'kick'){
         client.commands.get('kick').execute(message, args)
     };
@@ -173,13 +128,27 @@ if(command === 'say'){
 if(command === 'invite'){
     client.commands.get('invite').execute(message, args)
 };
-
-
+if(command === 'guild'){
+    client.commands.get('guild').execute(message, args)
+};
+if(command === 'rank'){
+    client.commands.get('rank').execute(message, args)
+};
+if(command === 'help'){
+    client.commands.get('help').execute(message, args)
+};
+if(command === 'support'){
+    client.commands.get('support').execute(message, args)
+};
+if(command === 'eval'){
+    client.commands.get('eval').execute(message, args)
+};
+if(command === 'play'){
+    client.commands.get('play').execute(message, args)
+};
 
 
 });
-
-
 
 client.mongoose.init();
 client.login(process.env.token);
