@@ -33,7 +33,7 @@ for(const file of commandFiles){
     client.commands.set(command.name, command);
 }
 
-const token = 'NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.Npqlsx868vmDsMkDQCj9JWP0_Zo';
+
 
 const x = '/';
 
