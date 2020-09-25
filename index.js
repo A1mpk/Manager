@@ -139,9 +139,6 @@ if(command === 'help'){
 if(command === 'support'){
     client.commands.get('support').execute(message, args)
 };
-if(command === 'eval'){
-    client.commands.get('eval').execute(message, args)
-};
 if(command === 'play'){
     client.commands.get('play').execute(message, args)
 };
