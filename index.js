@@ -186,4 +186,4 @@ if(command === 'play'){
 });
 
 client.mongoose.init();
-client.login(token);
+client.login(process.env.token);
