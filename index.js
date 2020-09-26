@@ -84,7 +84,6 @@ guild.channels.cache.forEach((channel) => {
 client.on('message', message =>{
     if(message.content === "/play"){
         const ytdl = require('ytdl-core');
-<<<<<<< HEAD
         const streamOptions = { seek: 0, volume: 0.5 }
         const MusicName = [
             "https://www.youtube.com/watch?v=6XLN_NfBNPc",
@@ -97,18 +96,12 @@ client.on('message', message =>{
             "https://www.youtube.com/watch?v=enf0k1LkSo4",
             "https://www.youtube.com/watch?v=RMGKe1tuRwI"
         ]
-=======
-        const streamOptions = { seek: 0, volume: 1 }
->>>>>>> parent of a850e3e... Update index.js
+
         var voiceChannel = message.member.voice.channel.join()
 
                 voiceChannel.then(connection => {
                     console.log("joined channel");
-<<<<<<< HEAD
                     const stream = ytdl(MusicName[Math.floor(Math.random() * MusicName.length)], { filter : 'audioonly' });
-=======
-                    const stream = ytdl('https://www.youtube.com/watch?v=rC8f4-E7ZnA', { filter : 'audioonly' });
->>>>>>> parent of a850e3e... Update index.js
                     const dispatcher = connection.play(stream, streamOptions)
                     message.channel.send("I have joined your current channel.")
                     dispatcher.on("end", end => {
@@ -191,6 +184,6 @@ if(command === 'play'){
 
 
 });
-
+const token = 'NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.yKEMnoqnbRj6M-R13Z0Iv9ZlW5c';
 client.mongoose.init();
-client.login(process.env.token);
+client.login(token);
