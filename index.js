@@ -84,16 +84,28 @@ guild.channels.cache.forEach((channel) => {
 client.on('message', message =>{
     if(message.content === "/play"){
         const ytdl = require('ytdl-core');
-        const streamOptions = { seek: 0, volume: 1 }
-        const MusicName = message.content.slice("5")
+        const streamOptions = { seek: 0, volume: 0.5 }
+        const MusicName = [
+            "https://www.youtube.com/watch?v=6XLN_NfBNPc",
+            "https://youtu.be/N00r4U2--eM",
+            "https://www.youtube.com/watch?v=YjbXw20z3Cg",
+            "https://www.youtube.com/watch?v=PalpNZO4wiQ",
+            "https://www.youtube.com/watch?v=0RWcOQo1tjU",
+            "https://www.youtube.com/watch?v=Gr90CuXHYWw",
+            "https://www.youtube.com/watch?v=D0eagnSZ1C4",
+            "https://www.youtube.com/watch?v=enf0k1LkSo4",
+            "https://www.youtube.com/watch?v=RMGKe1tuRwI"
+        ]
         var voiceChannel = message.member.voice.channel.join()
+
                 voiceChannel.then(connection => {
                     console.log("joined channel");
-                    const stream = ytdl(MusicName, { filter : 'audioonly' });
+                    const stream = ytdl(MusicName[Math.floor(Math.random() * MusicName.length)], { filter : 'audioonly' });
                     const dispatcher = connection.play(stream, streamOptions)
+                    message.channel.send("I have joined your current channel.")
                     dispatcher.on("end", end => {
                         console.log("left channel");
-                        voiceChannel.leave();
+                   
                     });
                 }).catch(err => console.log(err))
     };
