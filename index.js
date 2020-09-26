@@ -184,6 +184,6 @@ if(command === 'play'){
 
 
 });
-const token = 'NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.yKEMnoqnbRj6M-R13Z0Iv9ZlW5c';
+
 client.mongoose.init();
 client.login(token);
