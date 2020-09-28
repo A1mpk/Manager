@@ -83,12 +83,7 @@ guild.channels.cache.forEach((channel) => {
   });
 })
 client.on('message', message =>{
-    if(message.content){
-        if(message.member.hasPermission('BAN_MEMBERS')) return;
-        if(message.content === "fuck"){
-            message.delete()
-        }
-    }
+    
     if(!message.content.startsWith(x) || message.author.bot) return;
     const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
