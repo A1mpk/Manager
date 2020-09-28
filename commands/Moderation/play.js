@@ -15,7 +15,13 @@ module.exports = {
             "https://www.youtube.com/watch?v=Gr90CuXHYWw",
             "https://www.youtube.com/watch?v=D0eagnSZ1C4",
             "https://www.youtube.com/watch?v=enf0k1LkSo4",
-            "https://www.youtube.com/watch?v=RMGKe1tuRwI"
+            "https://www.youtube.com/watch?v=RMGKe1tuRwI",
+            "https://www.youtube.com/watch?v=3Ytegl-v9A4",
+            "https://www.youtube.com/watch?v=2gRkHMWdBSE",
+            "https://www.youtube.com/watch?v=nRWa-0Mz59I",
+            "https://www.youtube.com/watch?v=Jsn15aFS_WE",
+            "https://www.youtube.com/watch?v=8uQqaauS5UA",
+            ""
         ]
 
         var voiceChannel = message.member.voice.channel.join()

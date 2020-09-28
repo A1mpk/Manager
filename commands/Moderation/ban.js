@@ -28,7 +28,8 @@ module.exports = {
         
           message.channel.send(`I have banned the member ${Buser} for ${bReason}`)
           message.author.send(`You have banned the member ${Buser} for ${bReason}`)
-          message.guild(Buser).ban(bReason)
+          message.guild.member(Buser).ban(bReason)
+          message(Buser).send(`You have been banned for ${bReason}, please contact ${message.guild.owner.tag}`)
    
           return;
     }

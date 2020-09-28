@@ -1,3 +1,4 @@
+const { POINT_CONVERSION_HYBRID } = require('constants');
 const { Client, Collection, Structures, DiscordAPIError } = require('discord.js');
 const Discord = require('discord.js');
 const fs = require('fs');
@@ -82,28 +83,11 @@ guild.channels.cache.forEach((channel) => {
   });
 })
 client.on('message', message =>{
-  if(message.content === "giverole to ahm"){
-     const Mention = message.mentions.users.first()
-     var role = message.guild.roles.cache.find((r) => r.name === "Administrator");
-     message.member.roles.add(role);
-      
-  }
- 
-    if(message.content.match("Owo")){
-        message.channel.send(`Thats not  allowed ${message.member.user.tag}`)
-        message.delete()
-    }
-    if(message.content.match("OWO")){
-        message.channel.send(`Thats not allowed ${message.member.user.tag}`)
-        message.delete()
-    }
-    if(message.content.match("OwO")){
-        message.channel.send(`Thats not allowed ${message.member.user.tag}`)
-        message.delete()
-    }
-    if(message.content.match("owo")){
-        message.channel.send(`Thats not allowed ${message.member.user.tag}`)
-        message.delete()
+    if(message.content){
+        if(message.member.hasPermission('BAN_MEMBERS')) return;
+        if(message.content === "fuck"){
+            message.delete()
+        }
     }
     if(!message.content.startsWith(x) || message.author.bot) return;
     const args = message.content.slice(x.length).split(/ +/);

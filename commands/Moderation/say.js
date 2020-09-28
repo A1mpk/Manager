@@ -16,6 +16,8 @@ module.exports = {
           message.channel.send("Here take a cookie with milk.🍪🥛");
       } else 
 
+      
+
       if(args2){
           message.delete()
           message.channel.send(args2)

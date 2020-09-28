@@ -12,6 +12,7 @@
     "@discordjs/opus": "^0.3.2",
     "ascii-table": "0.0.9",
     "discord.js": "^12.3.1",
+    "ffmpeg": "0.0.4",
     "fs": "0.0.1-security",
     "g": "^2.0.1",
     "mongoose": "^5.10.3",
