@@ -141,6 +141,6 @@ if(command === 'currency'){
 
 
 });
-const token = "NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.zzQRnQBzdWxD_xHX7vS2O5hl5LU";
+
 client.mongoose.init();
-client.login(token);
+client.login(process.env.token);
