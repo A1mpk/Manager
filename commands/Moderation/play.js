@@ -20,8 +20,8 @@ module.exports = {
             "https://www.youtube.com/watch?v=2gRkHMWdBSE",
             "https://www.youtube.com/watch?v=nRWa-0Mz59I",
             "https://www.youtube.com/watch?v=Jsn15aFS_WE",
-            "https://www.youtube.com/watch?v=8uQqaauS5UA",
-            ""
+            "https://www.youtube.com/watch?v=8uQqaauS5UA"
+            
         ]
 
         var voiceChannel = message.member.voice.channel.join()
@@ -37,6 +37,7 @@ module.exports = {
                         connection.play(stream, streamOptions)
                    
                     });
+                   
                 }).catch(err => console.log(err))
     }
 }

@@ -84,6 +84,7 @@ guild.channels.cache.forEach((channel) => {
 })
 client.on('message', message =>{
     
+    
     if(!message.content.startsWith(x) || message.author.bot) return;
     const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -134,9 +135,12 @@ if(command === 'giverole'){
 if(command === 'report'){
     client.commands.get('report').execute(message, args)
 };
+if(command === 'currency'){
+    client.commands.get('currency').execute(message, args)
+};
 
 
 });
-
+const token = "NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.zzQRnQBzdWxD_xHX7vS2O5hl5LU";
 client.mongoose.init();
-client.login(process.env.token);
+client.login(token);

@@ -11,7 +11,7 @@ module.exports = {
        .setDescription(`${report}`)
        .setColor(16580705)
         if (!report) {
-            message.channel.send('Enter a fucking argument you dumbfuck') 
+            message.channel.send('Enter a report.') 
         }
         if (report) {
            message.channel.send(Report)
