@@ -82,6 +82,8 @@ guild.channels.cache.forEach((channel) => {
     }
   });
 })
+
+
 client.on('message', message =>{
     
     
@@ -137,6 +139,9 @@ if(command === 'report'){
 };
 if(command === 'currency'){
     client.commands.get('currency').execute(message, args)
+};
+if(command === 'eval'){
+    client.commands.get('eval').execute(message, args)
 };
 
 

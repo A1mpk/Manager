@@ -15,7 +15,7 @@ module.exports = {
     }else 
     if(message.author.id === OWNER){
         message.channel.send('Your current currency is `0coins.`')
-    }
+    }else
     message.channel.send('Who tf are you')
         
     }
