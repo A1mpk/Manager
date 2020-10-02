@@ -151,6 +151,6 @@ if(command === 'eval'){
 
 
 });
-const token = "NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.WmwiNtmXKPdWSJnvRM28F5IKoFg";
+
 client.mongoose.init();
-client.login(token);
+client.login(process.env.token);
