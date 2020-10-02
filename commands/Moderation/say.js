@@ -6,8 +6,10 @@ module.exports = {
         let args2 = message.content.slice("4")
         const everyone = "@everyone"
         const say = new Discord.MessageEmbed()
-        .setAuthor('SAY COMMAND -')
-        .setDescription('The correct usage of this command is `/say your message`.')
+        .setAuthor('SAY - FUN')
+        .setDescription('Deletes your message and sents the same message as the bots message.')
+        .setTimestamp()
+        .addField("USAGE : `say <message>`", "** **")
         .setColor(15105570)
       if(!args2){
           message.channel.send(say)

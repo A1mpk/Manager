@@ -10,7 +10,9 @@ module.exports = {
             channel.updateOverwrite(message.guild.roles.everyone, {
                 SEND_MESSAGES: false
             })
+            
            
         })
+        message.channel.send(`Locked ${message.guild.channels.cache.size} channels. {Including VC's}`)
         }
     }

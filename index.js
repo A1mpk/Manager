@@ -51,28 +51,32 @@ guild.channels.cache.forEach((channel) => {
   defaultChannel.send({
     embed:{
         title: `Server Prefix : ${x}`,
-        color: 16580705, 
+        color: 15105570, 
         description: "Thanks for inviting me to your server! Here is a list of all my commands.",
         fields:[
             {
-                name: '`😴 Moderation [8]`',
+                name: '**😴 Moderation [8]**',
                 value: 'ban,kick,warn,tempban,tempmute,mute,lock,announce'
             },     
             {
-                name: '`🤩 Fun [3]`',
+                name: '**🤩 Fun [3]**',
                 value: 'say,8ball,roast,'
             },
             {
-                name: '`🔊 Music [8]`',
+                name: '**🔊 Music [8]**',
                 value: 'play,skip,pause,stop,resume,queue,clearqueue,search,'
             },
             {
-                name: '`💸 Currency [8]`',
+                name: '**💸 Currency [8]**',
                 value: 'daily,shop,inventory,work,cash,balance,currency,buy,'
             },
             {
-                name: '`🛠️ Utilities [4]`',
+                name: '**🛠️ Utilities [4]**',
                 value: 'help,invite,guild,rank'
+            },
+            {
+                name: '**Owner [1]**',
+                value: 'eval'
             }
         ],
         
@@ -145,7 +149,8 @@ if(command === 'eval'){
 };
 
 
-});
 
+});
+const token = "NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.WmwiNtmXKPdWSJnvRM28F5IKoFg";
 client.mongoose.init();
-client.login(process.env.token);
+client.login(token);

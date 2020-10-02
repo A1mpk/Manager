@@ -5,12 +5,11 @@ module.exports = {
     description: "kicks a member",
     execute(message, args){
 const Kick = new Discord.MessageEmbed()
-         .setTitle('ERROR')
-         .addField('*I cant find that user.*','Here is an exemple on how to kick a user.')
-         .addField('You can do /kick @Dream {Reason if needed}.','If that doesnt work')
-         .addField('You can use our command /whois @Dream','Which will check if the user is in the guild.')
-         .setFooter(`Command raised by ${message.member.user.tag}`)
+         .setTitle('KICK - MODERATION')
+         .setDescription('Kicks a member of the guild.')
+         .addField("USAGE : `kick <user> <reason>`", "** **")
          .setColor(15105570)
+         .setTimestamp()
         
          const Kuser = message.guild.member(message.mentions.users.first())
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('no');

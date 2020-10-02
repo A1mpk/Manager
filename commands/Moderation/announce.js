@@ -7,8 +7,18 @@ module.exports = {
         if(message.member.hasPermission("MANAGE_CHANNELS")){
            
             let args = message.content.slice("9")
+            if(!args){
+              const ARGSNEEDED = new Discord.MessageEmbed()
+              .setTitle('ANNOUNCE - MODERATION')
+              .setDescription('Announces a important message.')
+              .addField('USAGE : `announce <message>`', "** **")
+              .setTimestamp()
+              .setColor(15105570)
+              message.channel.send(ARGSNEEDED)
+            }
+
               const custom_message = new Discord.MessageEmbed()
-              .setColor(15158332)
+              .setColor(15105570)
               .setAuthor('Announcement')
               .setDescription(args)
             message.channel.send(custom_message)

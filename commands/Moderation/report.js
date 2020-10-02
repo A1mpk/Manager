@@ -12,7 +12,12 @@ module.exports = {
        .setColor(15105570)
        .setFooter(`Command raised by ${message.member.user.tag}`)
         if (!report) {
-            message.channel.send('Enter a report.') 
+            const repportt = new Discord.MessageEmbed()
+           .setDescription("Sends a report to the owner of the bot.")
+           .addField("USAGE : `report <problem>`", '** **')
+           .setColor(15105570)
+           .setTitle('REPORT - UTILITIES')
+           message.channel.send(repportt)
         }
         if (report) {
            message.channel.send(Report)
