@@ -8,6 +8,7 @@ module.exports = {
         const AK = new Discord.MessageEmbed()
         .setAuthor('ERROR')
         .setDescription('You do not own the bot.')
+        .setColor(15105570)
         if(message.author.id !== OWNERID) return message.channel.send(AK)
         try {
           const code = args.join(" ");

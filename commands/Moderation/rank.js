@@ -8,7 +8,8 @@ module.exports = {
         .setAuthor(message.member.user.tag)
         .addField('User Created', message.member.user.createdAt)
         .addField('User Joined', message.member.joinedAt)
-        .setColor(16580705)
+        .setColor(15105570)
+        .setFooter(`Command raised by ${message.member.user.tag}`)
         message.channel.send(RankInfo)
     }
 }

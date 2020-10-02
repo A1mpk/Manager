@@ -9,7 +9,8 @@ module.exports = {
        const Report = new Discord.MessageEmbed()
        .setAuthor(`Report by ${message.member.user.tag}`)
        .setDescription(`${report}`)
-       .setColor(16580705)
+       .setColor(15105570)
+       .setFooter(`Command raised by ${message.member.user.tag}`)
         if (!report) {
             message.channel.send('Enter a report.') 
         }

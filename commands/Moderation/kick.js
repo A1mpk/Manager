@@ -9,7 +9,8 @@ const Kick = new Discord.MessageEmbed()
          .addField('*I cant find that user.*','Here is an exemple on how to kick a user.')
          .addField('You can do /kick @Dream {Reason if needed}.','If that doesnt work')
          .addField('You can use our command /whois @Dream','Which will check if the user is in the guild.')
-         .setColor(15158332)
+         .setFooter(`Command raised by ${message.member.user.tag}`)
+         .setColor(15105570)
         
          const Kuser = message.guild.member(message.mentions.users.first())
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('no');
@@ -17,10 +18,11 @@ const Kick = new Discord.MessageEmbed()
          let kReason = args.join(" ").slice(22);
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
          const KickMod = new Discord.MessageEmbed()
-         .setColor(15158332)
+         .setColor(15105570)
          .setTitle('ERROR')
          .setDescription('I cant kick that person.')
          .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")
+         .setFooter(`Command raised by ${message.member.user.tag}`)
          if(Kuser.hasPermission("ADMINISTRATOR")) return message.channel.send(KickMod);
    
           message.guild.member(Kuser).kick(kReason);

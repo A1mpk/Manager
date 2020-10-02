@@ -11,10 +11,11 @@ module.exports = {
             "Nice pfp",
          ]
                     const avatarEmbed = new DIscord.MessageEmbed()
-                        .setColor("RANDOM")
+                        .setColor(15105570)
                         .setAuthor(user.username)
                         .setDescription((res[Math.floor(Math.random() * res.length)]))
                         .setImage(user.displayAvatarURL())
+                        .setFooter(`Command raised by ${message.member.user.tag}`)
                     message.channel.send(avatarEmbed);
 
     }
