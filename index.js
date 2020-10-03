@@ -10,9 +10,12 @@ const client = new Client();
 client.commands = new Collection();
 client.aliases = new Collection();
 client.mongoose = require('./utils/mongoose');
-client.categories = fs.readdirSync('./commands/');;
-
-
+client.categories = fs.readdirSync('./commands/');
+const { config } = require('dotenv');
+const { isRegExp } = require('util');
+config({
+    path: `${__dirname}/.env`
+});
 
 ['command'].forEach(handler => {
     require(`./handlers/${handler}`)(client);
@@ -90,7 +93,9 @@ guild.channels.cache.forEach((channel) => {
 
 client.on('message', message =>{
     
-    
+    if(message.content === '/afk'){
+        message.member.setNickname(`[AFK]` + message.member.nickname)
+    }
     if(!message.content.startsWith(x) || message.author.bot) return;
     const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -141,12 +146,16 @@ if(command === 'giverole'){
 if(command === 'report'){
     client.commands.get('report').execute(message, args)
 };
-if(command === 'currency'){
-    client.commands.get('currency').execute(message, args)
-};
+
 if(command === 'eval'){
     client.commands.get('eval').execute(message, args)
 };
+
+if(command === 'info'){
+    client.commands.get('info').execute(message, args)
+};
+
+
 
 
 
