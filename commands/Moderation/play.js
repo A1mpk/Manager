@@ -7,21 +7,9 @@ module.exports = {
         const ytdl = require('ytdl-core');
         const streamOptions = { seek: 0, volume: 0.5 }
         const MusicName = [
-            "https://www.youtube.com/watch?v=6XLN_NfBNPc",
-            "https://youtu.be/N00r4U2--eM",
-            "https://www.youtube.com/watch?v=YjbXw20z3Cg",
-            "https://www.youtube.com/watch?v=PalpNZO4wiQ",
-            "https://www.youtube.com/watch?v=0RWcOQo1tjU",
-            "https://www.youtube.com/watch?v=Gr90CuXHYWw",
-            "https://www.youtube.com/watch?v=D0eagnSZ1C4",
-            "https://www.youtube.com/watch?v=enf0k1LkSo4",
-            "https://www.youtube.com/watch?v=RMGKe1tuRwI",
-            "https://www.youtube.com/watch?v=3Ytegl-v9A4",
-            "https://www.youtube.com/watch?v=2gRkHMWdBSE",
-            "https://www.youtube.com/watch?v=nRWa-0Mz59I",
-            "https://www.youtube.com/watch?v=Jsn15aFS_WE",
-            "https://www.youtube.com/watch?v=8uQqaauS5UA",
-            
+           "https://www.youtube.com/watch?v=PXGycbkbtW0",
+           "https://www.youtube.com/watch?v=dIzgiclddlM",
+           "https://www.youtube.com/watch?v=iI34LYmJ1Fs"
         ]
 
         var voiceChannel = message.member.voice.channel.join()

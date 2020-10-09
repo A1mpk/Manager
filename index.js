@@ -92,6 +92,7 @@ guild.channels.cache.forEach((channel) => {
 
 
 client.on('message', message =>{
+  
     
     if(message.content === '/afk'){
         message.member.setNickname(`[AFK]` + message.member.nickname)
@@ -154,7 +155,9 @@ if(command === 'eval'){
 if(command === 'info'){
     client.commands.get('info').execute(message, args)
 };
-
+if(command === 'setJoinLog'){
+    client.commands.get('setJoinLog').execute(message, args)
+};
 
 
 
@@ -162,4 +165,4 @@ if(command === 'info'){
 });
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login('NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.3nu_VoaULVRGYE2DWoSKMU6I9sk');

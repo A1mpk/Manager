@@ -6,13 +6,25 @@ module.exports = {
     description: "LOCKS THE CHANNELS",
     execute(message, args){
         const channels = message.guild.channels.cache.filter(ch => ch.type !== 'text-channels');
+        const argsfl = message.content.slice("5")
+        const lockhelp = new Discord.MessageEmbed()
+        .setTitle('LOCK - MODERATION')
+        .setDescription('Locks all channels.')
+        .addField("USAGE : `lock`", "** **")
+        .setColor(15105570)
+        .setTimestamp()
+        if(argsfl){
+            message.channel.send(lockhelp)
+        }else 
         channels.forEach(channel => {
             channel.updateOverwrite(message.guild.roles.everyone, {
                 SEND_MESSAGES: false
             })
             
            
-        })
+        }) 
         message.channel.send(`Locked ${message.guild.channels.cache.size} channels. {Including VC's}`)
-        }
+    }
+
+    
     }

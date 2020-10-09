@@ -7,6 +7,7 @@ module.exports = {
         if(message.member.hasPermission("MANAGE_CHANNELS")){
            
             let args = message.content.slice("9")
+    
             if(!args){
               const ARGSNEEDED = new Discord.MessageEmbed()
               .setTitle('ANNOUNCE - MODERATION')
