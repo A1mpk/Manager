@@ -165,4 +165,4 @@ if(command === 'setJoinLog'){
 });
 
 client.mongoose.init();
-client.login('NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.3nu_VoaULVRGYE2DWoSKMU6I9sk');
+client.login(process.env.token);
