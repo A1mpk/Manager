@@ -3,7 +3,6 @@ module.exports = {
     name: 'help',
     description: "HELP COMMAND ",
     execute(message, args){
-        if(message.content === "/help"){
             message.channel.send({
                 embed:{
                     title: 'List of commands [35]',
@@ -40,7 +39,7 @@ module.exports = {
                     }
                 }
                 })
-            }
+            
         }
     
     }

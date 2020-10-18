@@ -15,15 +15,18 @@ module.exports = {
         .setTimestamp()
         if(argsfl){
             message.channel.send(lockhelp)
-        }else 
-        channels.forEach(channel => {
-            channel.updateOverwrite(message.guild.roles.everyone, {
-                SEND_MESSAGES: false
-            })
-            
-           
-        }) 
-        message.channel.send(`Locked ${message.guild.channels.cache.size} channels. {Including VC's}`)
+        }
+        if(!argsfl){
+            channels.forEach(channel => {
+                channel.updateOverwrite(message.guild.roles.everyone, {
+                    SEND_MESSAGES: false
+                })
+                
+               
+            }) 
+            message.channel.send(`Locked ${message.guild.channels.cache.size} channels. {Including VC's}`) 
+        }
+      
     }
 
     

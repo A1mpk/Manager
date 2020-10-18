@@ -38,9 +38,20 @@ for(const file of commandFiles){
     client.commands.set(command.name, command);
 }
 
+client.on('guildMemberAdd', member => {
+  if(member.guild.name === "SP"){
+    const rolefound = member.guild.roles.cache.find(r => r.id === "753424012868321300")
+    member.roles.add(rolefound)
+  }else
+  if(member.guild.name === "Manager Support"){
+    const roledfound = member.guild.roles.cache.find(r => r.id === "753424012868321300")
+    member.roles.add(roledfound)
+  }
+   
+    
+})
 
-
-const x = '/';
+const x = '>';
 
 client.on('guildCreate', guild => {
     let defaultChannel = "";
@@ -92,11 +103,7 @@ guild.channels.cache.forEach((channel) => {
 
 
 client.on('message', message =>{
-  
-    
-    if(message.content === '/afk'){
-        message.member.setNickname(`[AFK]` + message.member.nickname)
-    }
+ 
     if(!message.content.startsWith(x) || message.author.bot) return;
     const args = message.content.slice(x.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -155,8 +162,8 @@ if(command === 'eval'){
 if(command === 'info'){
     client.commands.get('info').execute(message, args)
 };
-if(command === 'setJoinLog'){
-    client.commands.get('setJoinLog').execute(message, args)
+if(command === 'setAutorole'){
+    client.commands.get('setAutorole').execute(message, args)
 };
 
 
@@ -165,4 +172,4 @@ if(command === 'setJoinLog'){
 });
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login('NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.Dxg4xUEIK1ejlD2QX5pqXibyWSA');

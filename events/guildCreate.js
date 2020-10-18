@@ -9,7 +9,8 @@ module.exports = async (client, guild) => {
         _id: mongoose.Types.ObjectId(),
         guildID: guild.id,
         guildName: guild.name,
-        prefix: String
+        prefix: String,
+        autorole: String
     });
 const JoinedEmbedf = new Discord.MessageEmbed()
 .setAuthor('Manager')

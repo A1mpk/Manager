@@ -1,11 +1,16 @@
-const { connections } = require('mongoose');
+const { connections, startSession } = require('mongoose');
 
 module.exports = { 
     name: 'play',
     description: 'PLAYS A NMUSDC',
     execute(message, args){
+       const number = message.content.slice("5")
+
+            const streamOptions = { seek: 0, volume: 1 }
+            
+        
         const ytdl = require('ytdl-core');
-        const streamOptions = { seek: 0, volume: 0.5 }
+      
         const MusicName = [
            "https://www.youtube.com/watch?v=PXGycbkbtW0",
            "https://www.youtube.com/watch?v=dIzgiclddlM",
@@ -13,7 +18,7 @@ module.exports = {
         ]
 
         var voiceChannel = message.member.voice.channel.join()
-
+        
                 voiceChannel.then(connection => {
                     console.log("joined channel");
                     const stream = ytdl((MusicName[Math.floor(Math.random() * MusicName.length)]), { filter : 'audioonly' });

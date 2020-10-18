@@ -5,11 +5,14 @@ module.exports = {
     description: "Eval",
     execute(message, args){
         const OWNERID = "368148684468387840"
+        const COOWNERID = "503186950295912458"
         const AK = new Discord.MessageEmbed()
         .setAuthor('ERROR')
         .setDescription('You do not own the bot.')
         .setColor(15105570)
-        if(message.author.id !== OWNERID) return message.channel.send(AK)
+        if(message.author.id !== OWNERID,COOWNERID){
+          message.channel.send(AK)
+        }
         try {
           const code = args.join(" ");
           let evaled = eval(code);
