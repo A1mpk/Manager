@@ -172,4 +172,4 @@ if(command === 'setAutorole'){
 });
 
 client.mongoose.init();
-client.login('NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.Dxg4xUEIK1ejlD2QX5pqXibyWSA');
+client.login(process.env.token);

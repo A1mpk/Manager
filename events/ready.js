@@ -1,20 +1,22 @@
+const { ClientUser } = require("discord.js");
+const play = require("../commands/Moderation/play");
+
 module.exports = client => {
     console.log('Manager is now online and running!');
 
    
 
     let statuses = [
-        `${client.guilds.cache.size} guilds`,
-        "/help",
-        `Friendly`,
-        
+        '>help || 🎃🎃',
+        `over ${client.users.cache.size} users`,
+        `${client.guilds.cache.size} guilds`
     ]
 
     setInterval(function() {
         let status = statuses[Math.floor(Math.random() * statuses.length)];
         client.user.setActivity(status, {type: "WATCHING"});
 
-    }, 25000)
+    }, 5000)
     }
 
 

@@ -10,7 +10,7 @@ module.exports = async (client, guild) => {
         guildID: guild.id,
         guildName: guild.name,
         prefix: String,
-        autorole: String
+        
     });
 const JoinedEmbedf = new Discord.MessageEmbed()
 .setAuthor('Manager')
