@@ -10,7 +10,7 @@ module.exports = {
                     fields:[
                         {
                             name: '**😴 Moderation [8]**',
-                            value: 'ban,kick,warn,tempban,tempmute,mute,lock,announce'
+                            value: 'ban,kick,warn,tempban,tempmute,mute,lock,announce,config_joinmessage,config_welcome,rule_add,credit,'
                         },     
                         {
                             name: '**🤩 Fun [3]**',
@@ -26,7 +26,7 @@ module.exports = {
                         },
                         {
                             name: '**🛠️ Utilities [4]**',
-                            value: 'help,invite,guild,rank,support,info'
+                            value: 'help,invite,guild,rank,support,info,membercount'
                         },
                         {
                             name: '**Owner**',

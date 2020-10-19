@@ -11,9 +11,9 @@ module.exports = {
         .setDescription('Manager is an upcoming bot actively being developped. This bot will bring you moderation to music, music to currency, currency to fun.')
         .addField('Premium', 'translate,search,auto-moderator,auto-role and posts.')
         .addFields(
-            { name: 'Version', value: '0.0.1', inline: true },
-            { name: `Guilds`, value: `${client.guilds.cache.size}`, inline: true },
-            { name: 'Users', value: `${client.users.cache.size}`, inline: true },
+            { name: 'Version', value: '0.0.2', inline: true },
+            { name: `Guilds`, value: client.guilds.cache.size, inline: true },
+            { name: 'Users', value: client.users.cache.size, inline: true },
         )
         .setThumbnail(message.client.user.displayAvatarURL())
         
