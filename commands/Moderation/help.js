@@ -5,27 +5,27 @@ module.exports = {
     execute(message, args){
             message.channel.send({
                 embed:{
-                    title: 'List of commands [35]',
+                    title: 'List of commands [15]',
                     color: 15105570, 
                     fields:[
                         {
-                            name: '**😴 Moderation [8]**',
-                            value: 'ban,kick,warn,tempban,tempmute,mute,lock,announce,config_joinmessage,config_welcome,rule_add,credit,'
+                            name: '**😴 Moderation [7]**',
+                            value: 'ban,kick,lock,credit,rule_add,config_log,config_welcome'
                         },     
                         {
-                            name: '**🤩 Fun [3]**',
-                            value: 'say,8ball,roast,'
+                            name: '**🤩 Fun [0]**',
+                            value: 'nothing yet noob'
                         },
                         {
-                            name: '**🔊 Music [8]**',
-                            value: 'play,skip,pause,stop,resume,queue,clearqueue,search,'
+                            name: '**🔊 Music [1]**',
+                            value: 'play with playlist'
                         },
                         {
-                            name: '**💸 Currency [8]**',
-                            value: 'daily,shop,inventory,work,cash,balance,currency,buy,'
+                            name: '**💸 Currency [0]**',
+                            value: 'nothing yet nob'
                         },
                         {
-                            name: '**🛠️ Utilities [4]**',
+                            name: '**🛠️ Utilities [7]**',
                             value: 'help,invite,guild,rank,support,info,membercount'
                         },
                         {

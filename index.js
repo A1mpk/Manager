@@ -99,62 +99,63 @@ guild.channels.cache.forEach((channel) => {
 
 
 client.on('message', message =>{
- 
     const args = message.content.slice(x.length).split(/ +/);
-    let LeftChannel = message.guild.channels.cache.find(channel => args[1] === channel.id )
+ 
     if(message.content.startsWith( x + 'config_welcome')){
         if(message.member.hasPermission('MANAGE_CHANNELS')){
             const messagetosend = message.content.slice(15)
+           
+            if(!messagetosend) return message.channel.send('Enter a welcome message.')
+           client.on('guildMemberAdd', member => {
             const EmbedToSend = new Discord.MessageEmbed()
-            .setTitle(`Welcome to ${guild.name}`)
+            .setTitle(`Welcome to ${member.guild.name}`)
             .setDescription(messagetosend)
             .setColor(15105570)
             .setTimestamp()
-            if(!messagetosend) return message.channel.send('Enter a welcome message.')
-           client.on('guildMemberAdd', member => {
                member.send(EmbedToSend)
            })
         }
     
     }
-    if(message.content.startsWith(x + 'config_joinmessage')){
-
+    if(message.content.startsWith( x + 'config_log')){
+        let LeftChannel = message.guild.channels.cache.find(channel => args[1] === channel.id )
         if(message.member.hasPermission("MANAGE_CHANNELS")){
-          if(!LeftChannel) return message.channel.send(`Cant find channel id.`)
-          client.on('guildBanAdd', member =>{
-             const BannedMem = new Discord.MessageEmbed()
-             .setColor(15105570)
-             .setAuthor("Member Banned")
-             .addField('User', member.name)
-             .addField('Date', message.createdAt)
-             .addField('Last message', member.lastMessage)
-             LeftChannel.send(BannedMem)
-          })
-        client.on('guildMemberAdd', member =>{
-             const SJoined2 = new Discord.MessageEmbed()
-              .setTitle('Member Joined')
-              .addField('Member Name', member)
-              .addField('Joined', member.joinedAt)
-              .addField('Account ID', member.id)
-              .setFooter('Please welcome this member.')
-              .setColor(15105570)
-              member.send()
-               
-              LeftChannel.send(SJoined2)
-            });
-         client.on('guildMemberRemove', member =>{
-             const LeftEmbed = new Discord.MessageEmbed()
-             .setColor(15105570)
-             .setAuthor('Member Left')
-             .addField('Member Name', member.displayName)
-             .addField('Account ID', member.id)
-             .addField('Last message', member.lastMessage) 
-             LeftChannel.send(LeftEmbed)
-          })
-          return message.channel.send(`Join message is now fixed for ${LeftChannel}`)
-        }
-        return message.channel.send('You dont have permission to do that.')
-     }
+            if(!LeftChannel) return message.channel.send(`Cant find channel id.`)
+            client.on('guildBanAdd', member =>{
+               const BannedMem = new Discord.MessageEmbed()
+               .setColor(15105570)
+               .setAuthor("Member Banned")
+               .addField('User', member.name)
+               .addField('Date', message.createdAt)
+               .addField('Last message', member.lastMessage)
+               LeftChannel.send(BannedMem)
+            })
+          client.on('guildMemberAdd', member =>{
+               const SJoined2 = new Discord.MessageEmbed()
+                .setTitle('Member Joined')
+                .addField('Member Name', member)
+                .addField('Joined', member.joinedAt)
+                .addField('Account ID', member.id)
+                .setFooter('Please welcome this member.')
+                .setColor(15105570)
+                member.send()
+                 
+                LeftChannel.send(SJoined2)
+              });
+           client.on('guildMemberRemove', member =>{
+               const LeftEmbed = new Discord.MessageEmbed()
+               .setColor(15105570)
+               .setAuthor('Member Left')
+               .addField('Member Name', member.displayName)
+               .addField('Account ID', member.id)
+               .addField('Last message', member.lastMessage) 
+               LeftChannel.send(LeftEmbed)
+            })
+            return message.channel.send(`Join message is now fixed for ${LeftChannel}`)
+          }
+          return message.channel.send('You dont have permission to do that.')
+    }
+   
 
     if(!message.content.startsWith(x) || message.author.bot) return;
     const command = args.shift().toLowerCase();
@@ -225,6 +226,14 @@ if(command === 'membercount'){
 if(command === 'rule_add'){
     client.commands.get('rule_add').execute(message, args)
 };
+if(command === 'pain'){
+    client.commands.get('pain').execute(message, args)
+};
+if(command === 'happy'){
+    client.commands.get('happy').execute(message, args)
+};
+
+
 
 
 

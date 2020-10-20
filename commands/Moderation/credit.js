@@ -3,18 +3,18 @@ module.exports = {
     name: 'credit',
     description: "Announces a rule or a normal announcement",
     execute(message, args){
- 
+      const ARGSN2EEDED = new Discord.MessageEmbed()
+      .setTitle('CREDIT - MODERATION')
+      .setDescription('Credits a user.')
+      .addField('USAGE : `credit <message>`', "** **")
+      .setTimestamp()
+      .setColor(15105570)
         if(message.member.hasPermission("MANAGE_CHANNELS")){
-           
             let args = message.content.slice("8")
-    
+  
+
             if(!args){
-              const ARGSN2EEDED = new Discord.MessageEmbed()
-              .setTitle('CREDIT - MODERATION')
-              .setDescription('Credits a user.')
-              .addField('USAGE : `credit <message>`', "** **")
-              .setTimestamp()
-              .setColor(15105570)
+            
               message.channel.send(ARGSN2EEDED)
             }
 
