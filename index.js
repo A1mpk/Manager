@@ -236,4 +236,4 @@ if(command === 'bot_nick'){
 });
 
 client.mongoose.init();
-client.login('NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.6ZTFKDIwX6uzlYeciqzJLtTDtgc');
+client.login(process.env.token);
