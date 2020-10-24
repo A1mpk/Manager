@@ -10,7 +10,7 @@ module.exports = {
         .setDescription(`Changes the bot's nickname.`)
         .addField('USAGE : `bot_nick <nickname>`', "** **")
         .setTimestamp()
-       if(message.member.hasPermission('CHANGE_NICKNAME')){
+       if(message.member.hasPermission('ADMINISTRATOR')){
            if(!lol){
             message.channel.send(LOL)
         }
