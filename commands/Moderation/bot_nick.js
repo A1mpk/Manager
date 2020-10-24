@@ -20,7 +20,7 @@ module.exports = {
             
             message.channel.send(`My nickname is now **${lol}**.`)
         }
-       }else message.channel.send('You need `CHANGE_NICKNAME` to use this command.')
+       }else message.channel.send('You need `ADMINISTRATOR` to use this command.')
     }
 
 };
