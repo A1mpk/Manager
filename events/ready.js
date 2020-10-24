@@ -10,7 +10,6 @@ module.exports = client => {
         '>help || 🎃🎃',
         `over ${client.users.cache.size} users`,
         `${client.guilds.cache.size} guilds`,
-        '20435021'
     ]
 
     setInterval(function() {

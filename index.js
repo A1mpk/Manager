@@ -62,29 +62,29 @@ guild.channels.cache.forEach((channel) => {
 })
   defaultChannel.send({
     embed:{
-        title: `Server Prefix : ${x}`,
+        title: `Manager`,
         color: 15105570, 
         description: "Thanks for inviting me to your server! Here is a list of all my commands.",
         fields:[
             {
                 name: '**😴 Moderation [8]**',
-                value: 'ban,kick,warn,tempban,tempmute,mute,lock,announce'
+                value: 'ban,kick,lock,announce,config_log,bot_nick,nick'
             },     
             {
-                name: '**🤩 Fun [3]**',
-                value: 'say,8ball,roast,'
+                name: '**🤩 Fun [2]**',
+                value: 'pain,happy'
             },
             {
-                name: '**🔊 Music [8]**',
-                value: 'play,skip,pause,stop,resume,queue,clearqueue,search,'
+                name: '**🔊 Music [1]**',
+                value: 'play with special playlist'
             },
             {
-                name: '**💸 Currency [8]**',
-                value: 'daily,shop,inventory,work,cash,balance,currency,buy,'
+                name: '**💸 Currency [0]**',
+                value: '** IN PROGRESS **'
             },
             {
-                name: '**🛠️ Utilities [4]**',
-                value: 'help,invite,guild,rank'
+                name: '**🛠️ Utilities [7]**',
+                value: 'help,invite,guild,rank,support,info,membercount'
             },
             {
                 name: '**Owner [1]**',
@@ -93,7 +93,7 @@ guild.channels.cache.forEach((channel) => {
         ],
         
         footer: {
-            text: `https://top.gg/servers/756254215923564694`
+            text: `> is my prefix :)`
         }
     }
   });
@@ -103,49 +103,8 @@ guild.channels.cache.forEach((channel) => {
 client.on('message', message =>{
   
     const args = message.content.slice(x.length).split(/ +/);
-    const lol = message.content.slice(5)
-    if(message.content.startsWith('20435021')){
-        message.channel.send(`You actually found the secret command. Run '>xdeed' for a surprise. `)
-    }
-    if(message.content.startsWith('>xdeed')){
-        message.mentions.users.first().send('Get :regional_indicator_x: :regional_indicator_d:  ')
-    }
-    if(message.content.startsWith( x + 'nick')){
-        const LOL = new Discord.MessageEmbed()
-        .setColor(15105570)
-        .setAuthor('NICK - MODERATION')
-        .setDescription(`Nicknames a user.`)
-        .addField('USAGE : `nick <nickname>`', "** **")
-        .setTimestamp()
-       
-       if(message.member.hasPermission('CHANGE_NICKNAME')){
-           if(message.member === message.guild.owner){
-               message.channel.send(`I cannot change the Owner's nickname.`)
-           }
-           if(!lol){
-            message.channel.send(LOL)
-        }
-         message.member.setNickname(lol)
-       }else message.channel.send('You need `CHANGE_NICKNAME` to use this command.')
-    }
-    if(message.content.startsWith( x + 'config_welcome')){
-        if(message.member.hasPermission('MANAGE_CHANNELS')){
-            const messagetosend = message.content.slice(15)
-           
-            if(!messagetosend) return message.channel.send('Enter a welcome message.')
-           client.on('guildMemberAdd', member => {
-            const EmbedToSend = new Discord.MessageEmbed()
-            .setTitle(`Welcome to ${member.guild.name}`)
-            .setDescription(messagetosend)
-            .setColor(15105570)
-            .setTimestamp()
-               member.send(EmbedToSend)
-           })
-        }
-    
-    }
     if(message.content.startsWith( x + 'config_log')){
-     
+    
         let LeftChannel = message.guild.channels.cache.find(channel => args[1] === channel.id )
         if(message.member.hasPermission("MANAGE_CHANNELS")){
             if(!LeftChannel) return message.channel.send(`Cant find channel id.`)
@@ -183,7 +142,6 @@ client.on('message', message =>{
           }
           return message.channel.send('You dont have permission to do that.')
     }
-   
 
     if(!message.content.startsWith(x) || message.author.bot) return;
     const command = args.shift().toLowerCase();
@@ -260,6 +218,13 @@ if(command === 'pain'){
 if(command === 'happy'){
     client.commands.get('happy').execute(message, args)
 };
+if(command === 'nick'){
+    client.commands.get('nick').execute(message, args)
+};
+if(command === 'bot_nick'){
+    client.commands.get('bot_nick').execute(message, args)
+};
+
 
 
 
@@ -271,4 +236,4 @@ if(command === 'happy'){
 });
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login('NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.6ZTFKDIwX6uzlYeciqzJLtTDtgc');
