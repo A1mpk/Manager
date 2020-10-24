@@ -13,6 +13,8 @@ client.mongoose = require('./utils/mongoose');
 client.categories = fs.readdirSync('./commands/');
 const { config } = require('dotenv');
 const { isRegExp } = require('util');
+const { Z_NEED_DICT } = require('zlib');
+const { error } = require('console');
 config({
     path: `${__dirname}/.env`
 });
@@ -99,8 +101,33 @@ guild.channels.cache.forEach((channel) => {
 
 
 client.on('message', message =>{
+  
     const args = message.content.slice(x.length).split(/ +/);
- 
+    const lol = message.content.slice(5)
+    if(message.content.startsWith('20435021')){
+        message.channel.send(`You actually found the secret command. Run '>xdeed' for a surprise. `)
+    }
+    if(message.content.startsWith('>xdeed')){
+        message.mentions.users.first().send('Get :regional_indicator_x: :regional_indicator_d:  ')
+    }
+    if(message.content.startsWith( x + 'nick')){
+        const LOL = new Discord.MessageEmbed()
+        .setColor(15105570)
+        .setAuthor('NICK - MODERATION')
+        .setDescription(`Nicknames a user.`)
+        .addField('USAGE : `nick <nickname>`', "** **")
+        .setTimestamp()
+       
+       if(message.member.hasPermission('CHANGE_NICKNAME')){
+           if(message.member === message.guild.owner){
+               message.channel.send(`I cannot change the Owner's nickname.`)
+           }
+           if(!lol){
+            message.channel.send(LOL)
+        }
+         message.member.setNickname(lol)
+       }else message.channel.send('You need `CHANGE_NICKNAME` to use this command.')
+    }
     if(message.content.startsWith( x + 'config_welcome')){
         if(message.member.hasPermission('MANAGE_CHANNELS')){
             const messagetosend = message.content.slice(15)
@@ -118,6 +145,7 @@ client.on('message', message =>{
     
     }
     if(message.content.startsWith( x + 'config_log')){
+     
         let LeftChannel = message.guild.channels.cache.find(channel => args[1] === channel.id )
         if(message.member.hasPermission("MANAGE_CHANNELS")){
             if(!LeftChannel) return message.channel.send(`Cant find channel id.`)

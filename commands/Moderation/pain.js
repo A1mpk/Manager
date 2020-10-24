@@ -9,7 +9,8 @@ module.exports = {
       "I want to sleep but my brain won’t stop talking to itself.",
       "You get depressed because you know that you are not what you should be.",
       "I am feeling so lonely and depressed, and even more i can’t explain my feelings.",
-      "Depression is about as close as you get to somewhere between dead and alive, and its the worst."
+      "Depression is about as close as you get to somewhere between dead and alive, and its the worst.",
+      "Hate. It has caused a lot of problems in this world but has not solved one yet."
       
   ]
   message.channel.send((pain[Math.floor(Math.random() * pain.length)]))

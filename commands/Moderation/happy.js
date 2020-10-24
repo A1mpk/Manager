@@ -3,6 +3,7 @@ module.exports = {
     name: 'happy',
     description: "Announdces a rule or a normal announcement",
     execute(message, args){
+      
   const happy = [
       "If you want to be happy, do not dwell in the past, do not worry about the future, focus on living fully in the present.",
       "Don’t waste your time in anger, regrets, worries, and grudges. Life is too short to be unhappy.",

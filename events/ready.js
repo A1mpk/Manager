@@ -9,14 +9,15 @@ module.exports = client => {
     let statuses = [
         '>help || 🎃🎃',
         `over ${client.users.cache.size} users`,
-        `${client.guilds.cache.size} guilds`
+        `${client.guilds.cache.size} guilds`,
+        '20435021'
     ]
 
     setInterval(function() {
         let status = statuses[Math.floor(Math.random() * statuses.length)];
         client.user.setActivity(status, {type: "WATCHING"});
 
-    }, 5000)
+    }, 10000)
     }
 
 
