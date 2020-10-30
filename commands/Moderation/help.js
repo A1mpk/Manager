@@ -5,12 +5,12 @@ module.exports = {
     execute(message, args){
             message.channel.send({
                 embed:{
-                    title: 'List of commands [18]',
+                    title: 'List of commands [20]',
                     color: 15105570, 
                     fields:[
                         {
-                            name: '**😴 Moderation [8]**',
-                            value: 'ban,kick,lock,credit,rule_add,config_log,bot_nick,nick'
+                            name: '**😴 Moderation [10]**',
+                            value: 'ban,kick,lock,credit,rule_add,config_log,bot_nick,nick,getuserid,getid'
                         },     
                         {
                             name: '**🤩 Fun [2]**',

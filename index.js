@@ -40,17 +40,19 @@ for(const file of commandFiles){
     client.commands.set(command.name, command);
 }
 
-client.on('guildMemberAdd', member => {
-  
-    const rolefound = member.guild.roles.cache.find(r => r.id === "753424012868321300")
-    member.roles.add(rolefound)
-  
-   
-    
-})
+
 
 const x = '>';
-
+client.on('messageDelete', message => {
+    const hihahi = new Discord.MessageEmbed()
+    .setAuthor(`Message Deleted by ${message.author.tag}`)
+    .addField(`Deleted Message`, message)
+    .addField(`Deleted In`, message.channel.name)
+    .setTimestamp()
+    .setColor(15105570)
+    const ha = message.guild.channels.cache.find(channel => channel.id === '771563865434882088')
+    ha.send(hihahi)
+})
 client.on('guildCreate', guild => {
     let defaultChannel = "";
 guild.channels.cache.forEach((channel) => {
@@ -67,8 +69,8 @@ guild.channels.cache.forEach((channel) => {
         description: "Thanks for inviting me to your server! Here is a list of all my commands.",
         fields:[
             {
-                name: '**😴 Moderation [8]**',
-                value: 'ban,kick,lock,announce,config_log,bot_nick,nick'
+                name: '**😴 Moderation [10]**',
+                value: 'ban,kick,lock,announce,config_log,bot_nick,nick,getuserid,getid'
             },     
             {
                 name: '**🤩 Fun [2]**',
@@ -93,56 +95,13 @@ guild.channels.cache.forEach((channel) => {
         ],
         
         footer: {
-            text: `> is my prefix :)`
+            text: `My current prefix for this guild is **>**.`
         }
     }
   });
 })
-
-
 client.on('message', message =>{
-  
     const args = message.content.slice(x.length).split(/ +/);
-    if(message.content.startsWith( x + 'config_log')){
-    
-        let LeftChannel = message.guild.channels.cache.find(channel => args[1] === channel.id )
-        if(message.member.hasPermission("MANAGE_CHANNELS")){
-            if(!LeftChannel) return message.channel.send(`Cant find channel id.`)
-            client.on('guildBanAdd', member =>{
-               const BannedMem = new Discord.MessageEmbed()
-               .setColor(15105570)
-               .setAuthor("Member Banned")
-               .addField('User', member.name)
-               .addField('Date', message.createdAt)
-               .addField('Last message', member.lastMessage)
-               LeftChannel.send(BannedMem)
-            })
-          client.on('guildMemberAdd', member =>{
-               const SJoined2 = new Discord.MessageEmbed()
-                .setTitle('Member Joined')
-                .addField('Member Name', member)
-                .addField('Joined', member.joinedAt)
-                .addField('Account ID', member.id)
-                .setFooter('Please welcome this member.')
-                .setColor(15105570)
-                member.send()
-                 
-                LeftChannel.send(SJoined2)
-              });
-           client.on('guildMemberRemove', member =>{
-               const LeftEmbed = new Discord.MessageEmbed()
-               .setColor(15105570)
-               .setAuthor('Member Left')
-               .addField('Member Name', member.displayName)
-               .addField('Account ID', member.id)
-               .addField('Last message', member.lastMessage) 
-               LeftChannel.send(LeftEmbed)
-            })
-            return message.channel.send(`Join message is now fixed for ${LeftChannel}`)
-          }
-          return message.channel.send('You dont have permission to do that.')
-    }
-
     if(!message.content.startsWith(x) || message.author.bot) return;
     const command = args.shift().toLowerCase();
     if(command === 'kick'){
@@ -151,80 +110,80 @@ client.on('message', message =>{
     if(command === 'ban'){
         client.commands.get('ban').execute(message, args)
     };
-  if(command === 'exemple'){
-    client.commands.get('exemple').execute(message, args)
-};
-
-if(command === 'lock'){
+    if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
-};
-if(command === 'announce'){
+    };
+
+    if(command === 'announce'){
     client.commands.get('announce').execute(message, args)
-};
-if(command === 'avatar'){
+    };
+    if(command === 'avatar'){
     client.commands.get('avatar').execute(message, args)
-};
+    };
 
-if(command === 'say'){
+    if(command === 'say'){
     client.commands.get('say').execute(message, args)
-};
-if(command === 'invite'){
+    };
+    if(command === 'invite'){
     client.commands.get('invite').execute(message, args)
-};
-if(command === 'guild'){
+    };
+    if(command === 'guild'){
     client.commands.get('guild').execute(message, args)
-};
-if(command === 'rank'){
+    };
+    if(command === 'rank'){
     client.commands.get('rank').execute(message, args)
-};
-if(command === 'help'){
+    };
+    if(command === 'help'){
     client.commands.get('help').execute(message, args)
-};
-if(command === 'support'){
-    client.commands.get('support').execute(message, args)
-};
-if(command === 'play'){
+    };
+    if(command === 'play'){
     client.commands.get('play').execute(message, args)
-};
-if(command === 'giverole'){
+    };
+    if(command === 'giverole'){
     client.commands.get('giverole').execute(message, args)
-};
-if(command === 'report'){
+    };
+    if(command === 'report'){
     client.commands.get('report').execute(message, args)
-};
+    };
 
-if(command === 'eval'){
+    if(command === 'eval'){
     client.commands.get('eval').execute(message, args)
-};
+    };
 
-if(command === 'info'){
+    if(command === 'info'){
     client.commands.get('info').execute(message, args)
-};
-if(command === 'setAutorole'){
+    };
+    if(command === 'setAutorole'){
     client.commands.get('setAutorole').execute(message, args)
-};
-if(command === 'credit'){
+    };
+    if(command === 'credit'){
     client.commands.get('credit').execute(message, args)
-};
-if(command === 'membercount'){
+    };
+    if(command === 'membercount'){
     client.commands.get('membercount').execute(message, args)
-};
-if(command === 'rule_add'){
+    };
+    if(command === 'rule_add'){
     client.commands.get('rule_add').execute(message, args)
-};
-if(command === 'pain'){
+    };
+    if(command === 'pain'){
     client.commands.get('pain').execute(message, args)
-};
-if(command === 'happy'){
+    };
+     if(command === 'happy'){
     client.commands.get('happy').execute(message, args)
-};
-if(command === 'nick'){
+    };
+    if(command === 'nick'){
     client.commands.get('nick').execute(message, args)
-};
-if(command === 'bot_nick'){
+    };
+    if(command === 'bot_nick'){
     client.commands.get('bot_nick').execute(message, args)
-};
-
+    };
+    if(command === 'getid'){
+    client.commands.get('getid').execute(message, args)
+    };
+    if(command === 'getuserid'){
+        client.commands.get('getuserid').execute(message, args)
+    };
+  
 
 
 

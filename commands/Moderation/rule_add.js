@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const guild = require('./guild')
 
 module.exports = { 
     name: "rule_add",
@@ -6,7 +7,7 @@ module.exports = {
     execute(message, args){
         if(message.member.hasPermission("MANAGE_CHANNELS")){
            
-            let args3 = message.content.slice("9")
+            let args3 = message.content.slice(10)
     
             if(!args3){
               const ARGSNEEDED2 = new Discord.MessageEmbed()
@@ -21,7 +22,7 @@ module.exports = {
               const custom4_message = new Discord.MessageEmbed()
               .setColor(15105570)
               .setAuthor('Rules')
-              .setDescription(args)
+              .setDescription(`Welcome to **${message.guild.name}**, and here are the rules you should follow. ${args3}`)
               if(args3){
                 message.channel.send(custom4_message)
               }

@@ -1,4 +1,5 @@
 const { ClientUser } = require("discord.js");
+const guild = require("../commands/Moderation/guild");
 const play = require("../commands/Moderation/play");
 
 module.exports = client => {
@@ -7,9 +8,10 @@ module.exports = client => {
    
 
     let statuses = [
-        '>help || 🎃🎃',
-        `over ${client.users.cache.size} users`,
-        `${client.guilds.cache.size} guilds`,
+        `Miss || Manager`,
+        `>help || 🦇🦇`,
+        `>help || 🛸🛸`,
+        `>help || 👻👻`
     ]
 
     setInterval(function() {
