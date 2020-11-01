@@ -43,16 +43,7 @@ for(const file of commandFiles){
 
 
 const x = '>';
-client.on('messageDelete', message => {
-    const hihahi = new Discord.MessageEmbed()
-    .setAuthor(`Message Deleted by ${message.author.tag}`)
-    .addField(`Deleted Message`, message)
-    .addField(`Deleted In`, message.channel.name)
-    .setTimestamp()
-    .setColor(15105570)
-    const ha = message.guild.channels.cache.find(channel => channel.id === '771563865434882088')
-    ha.send(hihahi)
-})
+
 client.on('guildCreate', guild => {
     let defaultChannel = "";
 guild.channels.cache.forEach((channel) => {
