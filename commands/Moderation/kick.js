@@ -8,7 +8,7 @@ const Kick = new Discord.MessageEmbed()
          .setTitle('KICK - MODERATION')
          .setDescription('Kicks a member of the guild.')
          .addField("USAGE : `kick <user> <reason>`", "** **")
-         .setColor(15105570)
+         .setColor(3066993)
          .setTimestamp()
         
          const Kuser = message.guild.member(message.mentions.users.first())
@@ -17,7 +17,7 @@ const Kick = new Discord.MessageEmbed()
          let kReason = args.join(" ").slice(22);
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
          const KickMod = new Discord.MessageEmbed()
-         .setColor(15105570)
+         .setColor(3066993)
          .setTitle('ERROR')
          .setDescription('I cant kick that person.')
          .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")

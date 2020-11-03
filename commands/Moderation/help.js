@@ -6,7 +6,7 @@ module.exports = {
             message.channel.send({
                 embed:{
                     title: 'List of commands [20]',
-                    color: 15105570, 
+                    color: 3066993, 
                     fields:[
                         {
                             name: '**😴 Moderation [10]**',

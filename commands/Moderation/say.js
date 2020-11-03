@@ -10,7 +10,7 @@ module.exports = {
         .setDescription('Deletes your message and sents the same message as the bots message.')
         .setTimestamp()
         .addField("USAGE : `say <message>`", "** **")
-        .setColor(15105570)
+        .setColor(3066993)
       if(!args2){
           message.channel.send(say)
       };

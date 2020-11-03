@@ -8,7 +8,11 @@ module.exports = {
       .setDescription('Credits a user.')
       .addField('USAGE : `credit <message>`', "** **")
       .setTimestamp()
-      .setColor(15105570)
+      .setColor(3066993)
+      const custo3m_message = new Discord.MessageEmbed()
+              .setColor(3066993)
+              .setAuthor('Credits')
+              .setDescription(`Credits to ${args}`)
         if(message.member.hasPermission("MANAGE_CHANNELS")){
             let args = message.content.slice("8")
   
@@ -16,16 +20,14 @@ module.exports = {
             if(!args){
             
               message.channel.send(ARGSN2EEDED)
+            }else
+            if(args){
+              message.channel.send(custo3m_message)
+              if(message.deletable){
+                message.delete()
+              }
             }
-
-              const custo3m_message = new Discord.MessageEmbed()
-              .setColor(15105570)
-              .setAuthor('Credits')
-              .setDescription(`Credits to ${args}`)
-            message.channel.send(custo3m_message)
-            if(message.deletable){
-              message.delete()
-            }
+           
          } else message.channel.send('You do not have permissions to use this command.')
     }
 

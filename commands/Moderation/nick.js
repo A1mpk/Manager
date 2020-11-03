@@ -5,7 +5,7 @@ module.exports = {
     execute(message, args){
         const lol = message.content.slice(5)
         const LOL = new Discord.MessageEmbed()
-        .setColor(15105570)
+        .setColor(3066993)
         .setAuthor('NICK - MODERATION')
         .setDescription(`Changes your nickname.`)
         .addField('USAGE : `nick <nickname>`', "** **")

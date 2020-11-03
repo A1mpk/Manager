@@ -14,12 +14,12 @@ module.exports = {
               .setDescription('Announces a important message.')
               .addField('USAGE : `announce <message>`', "** **")
               .setTimestamp()
-              .setColor(15105570)
+              .setColor(3066993)
               message.channel.send(ARGSNEEDED)
             }
 
               const custom_message = new Discord.MessageEmbed()
-              .setColor(15105570)
+              .setColor(3066993)
               .setAuthor('Announcement')
               .setDescription(args)
             message.channel.send(custom_message)

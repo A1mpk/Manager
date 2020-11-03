@@ -8,14 +8,14 @@ module.exports = {
        const Report = new Discord.MessageEmbed()
        .setAuthor(`Report by ${message.member.user.tag}`)
        .setDescription(`${report}`)
-       .setColor(15105570)
+       .setColor(3066993)
        .setFooter(`Command raised by ${message.member.user.tag}`)
         if (!report) {
             const repportt = new Discord.MessageEmbed()
            .setDescription("Sends a report to the owner of the guild.")
            .addField("USAGE : `report <problem>`", '** **')
            .addField('Command Cooldown', '48 hours')
-           .setColor(15105570)
+           .setColor(3066993)
            .setTitle('REPORT - UTILITIES')
            message.channel.send(repportt)
         }

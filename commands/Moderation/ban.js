@@ -8,7 +8,7 @@ module.exports = {
          .setDescription("Bans a member from the guild.")
          .addField("USAGE : `ban <user> <reason>`", "** **")
          .setTimestamp()
-         .setColor(15105570)
+         .setColor(3066993)
          
         
          const Buser = message.guild.member(message.mentions.users.first())
@@ -17,7 +17,7 @@ module.exports = {
          let bReason = args.join(" ").slice(22);
          if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('You need to be an Admin to use this command.');
          const BanMod = new Discord.MessageEmbed()
-         .setColor(15105570)
+         .setColor(3066993)
          .setAuthor('BAN ERROR')
          .setDescription('I cannot ban that user.')
          .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")
@@ -31,7 +31,7 @@ module.exports = {
           message.channel.send(`I have banned the member ${Buser} for ${bReason}`)
           message.author.send(`You have banned the member ${Buser} for ${bReason}`)
           message.guild.member(Buser).ban(bReason)
-          message(Buser).send(`You have been banned for ${bReason}, please contact ${message.guild.owner.tag}`)
+          Buser.send(`You have been banned for ${bReason}, please contact ${message.guild.owner.tag}`)
    
           return;
     }

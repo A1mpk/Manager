@@ -15,6 +15,7 @@ const { config } = require('dotenv');
 const { isRegExp } = require('util');
 const { Z_NEED_DICT } = require('zlib');
 const { error } = require('console');
+const { getPackedSettings } = require('http2');
 config({
     path: `${__dirname}/.env`
 });
@@ -56,7 +57,7 @@ guild.channels.cache.forEach((channel) => {
   defaultChannel.send({
     embed:{
         title: `Manager`,
-        color: 15105570, 
+        color: 3066993, 
         description: "Thanks for inviting me to your server! Here is a list of all my commands.",
         fields:[
             {
@@ -92,7 +93,39 @@ guild.channels.cache.forEach((channel) => {
   });
 })
 client.on('message', message =>{
+ 
     const args = message.content.slice(x.length).split(/ +/);
+    if(message.content.startsWith(x + 'verify')){
+        
+        const Role = message.guild.roles.cache.find(r => r.name === 'Verified');
+        const VerifySetup = new Discord.MessageEmbed()
+        .setTitle(`Successfully verified ✔️`)
+        .setDescription(`Congratulations, you have been verified.`) 
+        .setFooter(`${message.guild.name} || Verify`)
+        .setThumbnail(message.member.user.displayAvatarURL())
+        .setTimestamp()
+        .setColor(3066993)
+        if(!Role){
+          message.guild.roles.create({
+                data: {
+                  name: 'Verified',
+                  color: 'GREEN',
+                  permissions: ['SEND_MESSAGES', 'ADD_REACTIONS', 'SPEAK', 'SEND_TTS_MESSAGES', 'STREAM', 'CONNECT', 'USE_EXTERNAL_EMOJIS', 'READ_MESSAGE_HISTORY'],
+                  
+                },
+                reason: 'Verify system, DO NOT CHANGE THE NAME OF THIS ROLE.',
+              })
+                .then(console.log())
+                .catch(console.error);
+               message.channel.send(`Something went wrong, please run the command again.`)
+        }
+        if(Role){
+            message.react('✔️')
+            message.member.roles.add(Role)
+            message.author.send(VerifySetup)
+        }
+       
+    }
     if(!message.content.startsWith(x) || message.author.bot) return;
     const command = args.shift().toLowerCase();
     if(command === 'kick'){
@@ -173,6 +206,9 @@ client.on('message', message =>{
     };
     if(command === 'getuserid'){
         client.commands.get('getuserid').execute(message, args)
+    };
+    if(command === 'clear'){
+        client.commands.get('clear').execute(message, args)
     };
   
 

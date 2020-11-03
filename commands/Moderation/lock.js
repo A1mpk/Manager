@@ -11,7 +11,7 @@ module.exports = {
         .setTitle('LOCK - MODERATION')
         .setDescription('Locks all channels.')
         .addField("USAGE : `lock`", "** **")
-        .setColor(15105570)
+        .setColor(3066993)
         .setTimestamp()
         if(argsfl){
             message.channel.send(lockhelp)
