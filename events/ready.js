@@ -8,10 +8,10 @@ module.exports = client => {
    
 
     let statuses = [
-        `Miss || Manager`,
+        `santa on a brick`,
         `>help || 🦇🦇`,
         `>help || 🛸🛸`,
-        `>help || 👻👻`
+        `>help `
     ]
 
     setInterval(function() {

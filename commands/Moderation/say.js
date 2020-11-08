@@ -14,7 +14,7 @@ module.exports = {
       if(!args2){
           message.channel.send(say)
       };
-      if(message.content.includes === "@everyone"){
+      if(message.content.match("@everyone")){
           message.channel.send("Here take a cookie with milk.🍪🥛");
       } else 
 
