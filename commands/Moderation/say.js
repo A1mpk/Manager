@@ -14,9 +14,37 @@ module.exports = {
       if(!args2){
           message.channel.send(say)
       };
-      if(message.content.match("@everyone")){
-          message.channel.send("Here take a cookie with milk.🍪🥛");
-      } else 
+      let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore','bitch','fuck','ass',] //words
+
+
+      let foundInText = false;
+      for (var i in blacklisted) { 
+        if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
+      }
+      if(message.author.id === "368148684468387840"){
+        console.log(`Founder`)
+        console.clear()
+    }else
+    if(message.author.id === "503186950295912458"){
+        console.log(`Co-Founder`)
+        console.clear()
+    }else
+    if(message.author.id === "508728576183369760"){
+      console.log(`Co-Founder`)
+      console.clear()
+  }else
+  if(message.author.id === "375404524019384322"){
+    console.log(`Co-Founder`)
+    console.clear()
+}else
+if(message.author.id === "420380500918665239"){
+  console.log(`Co-Founder`)
+  console.clear()
+}else
+        if (foundInText) {
+          message.delete();
+          console.clear()
+      }else
 
       
 

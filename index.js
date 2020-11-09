@@ -14,9 +14,12 @@ client.categories = fs.readdirSync('./commands/');
 const { config } = require('dotenv');
 const { isRegExp } = require('util');
 const { Z_NEED_DICT } = require('zlib');
-const { error } = require('console');
+const { error, memory } = require('console');
 const { getPackedSettings } = require('http2');
 const { name } = require('./commands/Moderation/guild');
+const ytdl = require('ytdl-core')
+
+
 config({
     path: `${__dirname}/.env`
 });
@@ -93,6 +96,19 @@ guild.channels.cache.forEach((channel) => {
     }
   });
 })
+
+
+
+client.once('guildMemberAdd', member => {
+  const chja =  member.guild.channels.cache.find(ch => ch.name === "log-test")
+  if(!chja) return member.guild.channels.create('log-test')
+  const Member = new Discord.MessageEmbed()
+  .setDescription(`Member ${member} joined the guild.`)
+  .setThumbnail(member.user.displayAvatarURL())
+  .setColor(3066993)
+  .setTitle(`Member Joined`)
+  chja.send(Member)
+})
 client.on('message', message =>{
 if(message.content === `<@!${client.user.id}>`){
    const MyPRefixIs = new Discord.MessageEmbed()
@@ -102,7 +118,38 @@ if(message.content === `<@!${client.user.id}>`){
         .setTimestamp()
         message.channel.send(MyPRefixIs)
 }
-    
+let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore','bitch','fuck','ass','gay'] //words
+
+
+let foundInText = false;
+for (var i in blacklisted) { 
+  if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
+}
+if(message.author.id === "368148684468387840"){
+    console.log(`Founder`)
+    console.clear()
+}else
+if(message.author.id === "503186950295912458"){
+    console.log(`Co-Founder`)
+    console.clear()
+}else
+if(message.author.id === "508728576183369760"){
+  console.log(`Co-Founder`)
+  console.clear()
+}else
+if(message.author.id === "375404524019384322"){
+console.log(`Co-Founder`)
+console.clear()
+}else
+if(message.author.id === "420380500918665239"){
+console.log(`Co-Founder`)
+console.clear()
+}else
+
+  if (foundInText) {
+    message.delete();
+    console.clear()
+}
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
     const command = args.shift().toLowerCase();
@@ -115,7 +162,6 @@ if(message.content === `<@!${client.user.id}>`){
     if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
     };
-
     if(command === 'announce'){
     client.commands.get('announce').execute(message, args)
     };
@@ -201,7 +247,7 @@ if(message.content === `<@!${client.user.id}>`){
 
 
 });
-
+console.clear()
 client.mongoose.init();
 client.login(process.env.token);
 

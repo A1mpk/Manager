@@ -14,7 +14,6 @@ module.exports = {
             const repportt = new Discord.MessageEmbed()
            .setDescription("Sends a report to the owner of the guild.")
            .addField("USAGE : `report <problem>`", '** **')
-           .addField('Command Cooldown', '48 hours')
            .setColor(3066993)
            .setTitle('REPORT - UTILITIES')
            message.channel.send(repportt)

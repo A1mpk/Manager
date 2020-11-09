@@ -12,7 +12,6 @@ const Kick = new Discord.MessageEmbed()
          .setTimestamp()
         
          const Kuser = message.guild.member(message.mentions.users.first())
-         if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('no');
          if(!Kuser) return message.channel.send(Kick); 
          let kReason = args.join(" ").slice(22);
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
