@@ -145,6 +145,10 @@ if(message.author.id === "420380500918665239"){
 console.log(`Co-Founder`)
 console.clear()
 }else
+if(message.author.id === "221763133994172419"){
+    console.log(`Co-Founder`)
+    console.clear()
+    }else
 
   if (foundInText) {
     message.delete();

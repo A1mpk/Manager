@@ -46,6 +46,11 @@ module.exports = {
         console.log(`Co-Founder`)
         console.clear()
     }else
+    if(message.author.id === "221763133994172419"){
+      console.log(`Co-Founder`)
+      console.clear()
+      }else
+  
               if (foundInText) {
                 message.delete();
                 console.clear()
