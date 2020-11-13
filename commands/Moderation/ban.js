@@ -21,7 +21,7 @@ module.exports = {
          .setAuthor('BAN ERROR')
          .setDescription('I cannot ban that user.')
          .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")
-         if(Buser.hasPermission("ADMINISTRATOR")) return message.channel.send(BanMod);
+         if(Buser.hasPermission("BAN_MEMBERS")) return message.channel.send(BanMod);
    
         
    
@@ -30,7 +30,7 @@ module.exports = {
         
           message.channel.send(`I have banned the member ${Buser} for ${bReason}`)
           message.author.send(`You have banned the member ${Buser} for ${bReason}`)
-          message.guild.member(Buser).ban(bReason)
+          message.guild.member(Kuser).ban(bReason);
           Buser.send(`You have been banned for ${bReason}, please contact ${message.guild.owner.tag}`)
    
           return;

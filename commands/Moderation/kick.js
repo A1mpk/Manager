@@ -21,7 +21,7 @@ const Kick = new Discord.MessageEmbed()
          .setDescription('I cant kick that person.')
          .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")
          .setFooter(`Command raised by ${message.member.user.tag}`)
-         if(Kuser.hasPermission("ADMINISTRATOR")) return message.channel.send(KickMod);
+         if(Kuser.hasPermission("KICK_MEMBERS")) return message.channel.send(KickMod);
    
           message.guild.member(Kuser).kick(kReason);
          Kuser.send(`You were kicked from the server! Reason : ${kReason}`)
