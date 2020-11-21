@@ -50,6 +50,7 @@ for(const file of commandFiles){
 const x = '>';
 
 client.on('guildCreate', guild => {
+    guild.channels.create('log')
     let defaultChannel = "";
 guild.channels.cache.forEach((channel) => {
   if(channel.type == "text" && defaultChannel == "") {
@@ -98,19 +99,49 @@ guild.channels.cache.forEach((channel) => {
 })
 
 
+client.on('guildMemberRemove', member => {
+    const Channel = member.guild.channels.cache.find(ch => ch.name === "log-test")
+    const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
+    if(!Joins) return member.guild.channels.create("👋joins")
+    const EmbedLeft = new Discord.MessageEmbed()
+    .setFooter(`We are now${member.guild.memberCount} members.`)
+    .setTimestamp()
+    .setColor(3066993)
+    .setThumbnail(member.user.displayAvatarURL())
+    .setAuthor(`Member Left`)
+    .setDescription(`Sad momento! ${member} just left the group!`)
+    if(Channel){
+        Channel.send(EmbedLeft)
+    }else
+   if(!Channel){
+    member.guild.channels.create("log-test")
+   } 
+   if(Joins){
+       Joins.send(EmbedLeft)
+   }
+   
+})
+client.on('guildMemberAdd', member => {
 
-client.once('guildMemberAdd', member => {
+  const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
+  if(!Joins) return member.guild.channels.create("👋joins")
+
   const chja =  member.guild.channels.cache.find(ch => ch.name === "log-test")
   if(!chja) return member.guild.channels.create('log-test')
   const Member = new Discord.MessageEmbed()
-  .setDescription(`Member ${member} joined the guild.`)
+  .setDescription(`Hey ${member}, welcome to ${member.guild}.`)
   .setThumbnail(member.user.displayAvatarURL())
   .setColor(3066993)
   .setTitle(`Member Joined`)
+  .setFooter(`We are now ${member.guild.memberCount} members.`)
+  .setTimestamp()
   chja.send(Member)
+  Joins.send(Member)
 })
+
+
 client.on('message', message =>{
-   
+
     if(message.content.startsWith(x + "uptime")){
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
@@ -122,11 +153,12 @@ client.on('message', message =>{
         const UptimeEMbed = new Discord.MessageEmbed()
         .setAuthor(client.user.username)
         .addFields(
-            { name: 'Days', value: days,inline: true },
             { name: 'Hours', value: hours ,inline: true},
             { name: 'Minutes', value: minutes,inline: true},
             { name: 'Seconds', value: seconds ,inline: true}
         )
+        .setTimestamp()
+        .setFooter(`Uptime`)
         .setColor(3066993)
         message.channel.send(UptimeEMbed)
     }
@@ -138,18 +170,23 @@ if(message.content === `<@!${client.user.id}>`){
         .setTimestamp()
         message.channel.send(MyPRefixIs)
 }
-let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore',] //words
+let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore','bitch','ass','fuck','gay','furry','hitler','Friendly','kids','slave','dickhead','blowjob','handjob','dick'] //words
 
 
 let foundInText = false;
 for (var i in blacklisted) { 
   if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
 }
-
-  if (foundInText) {
-    message.delete();
-    console.clear()
-}
+if(message.member !== message.guild.me){
+    if (foundInText) {
+     
+        message.reply(`Don't say that word.`)
+      const h =  client.guilds.cache.find(ch => ch.name === "Mint Support")
+     const channel =   h.channels.cache.find(ch => ch.name === "bad-word")
+     channel.send(`Message by ${message.member.user.tag}, in ${message.guild}, message = "${message}"`)
+     }
+}else return;
+  
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
     const command = args.shift().toLowerCase();
@@ -236,6 +273,13 @@ for (var i in blacklisted) {
     if(command === 'verify'){
         client.commands.get('verify').execute(message, args)
     };
+    if(command === '8ball'){
+        client.commands.get('8ball').execute(message, args)
+    };
+    if(command === 'slowmode'){
+        client.commands.get('slowmode').execute(message, args)
+    };
+   
    
   
 
@@ -245,9 +289,8 @@ for (var i in blacklisted) {
 
 
 
-
 });
-console.clear()
+
 client.mongoose.init();
 client.login(process.env.token);
 

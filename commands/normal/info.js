@@ -7,8 +7,8 @@ module.exports = {
     execute(message,args ){
         const Info = new Discord.MessageEmbed()
         .setColor(3066993)
-        .setTitle('Manager#4176')
-        .setDescription('Manager is an upcoming bot actively being developped. This bot will bring you moderation to music, music to currency, currency to fun.')
+        .setTitle( message.guild.me.user.tag)
+        .setDescription(`${message.guild.me.user.tag} is an upcoming bot actively being developped. This bot will bring you moderation to music, music to currency, currency to fun.`)
         .addField('Premium', 'translate,search,auto-moderator,auto-role and posts.')
         .addFields(
             { name: 'Version', value: '0.0.3', inline: true },

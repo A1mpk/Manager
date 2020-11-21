@@ -27,7 +27,7 @@ module.exports = {
       }
       var server = servers[message.guild.id];
       server.queue.push(argforplay);
-      if(message.guild.me.voice.channel) return message.channel.send(`I am in a channel, please disconnect me if you would like to play an song in another channel.`)
+      if(message.guild.me.voice.channel) return message.channel.send(`Disconnect me to play another song.`)
       if(!message.guild.me.voice.channel) message.member.voice.channel.join().then(function(connection){
           play(connection, message);
           message.channel.send(`Now Playing : ${argforplay}.`)
