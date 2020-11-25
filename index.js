@@ -122,12 +122,36 @@ client.on('guildMemberRemove', member => {
    
 })
 client.on('guildMemberAdd', member => {
-
+ 
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
-  if(!Joins) return member.guild.channels.create("👋joins")
-
+  if(!Joins) return member.guild.channels.create("👋joins") 
+  const AutoRoleForSp = member.guild.roles.cache.find(role => role.name === "Member")
+  if(!AutoRoleForSp) return   member.guild.roles.create({
+    data: {
+      name: 'Member',
+      color: 'BLACK',
+      permissions: ['SEND_MESSAGES', 'ADD_REACTIONS', 'SPEAK', 'SEND_TTS_MESSAGES', 'STREAM', 'CONNECT', 'USE_EXTERNAL_EMOJIS', 'READ_MESSAGE_HISTORY'],
+      
+    },
+    reason: 'Testing '
+}
+).then(member.guild.owner.send(`Member role was not found, therefore I have created another one, you can always change the permissions for the roles to however you like.`)) || member.send("I couldn't give you the member role. Please ask a moderator to give you it.")
+.catch(console.error);
+  
   const chja =  member.guild.channels.cache.find(ch => ch.name === "log-test")
   if(!chja) return member.guild.channels.create('log-test')
+  const AutoRollin = new Discord.MessageEmbed()
+  .setDescription(`I have added the role<@${AutoRoleForSp}> for ${member.user.tag}.`)
+  .setThumbnail(member.user.displayAvatarURL())
+  .setTitle(`AutoRole ${member.guild.name}`)
+  .setTimestamp()
+  .setColor(3066993)
+  const NotAutoRollin = new Discord.MessageEmbed()
+  .setDescription(`I couldn't add <@${AutoRoleForSp}> for ${member.user.tag}`)
+  .setThumbnail(member.user.displayAvatarURL())
+  .setTitle(`AutoRole ${member.guild.name}`)
+  .setTimestamp()
+  .setColor(3066993)
   const Member = new Discord.MessageEmbed()
   .setDescription(`Hey ${member}, welcome to ${member.guild}.`)
   .setThumbnail(member.user.displayAvatarURL())
@@ -135,13 +159,48 @@ client.on('guildMemberAdd', member => {
   .setTitle(`Member Joined`)
   .setFooter(`We are now ${member.guild.memberCount} members.`)
   .setTimestamp()
+  
+  
   chja.send(Member)
+  if(AutoRoleForSp) return member.roles.add(AutoRoleForSp) || chja.send(AutoRollin)
   Joins.send(Member)
 })
 
 
 client.on('message', message =>{
-
+ 
+    if(message.content === ">exemple"){
+        const AutoRollin = new Discord.MessageEmbed()
+        .setDescription(`I have added the role<@role}> for ${message.member.user.tag}.`)
+        .setThumbnail(message.member.user.displayAvatarURL())
+        .setTitle(`AutoRole ${message.member.guild.name}`)
+        .setTimestamp()
+        .setColor(3066993)
+        const NotAutoRollin = new Discord.MessageEmbed()
+        .setDescription(`I couldn't add <@role> for ${message.member.user.tag}`)
+        .setThumbnail(message.member.user.displayAvatarURL())
+        .setTitle(`AutoRole ${message.member.guild.name}`)
+        .setTimestamp()
+        .setColor(3066993)
+        const Member = new Discord.MessageEmbed()
+        .setDescription(`Hey ${message.member}, welcome to ${message.member.guild}.`)
+        .setThumbnail(message.member.user.displayAvatarURL())
+        .setColor(3066993)
+        .setTitle(`Member Joined`)
+        .setFooter(`We are now ${message.member.guild.memberCount} members.`)
+        .setTimestamp()
+        message.channel.send(AutoRollin)
+        message.channel.send(NotAutoRollin)
+        message.channel.send(Member)
+    }
+    if(message.content.startsWith('roleall')){
+        const role =  message.guild.roles.cache.find(role => role.name === "Member")
+        const everyone2 = message.guild.members.cache.each(
+            roles => roles.roles.add(role)
+        )
+        everyone2
+        message.channel.send(`Given role "MEMBER" to ${message.guild.memberCount}`)
+    }
     if(message.content.startsWith(x + "uptime")){
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
@@ -167,25 +226,11 @@ if(message.content === `<@!${client.user.id}>`){
         .setColor(3066993)
         .setAuthor('Prefix')
         .setDescription('`>`')
+        .addField(`Presence`, '**ACTIVE**: :green_circle: ')
         .setTimestamp()
         message.channel.send(MyPRefixIs)
 }
-let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore','bitch','ass','fuck','gay','furry','hitler','Friendly','kids','slave','dickhead','blowjob','handjob','dick'] //words
 
-
-let foundInText = false;
-for (var i in blacklisted) { 
-  if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
-}
-if(message.member !== message.guild.me){
-    if (foundInText) {
-     
-        message.reply(`Don't say that word.`)
-      const h =  client.guilds.cache.find(ch => ch.name === "Mint Support")
-     const channel =   h.channels.cache.find(ch => ch.name === "bad-word")
-     channel.send(`Message by ${message.member.user.tag}, in ${message.guild}, message = "${message}"`)
-     }
-}else return;
   
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
