@@ -98,7 +98,6 @@ guild.channels.cache.forEach((channel) => {
   });
 })
 
-
 client.on('guildMemberRemove', member => {
     const Channel = member.guild.channels.cache.find(ch => ch.name === "log-test")
     const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
@@ -129,7 +128,7 @@ client.on('guildMemberAdd', member => {
   if(!AutoRoleForSp) return   member.guild.roles.create({
     data: {
       name: 'Member',
-      color: 'BLACK',
+      color: 'NONE',
       permissions: ['SEND_MESSAGES', 'ADD_REACTIONS', 'SPEAK', 'SEND_TTS_MESSAGES', 'STREAM', 'CONNECT', 'USE_EXTERNAL_EMOJIS', 'READ_MESSAGE_HISTORY'],
       
     },
@@ -168,38 +167,8 @@ client.on('guildMemberAdd', member => {
 
 
 client.on('message', message =>{
- 
-    if(message.content === ">exemple"){
-        const AutoRollin = new Discord.MessageEmbed()
-        .setDescription(`I have added the role<@role}> for ${message.member.user.tag}.`)
-        .setThumbnail(message.member.user.displayAvatarURL())
-        .setTitle(`AutoRole ${message.member.guild.name}`)
-        .setTimestamp()
-        .setColor(3066993)
-        const NotAutoRollin = new Discord.MessageEmbed()
-        .setDescription(`I couldn't add <@role> for ${message.member.user.tag}`)
-        .setThumbnail(message.member.user.displayAvatarURL())
-        .setTitle(`AutoRole ${message.member.guild.name}`)
-        .setTimestamp()
-        .setColor(3066993)
-        const Member = new Discord.MessageEmbed()
-        .setDescription(`Hey ${message.member}, welcome to ${message.member.guild}.`)
-        .setThumbnail(message.member.user.displayAvatarURL())
-        .setColor(3066993)
-        .setTitle(`Member Joined`)
-        .setFooter(`We are now ${message.member.guild.memberCount} members.`)
-        .setTimestamp()
-        message.channel.send(AutoRollin)
-        message.channel.send(NotAutoRollin)
-        message.channel.send(Member)
-    }
-    if(message.content.startsWith('roleall')){
-        const role =  message.guild.roles.cache.find(role => role.name === "Member")
-        const everyone2 = message.guild.members.cache.each(
-            roles => roles.roles.add(role)
-        )
-        everyone2
-        message.channel.send(`Given role "MEMBER" to ${message.guild.memberCount}`)
+    if(message.content.startsWith('69')){
+        message.channel.send(` I have ${client.users.cache.size} users and im in ${client.guilds.cache.size} guilds! #Drint`)
     }
     if(message.content.startsWith(x + "uptime")){
         let totalSeconds = (client.uptime / 1000);
@@ -229,6 +198,21 @@ if(message.content === `<@!${client.user.id}>`){
         .addField(`Presence`, '**ACTIVE**: :green_circle: ')
         .setTimestamp()
         message.channel.send(MyPRefixIs)
+}
+if(message.content.startsWith( x + 'info')){
+    const Info = new Discord.MessageEmbed()
+    .setColor("RED")
+    .setTitle('Mint')
+    .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, music to currency, currency to fun.`)
+    .addField('Premium', 'translate,search,auto-moderator,auto-role and posts.')
+    .addFields(
+        { name: 'Version', value: '0.0.3', inline: true },
+        { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
+        { name: 'Users', value: message.client.users.cache.size , inline: true },
+    )
+    .setThumbnail(message.client.user.displayAvatarURL())
+    
+    message.channel.send(Info)
 }
 
   
@@ -277,10 +261,6 @@ if(message.content === `<@!${client.user.id}>`){
 
     if(command === 'eval'){
     client.commands.get('eval').execute(message, args)
-    };
-
-    if(command === 'info'){
-    client.commands.get('info').execute(message, args)
     };
     if(command === 'setAutorole'){
     client.commands.get('setAutorole').execute(message, args)

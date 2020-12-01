@@ -3,42 +3,30 @@ module.exports = {
     name: 'help',
     description: "HELP COMMAND ",
     execute(message, args){
-            message.channel.send({
-                embed:{
-                    title: 'List of commands [20]',
-                    color: 3066993, 
-                    fields:[
-                        {
-                            name: '**😴 Moderation [10]**',
-                            value: 'ban,kick,lock,credit,rule_add,config_log,bot_nick,nick,getuserid,getid'
-                        },     
-                        {
-                            name: '**🤩 Fun [2]**',
-                            value: 'pain,happy'
-                        },
-                        {
-                            name: '**🔊 Music [1]**',
-                            value: 'play with playlist'
-                        },
-                        {
-                            name: '**💸 Currency [0]**',
-                            value: 'nothing yet nob'
-                        },
-                        {
-                            name: '**🛠️ Utilities [7]**',
-                            value: 'help,invite,guild,rank,support,info,membercount'
-                        },
-                        {
-                            name: '**Owner**',
-                            value: 'eval'
-                        }
-                    ],
-                    
-                    footer: {
-                        text: `https://top.gg/servers/756254215923564694`
-                    }
-                }
-                })
+        const Help = new Discord.MessageEmbed()
+        .setAuthor('Help')
+        .setColor("RED")
+        .setDescription('Hey, im Dreamy a bot made by Dream#3076. So you wonder what can i do right? If so i can do some basic commands such as :```clear,ban,kick,announce,play,slowmode,verify and others!```')
+        .addField('Moderation Commands', "**>help moderation**")
+        const ModerationEmbed = new Discord.MessageEmbed()
+        .setAuthor('Moderation Commands')
+        .addField('ban', 'This command is used to ban the mentionned user.')
+        .addField('kick','This command is used for kicking the mentionned user.')
+        .addField('mute', 'This command can mute a person **forever** however you can always unmute them from our command "unmute @user"')
+        .addField("tempmute", 'This command will mute a person for a certain amount of time.')
+        .addField('giverole', 'This command will give the mentionned role to the person(Ex : >giverole @user')
+        .addField('warn', 'This command will warn the mentionned user, however if they get 3 warns they will be kicked from the group.')
+        .addField('roleinfo', 'This command will give some informations about the mentionned role.')
+        .setColor("BLUE")
+        const Helpars = message.content.slice(5)
+        if(Helpars.match("moderation")){
+            message.author.send(ModerationEmbed)
+            message.channel.send("Check your DMS!")
+        }else
+        if(!Helpars){
+            message.author.send(Help)
+        }
+        
             
         }
     
