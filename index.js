@@ -214,29 +214,7 @@ if(message.content.startsWith( x + 'info')){
     
     message.channel.send(Info)
 }
-if(message.content.startsWith(x + "spshit")){
-    const SJoined = new Discord.MessageEmbed()
-    .setTitle('Greetings & Information')
-    .setDescription('Welcome to SP! This is a server where we make games on the popular platform ROBLOX. Please be respectful to eachother and be responsible with your behaviour. Thank you for joining!')
-    .setColor(15158332)
-    .addField('Information','Sp Studios is a roblox developer group that obviously make games.They also sometimes makes clothing!')
-    .addField('Date','The group was orignally made in 2018.')
-    .addField('Type of games','Adventure & FPS games')
-    .addField('Member Count','Currently 12 members.')
-    .addField('Developpers','There are 5 developpers in the group.You can find them with the role "Developpers".')
-   
-    const SJoined2 = new Discord.MessageEmbed()
-     .setTitle('Member Joined')
-     .addField('Member Name', 'user')
-     .addField('Joined', 'user date')
-     .addField('Account ID', 'user id')
-     .setFooter('Please welcome this member.')
-     .setColor(15158332)
-      message.channel.send(SJoined)
-      message.channel.send(SJoined2)
-}
 
-  
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
     const command = args.shift().toLowerCase();
@@ -325,6 +303,10 @@ if(message.content.startsWith(x + "spshit")){
     if(command === 'slowmode'){
         client.commands.get('slowmode').execute(message, args)
     };
+    if(command === 'suggestion'){
+        client.commands.get('suggestion').execute(message, args)
+    };
+   
    
    
   
