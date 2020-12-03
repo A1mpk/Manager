@@ -27,7 +27,7 @@ module.exports = {
         
         collector.on('end', collected => {
             const Embed = new Discord.MessageEmbed()
-            .setAuthor(collected.first())
+            .setTitle(collected.first())
             .addField('What is your suggestion?', collected.last())
            .setColor("RED")
            .setThumbnail(message.author.displayAvatarURL())

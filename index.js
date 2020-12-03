@@ -165,11 +165,10 @@ client.on('guildMemberAdd', member => {
   Joins.send(Member)
 })
 
-
 client.on('message', message =>{
-    if(message.content.startsWith('69')){
-        message.channel.send(` I have ${client.users.cache.size} users and im in ${client.guilds.cache.size} guilds! #Drint`)
-    }
+   
+    
+   
     if(message.content.startsWith(x + "uptime")){
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
@@ -189,7 +188,7 @@ client.on('message', message =>{
         .setFooter(`Uptime`)
         .setColor(3066993)
         message.channel.send(UptimeEMbed)
-    }
+}
 if(message.content === `<@!${client.user.id}>`){
    const MyPRefixIs = new Discord.MessageEmbed()
         .setColor(3066993)
@@ -305,6 +304,12 @@ if(message.content.startsWith( x + 'info')){
     };
     if(command === 'suggestion'){
         client.commands.get('suggestion').execute(message, args)
+    };
+    if(command === 'mute'){
+        client.commands.get('mute').execute(message, args)
+    };
+    if(command === 'unmute'){
+            client.commands.get('unmute').execute(message, args)
     };
    
    
