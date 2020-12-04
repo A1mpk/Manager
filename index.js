@@ -119,24 +119,31 @@ client.on('guildMemberRemove', member => {
    }
    
 })
-client.on('messageDelete', message => {
-    const GuildChannel = message.guild.channels.cache.find(c=> c.name === "log-test")
-    if(!GuildChannel) return message.guild.channels.create("log-test")
-    const MessageEmbed = new Discord.MessageEmbed()
-    .setAuthor(`Message Deleted`)
-    .addField(`Message :`, message)
-    .addField('Sent by', message.member.user.tag)
-    .addField('Deleted in', message.channel.name)
-    .setThumbnail(message.member.user.displayAvatarURL())
-    .setTimestamp()
-    .setFooter(`Deleted Message Log`)
-    .setColor(3066993)
-    GuildChannel.send(MessageEmbed)
-    if(console.error)return ;
+client.on('messageDelete', Hessage => {
+    if(Hessage.author === Hessage.guild.me){
+        console.log(`My message.`)
+    }
+    else
+    if(!Hessage.author === Hessage.guild.me){
+        const GuildChannel = Hessage.guild.channels.cache.find(c=> c.name === "log-test")
+        if(!GuildChannel) return Hessage.guild.channels.create("log-test")
+        const MessageEmbed = new Discord.MessageEmbed()
+        .setAuthor(`Message Deleted`)
+        .addField(`Message :`, Hessage)
+        .addField('Sent by', Hessage.member.user.tag)
+        .addField('Deleted in', Hessage.channel.name)
+        .setThumbnail(Hessage.member.user.displayAvatarURL())
+        .setTimestamp()
+        .setFooter(`Deleted Message Log`)
+        .setColor(3066993)
+        GuildChannel.send(MessageEmbed)
+     
+    }
+   
         
     
     
-});
+})
 client.on('roleDelete', Role=> {
     const role = Role.guild.channels.cache.find(c=> c.name === "log-test")
     if(!role) return Role.guild.channels.create("log-test")
@@ -171,30 +178,20 @@ client.on('guildMemberAdd', member => {
   
   const chja =  member.guild.channels.cache.find(ch => ch.name === "log-test")
   if(!chja) return member.guild.channels.create('log-test')
-  const AutoRollin = new Discord.MessageEmbed()
-  .setDescription(`I have added the role<@${AutoRoleForSp}> for ${member.user.tag}.`)
-  .setThumbnail(member.user.displayAvatarURL())
-  .setTitle(`AutoRole ${member.guild.name}`)
-  .setTimestamp()
-  .setColor(3066993)
-  const NotAutoRollin = new Discord.MessageEmbed()
-  .setDescription(`I couldn't add <@${AutoRoleForSp}> for ${member.user.tag}`)
-  .setThumbnail(member.user.displayAvatarURL())
-  .setTitle(`AutoRole ${member.guild.name}`)
-  .setTimestamp()
-  .setColor(3066993)
+  
   const Member = new Discord.MessageEmbed()
   .setDescription(`Hey ${member}, welcome to ${member.guild}.`)
   .setThumbnail(member.user.displayAvatarURL())
   .setColor(3066993)
   .setTitle(`Member Joined`)
-  .setFooter(`We are now ${member.guild.memberCount} members.`)
+  .setFooter(`${member.guild.memberCount} members.`)
   .setTimestamp()
   
   
   chja.send(Member)
-  if(AutoRoleForSp) return member.roles.add(AutoRoleForSp) || chja.send(AutoRollin)
   Joins.send(Member)
+  if(AutoRoleForSp) return member.roles.add(AutoRoleForSp) 
+  
 })
 
 client.on('message', message => {
@@ -358,7 +355,7 @@ if(message.content.startsWith( x + 'info')){
 });
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login(`NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.2epWcxkqp-EhHEajVE5dBX-J0zI`);
 
 
 
