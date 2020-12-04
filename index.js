@@ -355,7 +355,7 @@ if(message.content.startsWith( x + 'info')){
 });
 
 client.mongoose.init();
-client.login(`NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.2epWcxkqp-EhHEajVE5dBX-J0zI`);
+client.login(process.env.token);
 
 
 
