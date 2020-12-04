@@ -26,6 +26,9 @@ module.exports = {
          console.log(Reason) 
          // Add the mute command to the G
          const UserToMute = message.mentions.users.first();
+         if(message.guild.member(UserToMute).roles.cache.get(MuteROle.id)){
+            message.channel.send(`That user is already muted!`)
+           }else
          if(message.guild.member(UserToMute).hasPermission(['MUTE_MEMBERS', 'ADMINISTRATOR'])){
              message.channel.send(`Failure to mute the mentionned user due to them being a mod.`)
          }else
@@ -36,7 +39,7 @@ module.exports = {
                      SEND_MESSAGES: false
                  })
              })
-             message.channel.send(`I have muted ${UserToMute.tag} for${Reason}.`)
+             message.channel.send(`I have muted ${UserToMute.tag} for ${Reason}.`)
          }
        
         }else message.channel.send(`You are not permitted to run this command due to the roles you currently have.`) // WORKS

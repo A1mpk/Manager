@@ -19,7 +19,6 @@ const { getPackedSettings } = require('http2');
 const { name } = require('./commands/Moderation/guild');
 const ytdl = require('ytdl-core')
 
-
 config({
     path: `${__dirname}/.env`
 });
@@ -165,10 +164,7 @@ client.on('guildMemberAdd', member => {
   Joins.send(Member)
 })
 
-client.on('message', message =>{
-   
-    
-   
+client.on('message', message => {
     if(message.content.startsWith(x + "uptime")){
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
@@ -311,6 +307,10 @@ if(message.content.startsWith( x + 'info')){
     if(command === 'unmute'){
             client.commands.get('unmute').execute(message, args)
     };
+    if(command === 'update'){
+        client.commands.get('update').execute(message, args)
+};
+
    
    
    

@@ -3,16 +3,21 @@ module.exports = {
     name: 'unmute',
     description: "UnMute member",
     execute(message, args){
-        
+        const MuteROle = message.guild.roles.cache.find(Role => Role.name === "Muted")
+        const UserToMute = message.mentions.users.first();
+        if(!message.guild.member(UserToMute).roles.cache.get(MuteROle.id)){
+            message.channel.send(`That user is already unmuted!`)
+           }else
         // CHECKING IF MUTE ROLE FOUND WORKS
         if(message.member.hasPermission(['ADMINISTRATOR','MUTE_MEMBERS'])){
-         const MuteROle = message.guild.roles.cache.find(Role => Role.name === "Muted")
+        
          // Reasons for mute (not needed?) WORKS
          const Reason = message.content.slice(30);
          if(!Reason) return message.channel.send(`Reason was not included.`)
          console.log(Reason) 
          // Add the mute command to the G
-         const UserToMute = message.mentions.users.first();
+
+       
          if(!UserToMute) return message.channel.send(`Make sure to mention someone!`)
          if(Reason){
             message.guild.member(UserToMute).roles.remove(MuteROle)
