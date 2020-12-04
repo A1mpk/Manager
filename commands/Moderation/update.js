@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = Discord.Client()
+const client =  new Discord.Client()
 module.exports = {
     name: 'update',
     description: "Update lol",
