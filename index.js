@@ -119,6 +119,39 @@ client.on('guildMemberRemove', member => {
    }
    
 })
+client.on('messageDelete', message => {
+    const GuildChannel = message.guild.channels.cache.find(c=> c.name === "log-test")
+    if(!GuildChannel) return message.guild.channels.create("log-test")
+    const MessageEmbed = new Discord.MessageEmbed()
+    .setAuthor(`Message Deleted`)
+    .addField(`Message :`, message)
+    .addField('Sent by', message.member.user.tag)
+    .addField('Deleted in', message.channel.name)
+    .setThumbnail(message.member.user.displayAvatarURL())
+    .setTimestamp()
+    .setFooter(`Deleted Message Log`)
+    .setColor(3066993)
+    GuildChannel.send(MessageEmbed)
+    if(console.error)return ;
+        
+    
+    
+});
+client.on('roleDelete', Role=> {
+    const role = Role.guild.channels.cache.find(c=> c.name === "log-test")
+    if(!role) return Role.guild.channels.create("log-test")
+    const ROleInfo = new Discord.MessageEmbed()
+    .setAuthor('Role Deleted')
+    .addField(`Role Name`, Role.name)
+    .addField(`Role Creation Date`, Role.createdAt)
+    .addField(`Role Color`, Role.color)
+    .addField(`Role Hoist`, Role.hoist)
+    .addField(`Role Mentionable`, Role.mentionable)
+    .setTimestamp()
+    .setThumbnail(Role.guild.iconURL())
+    .setColor(3066993)
+    role.send(ROleInfo)
+})
 client.on('guildMemberAdd', member => {
  
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
