@@ -3,11 +3,11 @@ const client =  new Discord.Client()
 module.exports = {
     name: 'update',
     description: "Update lol",
-    execute(message, args){
+    execute(message, args,client){
  
         const update = new Discord.MessageEmbed()
         .setTimestamp()
-        .setThumbnail(client.user.displayAvatarURL())
+        .setThumbnail(message.guild.me.user.displayAvatarURL())
         .setTitle(`Update 0.4`)
         .setDescription(`__Whats new?__`)
         .addField(`Suggestion`, 'This command is a suggestion one! Want to suggest something for the server? Well now you can!')
