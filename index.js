@@ -66,27 +66,27 @@ guild.channels.cache.forEach((channel) => {
         fields:[
             {
                 name: '**😴 Moderation [10]**',
-                value: 'ban,kick,lock,announce,config_log,bot_nick,nick,getuserid,getid'
+                value: 'ban,kick,mute,bot_nick,rule_add,slowmode,unmute,clear,announce,lock,giverole'
             },     
             {
-                name: '**🤩 Fun [2]**',
-                value: 'pain,happy'
+                name: '**🤩 Fun [5]**',
+                value: 'pain,happy,8ball,say,karen'
             },
             {
                 name: '**🔊 Music [1]**',
-                value: 'play with special playlist'
+                value: 'play(link only)'
             },
             {
                 name: '**💸 Currency [0]**',
-                value: '** IN PROGRESS **'
+                value: 'Coming soon'
             },
             {
-                name: '**🛠️ Utilities [7]**',
-                value: 'help,invite,guild,rank,support,info,membercount'
+                name: '**🛠️ Utilities [12]**',
+                value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick'
             },
             {
-                name: '**Owner [1]**',
-                value: 'eval'
+                name: 'Premium [4]',
+                value: 'suggestion,auto-role,auto-moderator,youtube notification'
             }
         ],
         
@@ -339,7 +339,15 @@ if(message.content.startsWith( x + 'info')){
     };
     if(command === 'update'){
         client.commands.get('update').execute(message, args)
-};
+    };
+    if(command === 'giverole'){
+        client.commands.get('giverole').execute(message, args)
+    };
+    if(command === 'karen'){
+        client.commands.get('karen').execute(message, args)
+    };
+    
+
 
    
    
@@ -355,7 +363,7 @@ if(message.content.startsWith( x + 'info')){
 });
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login(`NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.0iMbqYZI8KXSX6hbdpfNJdGqEgs`);
 
 
 

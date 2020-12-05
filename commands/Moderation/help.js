@@ -5,37 +5,37 @@ module.exports = {
     execute(message, args){
         message.channel.send({
             embed:{
-                title: 'List of commands [20]',
+                title: 'List of commands [32]',
                 color: 3066993, 
                 fields:[
                     {
                         name: '**😴 Moderation [10]**',
-                        value: 'ban,kick,lock,credit,rule_add,config_log,bot_nick,nick,getuserid,getid'
+                        value: 'ban,kick,mute,bot_nick,rule_add,slowmode,unmute,clear,announce,lock,giverole'
                     },     
                     {
-                        name: '**🤩 Fun [2]**',
-                        value: 'pain,happy'
+                        name: '**🤩 Fun [5]**',
+                        value: 'pain,happy,8ball,say,karen'
                     },
                     {
                         name: '**🔊 Music [1]**',
-                        value: 'play with playlist'
+                        value: 'play(link only)'
                     },
                     {
                         name: '**💸 Currency [0]**',
-                        value: 'nothing yet nob'
+                        value: 'Coming soon'
                     },
                     {
-                        name: '**🛠️ Utilities [7]**',
-                        value: 'help,invite,guild,rank,support,info,membercount'
+                        name: '**🛠️ Utilities [12]**',
+                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick'
                     },
                     {
-                        name: '**Owner**',
-                        value: 'eval'
+                        name: 'Premium [4]',
+                        value: 'suggestion,auto-role,auto-moderator,youtube notification'
                     }
                 ],
                 
                 footer: {
-                    text: "https://top.gg/servers/756254215923564694%60"
+                    text: "Love from Mint Support"
                 }
             }
             })

@@ -15,6 +15,8 @@ module.exports = {
         .addField('Unmute', 'This command will unmute the user.')
         .addField(`Slowmode`, 'This command sets the slowmode for a channel.')
         .addField(`Clear`,'This commands deletes messages up to 100!')
+        .addField(`Giverole`, 'This command lets you give a role to a member. **Usage : >giverole <@> <rolename>**')
+        .addField(`Karen`, 'This command is a fun command! Try to compete against Karen. All answers are right just go all out on her.')
         .setColor("RED")
         .setFooter(`From Mint Support`)
       message.channel.send(update)
