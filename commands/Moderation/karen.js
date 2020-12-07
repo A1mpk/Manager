@@ -28,10 +28,17 @@ module.exports = {
               
           })
           collector.on('end', collected => {
+              const Reply = [
+                  "You won, Karen got crippling depression",
+                  "You lost, Karen won!",
+                  "Tie..Karen asks for a rematch!",
+                  "Karen calls the police on you and you get arrested!"
+              ]
               let counter = 0;
-             message.channel.send(`The game ended, you lost. Karen won!`)
+              message.channel.send((Reply[Math.floor(Math.random() * Reply.length)]))
               collected.forEach(value => {
-                  value.channel.send(`Question :${karenquestions[counter++]} Your answer : ${value.content}`)
+                  value.channel.send(`Question :${karenquestions[counter++]} Your answer : ${value.content}`).then(mes => mes.delete({timeout: 10000})).catch(console.error)
+                 
               })
           })
     }

@@ -1,3 +1,4 @@
+/// THE VARIABLES IMPORTANT!
 const { POINT_CONVERSION_HYBRID, EMFILE } = require('constants');
 const { Client, Collection, Structures, DiscordAPIError } = require('discord.js');
 const Discord = require('discord.js');
@@ -18,15 +19,13 @@ const { error, memory } = require('console');
 const { getPackedSettings } = require('http2');
 const { name } = require('./commands/Moderation/guild');
 const ytdl = require('ytdl-core')
-
+// COMMAND HANDLER
 config({
     path: `${__dirname}/.env`
 });
-
 ['command'].forEach(handler => {
     require(`./handlers/${handler}`)(client);
 });
-
 fs.readdir('./events/', (err, files) => {
     if (err) return console.error;
     files.forEach(file => {
@@ -43,11 +42,11 @@ for(const file of commandFiles){
 
     client.commands.set(command.name, command);
 }
-
-
-
+// PREMIUM START???
+const SP = client.guilds.cache.find(Guild => Guild.id === "753413725968400494")
+/// PREFIX
 const x = '>';
-
+/// ALL THE LISTENERS :
 client.on('guildCreate', guild => {
     guild.channels.create('log')
     let defaultChannel = "";
@@ -96,13 +95,12 @@ guild.channels.cache.forEach((channel) => {
     }
   });
 })
-
 client.on('guildMemberRemove', member => {
     const Channel = member.guild.channels.cache.find(ch => ch.name === "log-test")
     const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
     if(!Joins) return member.guild.channels.create("👋joins")
     const EmbedLeft = new Discord.MessageEmbed()
-    .setFooter(`We are now${member.guild.memberCount} members.`)
+    .setFooter(`We are now ${member.guild.memberCount} members.`)
     .setTimestamp()
     .setColor(3066993)
     .setThumbnail(member.user.displayAvatarURL())
@@ -119,30 +117,78 @@ client.on('guildMemberRemove', member => {
    }
    
 })
-client.on('messageDelete', Hessage => {
-    if(Hessage.author === Hessage.guild.me){
-        console.log(`My message.`)
-    }
-    else
-    if(!Hessage.author === Hessage.guild.me){
-        const GuildChannel = Hessage.guild.channels.cache.find(c=> c.name === "log-test")
-        if(!GuildChannel) return Hessage.guild.channels.create("log-test")
-        const MessageEmbed = new Discord.MessageEmbed()
-        .setAuthor(`Message Deleted`)
-        .addField(`Message :`, Hessage)
-        .addField('Sent by', Hessage.member.user.tag)
-        .addField('Deleted in', Hessage.channel.name)
-        .setThumbnail(Hessage.member.user.displayAvatarURL())
-        .setTimestamp()
-        .setFooter(`Deleted Message Log`)
-        .setColor(3066993)
-        GuildChannel.send(MessageEmbed)
-     
-    }
-   
-        
-    
-    
+client.on('messageDelete', message => {
+    if(message.author.id === "725787532008095744")return;
+            const GuildChannel = message.guild.channels.cache.find(c=> c.name === "log-test")
+            if(!GuildChannel) return message.guild.channels.create("log-test")
+            const MessageEmbed = new Discord.MessageEmbed()
+            .setAuthor(`Message Deleted`)
+            .addField(`Message :`, message)
+            .addField('Sent by', message.member.user.tag)
+            .addField('Deleted in', message.channel.name)
+            .setThumbnail(message.member.user.displayAvatarURL())
+            .setTimestamp()
+            .setFooter(`Deleted Message Log`)
+            .setColor(3066993)
+            GuildChannel.send(MessageEmbed)
+})
+client.on('inviteCreate', invite => {
+    const guildChannel = invite.guild.channels.cache.find(c=> c.name === "log-test")
+    if(!guildChannel) return invite.guild.channels.create("log-test")
+    const MessageEmbed2 = new Discord.MessageEmbed()
+    .setAuthor(`Invite Created`)
+    .addField(`Created by`, invite.inviter.tag)
+    .addField(`Expire Date`, invite.expiresAt)
+    .addField('Uses ', invite.maxUses)
+    .addField('Channel for invite', invite.channel)
+    .addField(`Invite URL`, invite.url)
+    .setThumbnail(invite.inviter.displayAvatarURL())
+    .setTimestamp()
+    .setFooter(`Invite Logger`)
+    .setColor(3066993)
+    guildChannel.send(MessageEmbed2)
+} )
+client.on('inviteDelete', invite => {
+    const guildChannel = invite.guild.channels.cache.find(c=> c.name === "log-test")
+    if(!guildChannel) return invite.guild.channels.create("log-test")
+    const MessageEmbed2 = new Discord.MessageEmbed()
+    .setAuthor(`Invite Deleted`)
+    .addField(`Deleted by`, invite.inviter.tag)
+    .addField(`Expire Date`, invite.expiresAt)
+    .addField('Uses ', invite.maxUses)
+    .addField('Channel for invite', invite.channel)
+    .setThumbnail(invite.inviter.displayAvatarURL())
+    .setTimestamp()
+    .setFooter(`Invite Delete Logger`)
+    .setColor(3066993)
+    guildChannel.send(MessageEmbed2)
+})
+client.on('emojiCreate', emoji => {
+    const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "log-test")
+    if(!guildChannel23) return emoji.guild.channels.create("log-test")
+    const MessageEmbed = new Discord.MessageEmbed()
+    .setAuthor(`Emoji Created`)
+    .addField(`Emoji Name`, emoji.name)
+    .addField(`Emoji Created At`, emoji.createdAt)
+    .addField('Emoji Animated', emoji.animated)
+    .addField(`Emoji`, emoji)
+    .setTimestamp()
+    .setFooter(`Emoji Created`)
+    .setColor(3066993)
+    guildChannel23.send(MessageEmbed)
+})
+client.on('emojiDelete', emoji => {
+    const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "log-test")
+    if(!guildChannel23) return emoji.guild.channels.create("log-test")
+    const MessageEmbed = new Discord.MessageEmbed()
+    .setAuthor(`Emoji Delete`)
+    .addField(`Emoji Name`, emoji.name)
+    .addField(`Emoji Created At`, emoji.createdAt)
+    .addField('Emoji Animated', emoji.animated)
+    .setTimestamp()
+    .setFooter(`Emoji Deleted`)
+    .setColor(3066993)
+    guildChannel23.send(MessageEmbed)
 })
 client.on('roleDelete', Role=> {
     const role = Role.guild.channels.cache.find(c=> c.name === "log-test")
@@ -193,8 +239,9 @@ client.on('guildMemberAdd', member => {
   if(AutoRoleForSp) return member.roles.add(AutoRoleForSp) 
   
 })
-
+/// ALL THE COMMANDS HANDLER!
 client.on('message', message => {
+    if(message.content.startsWith(x + ''))
     if(message.content.startsWith(x + "uptime")){
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
@@ -361,7 +408,7 @@ if(message.content.startsWith( x + 'info')){
 
 
 });
-
+/// BOT LOGIN + DATA BASE LOGIN
 client.mongoose.init();
 client.login(process.env.token);
 
