@@ -43,7 +43,7 @@ for(const file of commandFiles){
     client.commands.set(command.name, command);
 }
 // PREMIUM START???
-const SP = client.guilds.cache.find(Guild => Guild.id === "753413725968400494")
+
 /// PREFIX
 const x = '>';
 /// ALL THE LISTENERS :
@@ -95,6 +95,10 @@ guild.channels.cache.forEach((channel) => {
     }
   });
 })
+client.on('ready', () => {
+    console.log(`Manager is now online and running!`)
+    client.user.setActivity(`>help`, {type: "WATCHING"})
+})
 client.on('guildMemberRemove', member => {
     const Channel = member.guild.channels.cache.find(ch => ch.name === "log-test")
     const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
@@ -118,19 +122,30 @@ client.on('guildMemberRemove', member => {
    
 })
 client.on('messageDelete', message => {
-    if(message.author.id === "725787532008095744")return;
-            const GuildChannel = message.guild.channels.cache.find(c=> c.name === "log-test")
-            if(!GuildChannel) return message.guild.channels.create("log-test")
-            const MessageEmbed = new Discord.MessageEmbed()
-            .setAuthor(`Message Deleted`)
-            .addField(`Message :`, message)
-            .addField('Sent by', message.member.user.tag)
-            .addField('Deleted in', message.channel.name)
-            .setThumbnail(message.member.user.displayAvatarURL())
-            .setTimestamp()
-            .setFooter(`Deleted Message Log`)
-            .setColor(3066993)
-            GuildChannel.send(MessageEmbed)
+    
+    if(message.author.bot) return;
+try{
+    const GuildChannel = message.guild.channels.cache.find(c=> c.name === "log-test")
+    if(!GuildChannel) return message.guild.channels.create("log-test")
+    const MessageEmbed = new Discord.MessageEmbed()
+    .setAuthor(`Message Deleted`)
+    .addField(`Message :`, message)
+    .addField('Sent by', message.member.user.tag)
+    .addField('Deleted in', message.channel.name)
+    .setThumbnail(message.member.user.displayAvatarURL())
+    .setTimestamp()
+    .setFooter(`Deleted Message Log`)
+    .setColor(3066993)
+    GuildChannel.send(MessageEmbed)
+    }catch(err){
+    return;
+    }
+
+
+   
+    
+
+           
 })
 client.on('inviteCreate', invite => {
     const guildChannel = invite.guild.channels.cache.find(c=> c.name === "log-test")
@@ -286,7 +301,17 @@ if(message.content.startsWith( x + 'info')){
     
     message.channel.send(Info)
 }
+let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore','ok','k'] //words
 
+
+let foundInText = false;
+for (var i in blacklisted) { 
+  if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
+}
+
+  if (foundInText) {
+    message.delete()
+}
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
     const command = args.shift().toLowerCase();
