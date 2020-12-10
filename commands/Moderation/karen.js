@@ -36,10 +36,7 @@ module.exports = {
               ]
               let counter = 0;
               message.channel.send((Reply[Math.floor(Math.random() * Reply.length)]))
-              collected.forEach(value => {
-                  value.channel.send(`Question :${karenquestions[counter++]} Your answer : ${value.content}`).then(mes => mes.delete({timeout: 10000})).catch(console.error)
-                 
-              })
+              
           })
     }
 }

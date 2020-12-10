@@ -80,12 +80,12 @@ guild.channels.cache.forEach((channel) => {
                 value: 'Coming soon'
             },
             {
-                name: '**🛠️ Utilities [12]**',
-                value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick'
+                name: '**🛠️ Utilities [13]**',
+                value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update'
             },
             {
-                name: 'Premium [4]',
-                value: 'suggestion,auto-role,auto-moderator,youtube notification'
+                name: 'Premium [Coming Soon]',
+                value: 'Premium command that works for everyone : suggestion'
             }
         ],
         
@@ -147,6 +147,7 @@ try{
 
            
 })
+
 client.on('inviteCreate', invite => {
     const guildChannel = invite.guild.channels.cache.find(c=> c.name === "log-test")
     if(!guildChannel) return invite.guild.channels.create("log-test")
@@ -301,7 +302,7 @@ if(message.content.startsWith( x + 'info')){
     
     message.channel.send(Info)
 }
-let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore','ok','k'] //words
+let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore','slut'] //words
 
 
 let foundInText = false;
@@ -318,9 +319,7 @@ for (var i in blacklisted) {
     if(command === 'kick'){
         client.commands.get('kick').execute(message, args)
     };
-    if(command === 'ban'){
-        client.commands.get('ban').execute(message, args)
-    };
+ 
     if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
     };
@@ -348,6 +347,9 @@ for (var i in blacklisted) {
     if(command === 'play'){
     client.commands.get('play').execute(message, args)
     };
+    if(command === 'ban'){
+        client.commands.get('ban').execute(message, args)
+        };
     if(command === 'giverole'){
     client.commands.get('giverole').execute(message, args)
     };
@@ -418,20 +420,20 @@ for (var i in blacklisted) {
     if(command === 'karen'){
         client.commands.get('karen').execute(message, args)
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
     
-
-
-   
-   
-   
-  
-
-
-
-
-
-
-
 });
 /// BOT LOGIN + DATA BASE LOGIN
 client.mongoose.init();

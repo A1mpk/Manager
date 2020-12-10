@@ -5,7 +5,7 @@ module.exports = {
     execute(message, args){
         message.channel.send({
             embed:{
-                title: 'List of commands [32]',
+                title: 'List of commands [33]',
                 color: 3066993, 
                 fields:[
                     {
@@ -21,16 +21,12 @@ module.exports = {
                         value: 'play(link only)'
                     },
                     {
-                        name: '**💸 Currency [0]**',
-                        value: 'Coming soon'
-                    },
-                    {
-                        name: '**🛠️ Utilities [12]**',
-                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick'
+                        name: '**🛠️ Utilities [13]**',
+                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update'
                     },
                     {
                         name: 'Premium [4]',
-                        value: 'suggestion,auto-role,auto-moderator,youtube notification'
+                        value: 'Premium command that works for everyone : suggestion'
                     }
                 ],
                 
