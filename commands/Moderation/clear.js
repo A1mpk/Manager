@@ -12,16 +12,18 @@ module.exports = {
         .setTimestamp()
         const aaa = message.content.split(' ').slice(1); 
         const amount = aaa.join(' ');
+        if(message.member.hasPermission('MANAGE_MESSAGES')){
+            if (!amount) return message.channel.send(ClearHElped) 
+            if (isNaN(amount)) return message.channel.send(`That's not a number.`); 
+            
+            if (amount > 100) return message.channel.send(`Please enter an number below **100**.`); 
+            if (amount < 1) return message.channel.send(`Really?!?!?`); 
+            
+            message.channel.messages.fetch({ limit: amount }).then(messages => { 
+                message.channel.bulkDelete(messages 
+            )});
+        }else message.channel.send('You need `MANAGE_MESSAGES` to use this command.')
         
-        if (!amount) return message.channel.send(ClearHElped) 
-        if (isNaN(amount)) return message.channel.send(`That's not a number.`); 
-        
-        if (amount > 100) return message.channel.send(`Please enter an number below **100**.`); 
-        if (amount < 1) return message.channel.send(`Really?!?!?`); 
-        
-        message.channel.messages.fetch({ limit: amount }).then(messages => { 
-            message.channel.bulkDelete(messages 
-        )});
        
     }
 

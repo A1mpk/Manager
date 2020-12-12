@@ -12,11 +12,14 @@ module.exports = {
             .addField("USAGE : `slowmode <seconds>`", "** **")
             .setColor(3066993)
             .setTimestamp()
-        if (!amount) return message.channel.send(h69) 
-        if (isNaN(amount)) return message.channel.send(`That's not a number.`); 
-        if (amount > 21600) return message.channel.send(`The maximum input for this command is 21600.`); 
-        message.channel.setRateLimitPerUser(amount)
-        message.channel.send(`Current cooldown for this channel : ${amount}.`)
+            if(message.member.hasPermission(['MANAGE_CHANNELS'])){
+                if (!amount) return message.channel.send(h69) 
+                if (isNaN(amount)) return message.channel.send(`That's not a number.`); 
+                if (amount > 21600) return message.channel.send(`The maximum input for this command is 21600.`); 
+                message.channel.setRateLimitPerUser(amount)
+                message.channel.send(`Current cooldown for this channel : ${amount}.`)
+            }else message.channel.send('You need `MANAGE_CHANNELS` to use this command')
+        
     }
 
 };

@@ -11,12 +11,11 @@ module.exports = {
         .setTimestamp()
         .setColor(3066993)
         
-       
+        if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
         const Buser = message.guild.member(message.mentions.users.first())
-        if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send('ERROR : Missing Permissions');
         if(!Buser) return message.channel.send(Ban); 
         let bReason = args
-        if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
+       
         const BanMod = new Discord.MessageEmbed()
         .setColor(3066993)
         .setAuthor('BAN ERROR')

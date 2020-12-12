@@ -10,11 +10,10 @@ const Kick = new Discord.MessageEmbed()
          .addField("USAGE : `kick <user> <reason>`", "** **")
          .setColor(3066993)
          .setTimestamp()
-        
+         if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need KICK_MEMBERS to use this command.');
          const Kuser = message.guild.member(message.mentions.users.first())
          if(!Kuser) return message.channel.send(Kick); 
          let kReason = args.join(" ").slice(22);
-         if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
          const KickMod = new Discord.MessageEmbed()
          .setColor(3066993)
          .setTitle('ERROR')

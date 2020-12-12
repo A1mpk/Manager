@@ -20,6 +20,6 @@ module.exports = {
             if(!GiveRole){
                 message.channel.send(`I cannot find the role ``${Rolename}``.`)
             }
-        }else message.channel.send(`You are not permitted to run this command due to the roles you currently have.`)
+        }else message.channel.send(`You are not permitted to run this command due to the roles you currently have.`);
     }
 }

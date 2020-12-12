@@ -90,7 +90,7 @@ guild.channels.cache.forEach((channel) => {
         ],
         
         footer: {
-            text: `My current prefix for this guild is **>**.`
+            text: `Friendly`
         }
     }
   });
@@ -257,7 +257,8 @@ client.on('guildMemberAdd', member => {
 })
 /// ALL THE COMMANDS HANDLER!
 client.on('message', message => {
-    if(message.content.startsWith(x + ''))
+    if(message.author.bot)return;
+    if(message.channel.type === 'dm') return;
     if(message.content.startsWith(x + "uptime")){
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
@@ -283,7 +284,6 @@ if(message.content === `<@!${client.user.id}>`){
         .setColor(3066993)
         .setAuthor('Prefix')
         .setDescription('`>`')
-        .addField(`Presence`, '**ACTIVE**: :green_circle: ')
         .setTimestamp()
         message.channel.send(MyPRefixIs)
 }

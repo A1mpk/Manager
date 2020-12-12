@@ -13,19 +13,22 @@ module.exports = {
         .addField("USAGE : `lock`", "** **")
         .setColor(3066993)
         .setTimestamp()
-        if(argsfl){
-            message.channel.send(lockhelp)
-        }
-        if(!argsfl){
-            channels.forEach(channel => {
-                channel.updateOverwrite(message.guild.roles.everyone, {
-                    SEND_MESSAGES: false
-                })
-                
-               
-            }) 
-            message.channel.send(`Locked ${message.guild.channels.cache.size} channels. {Including VC's}`) 
-        }
+        if(message.member.hasPermission('MANAGE_CHANNELS')){
+            if(argsfl){
+                message.channel.send(lockhelp)
+            }
+            if(!argsfl){
+                channels.forEach(channel => {
+                    channel.updateOverwrite(message.guild.roles.everyone, {
+                        SEND_MESSAGES: false
+                    })
+                    
+                   
+                }) 
+                message.channel.send(`Locked ${message.guild.channels.cache.size} channels. {Including VC's}`) 
+            }
+        }else message.channel.send('You need `MANAGE_CHANNELS` to use this command.')
+        
       
     }
 
