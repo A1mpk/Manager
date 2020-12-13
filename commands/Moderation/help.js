@@ -5,7 +5,7 @@ module.exports = {
     execute(message, args){
         message.channel.send({
             embed:{
-                title: 'List of commands [33]',
+                title: 'List of commands [37]',
                 color: 3066993, 
                 fields:[
                     {
@@ -17,21 +17,17 @@ module.exports = {
                         value: 'pain,happy,8ball,say,karen'
                     },
                     {
-                        name: '**🔊 Music [1]**',
-                        value: 'play(link only)'
+                        name: '**👂 LISTENERS [8]**',
+                        value: 'InviteCreate/Delete, RoleDelete, EmojiCreate/Delete, messageDelete, GuildMemberAdd/Remove'
                     },
                     {
-                        name: '**🛠️ Utilities [13]**',
-                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update'
-                    },
-                    {
-                        name: 'Premium [4]',
-                        value: 'Premium command that works for everyone : suggestion'
+                        name: '**🛠️ Utilities [14]**',
+                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update,suggestion'
                     }
                 ],
                 
                 footer: {
-                    text: "Love from Mint Support"
+                    text: "Love from Mint Support💓"
                 }
             }
             })

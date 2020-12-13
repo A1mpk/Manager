@@ -1,5 +1,5 @@
 /// THE VARIABLES IMPORTANT!
-const { POINT_CONVERSION_HYBRID, EMFILE } = require('constants');
+const { POINT_CONVERSION_HYBRID, EMFILE, S_IFBLK } = require('constants');
 const { Client, Collection, Structures, DiscordAPIError } = require('discord.js');
 const Discord = require('discord.js');
 const fs = require('fs');
@@ -72,20 +72,12 @@ guild.channels.cache.forEach((channel) => {
                 value: 'pain,happy,8ball,say,karen'
             },
             {
-                name: '**🔊 Music [1]**',
-                value: 'play(link only)'
+                name: '**👂 LISTENERS [8]**',
+                value: 'InviteCreate/Delete, RoleDelete, EmojiCreate/Delete, messageDelete, GuildMemberAdd/Remove'
             },
             {
-                name: '**💸 Currency [0]**',
-                value: 'Coming soon'
-            },
-            {
-                name: '**🛠️ Utilities [13]**',
-                value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update'
-            },
-            {
-                name: 'Premium [Coming Soon]',
-                value: 'Premium command that works for everyone : suggestion'
+                name: '**🛠️ Utilities [14]**',
+                value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update,suggestion'
             }
         ],
         

@@ -10,17 +10,23 @@ module.exports = {
         .setDescription(`Changes the bot's nickname.`)
         .addField('USAGE : `bot_nick <nickname>`', "** **")
         .setTimestamp()
-       if(message.member.hasPermission('ADMINISTRATOR')){
-           if(!lol){
-            message.channel.send(LOL)
+        try{
+            if(message.member.hasPermission('ADMINISTRATOR')){
+                if(!lol){
+                 message.channel.send(LOL)
+             }
+             if(lol){
+                 if(lol.length >32) return message.channel.send(`My nickname has more than 32characters, 32 is the max!`)
+                 if(lol.length <32){
+                    message.guild.me.setNickname(lol)
+                    message.channel.send(`My nickname is now **${lol}**.`)
+                 }
+             }
+            }else message.channel.send('You need `ADMINISTRATOR` to use this command.')
+        }catch(er){
+            message.channel.send(`Something went wrong, please re-run this command.`)
         }
-        if(lol){
-            message.guild.me.setNickname(lol)
     
-            
-            message.channel.send(`My nickname is now **${lol}**.`)
-        }
-       }else message.channel.send('You need `ADMINISTRATOR` to use this command.')
     }
 
 };
