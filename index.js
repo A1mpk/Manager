@@ -364,12 +364,6 @@ for (var i in blacklisted) {
     if(command === 'rule_add'){
     client.commands.get('rule_add').execute(message, args)
     };
-    if(command === 'pain'){
-    client.commands.get('pain').execute(message, args)
-    };
-     if(command === 'happy'){
-    client.commands.get('happy').execute(message, args)
-    };
     if(command === 'nick'){
     client.commands.get('nick').execute(message, args)
     };
