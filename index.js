@@ -252,6 +252,7 @@ client.on('message', message => {
     if(message.author.bot)return;
     if(message.channel.type === 'dm') return;
     if(message.content.startsWith(x + "uptime")){
+        
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
         totalSeconds %= 86400;
@@ -278,13 +279,14 @@ if(message.content === `<@!${client.user.id}>`){
         .setDescription('`>`')
         .setTimestamp()
         message.channel.send(MyPRefixIs)
+        
+        
 }
 if(message.content.startsWith( x + 'info')){
     const Info = new Discord.MessageEmbed()
     .setColor("RED")
     .setTitle('Mint')
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, music to currency, currency to fun.`)
-    .addField('Premium', 'translate,search,auto-moderator,auto-role and posts.')
     .addFields(
         { name: 'Version', value: '0.0.3', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
@@ -294,7 +296,7 @@ if(message.content.startsWith( x + 'info')){
     
     message.channel.send(Info)
 }
-let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','hoe','whore','slut'] //words
+let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','whore','slut'] //words
 
 
 let foundInText = false;

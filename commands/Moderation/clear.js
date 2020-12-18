@@ -23,7 +23,7 @@ module.exports = {
             message.channel.messages.fetch({ limit: amount }).then(messages => { 
                 message.channel.bulkDelete(messages 
             )})
-            message.channel.send(`I have cleared ${amount}`)
+            message.channel.send(`I have cleared ${amount} messages!`)
         }else message.channel.send('You need `MANAGE_MESSAGES` to use this command.')
         
        

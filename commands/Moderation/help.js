@@ -10,11 +10,11 @@ module.exports = {
                 fields:[
                     {
                         name: '**😴 Moderation [10]**',
-                        value: 'ban,kick,mute,bot_nick,rule_add,slowmode,unmute,clear,announce,lock,giverole'
+                        value: 'ban,kick,mute,bot_nick,rule_add,slowmode,clear,announce,lock'
                     },     
                     {
-                        name: '**🤩 Fun [5]**',
-                        value: 'pain,happy,8ball,say,karen'
+                        name: '**🤩 Fun [3]**',
+                        value: '8ball,say,karen'
                     },
                     {
                         name: '**👂 LISTENERS [8]**',
@@ -22,7 +22,7 @@ module.exports = {
                     },
                     {
                         name: '**🛠️ Utilities [14]**',
-                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update,suggestion'
+                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,suggestion'
                     }
                 ],
                 
