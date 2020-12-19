@@ -344,9 +344,6 @@ for (var i in blacklisted) {
     if(command === 'ban'){
         client.commands.get('ban').execute(message, args)
         };
-    if(command === 'giverole'){
-    client.commands.get('giverole').execute(message, args)
-    };
     if(command === 'report'){
     client.commands.get('report').execute(message, args)
     };
@@ -408,6 +405,7 @@ for (var i in blacklisted) {
     if(command === 'karen'){
         client.commands.get('karen').execute(message, args)
     };
+   
 
 
 
