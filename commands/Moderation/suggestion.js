@@ -3,7 +3,9 @@ const Discord = require('discord.js')
 module.exports = {
     name: "suggestion",
     description: "Suggeston command version 1",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const questions = [ 
             'Set a tittle for your suggestion!',
             'What is your suggestion?'

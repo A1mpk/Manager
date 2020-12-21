@@ -4,7 +4,9 @@ const guild = require('./guild')
 module.exports = {
     name: 'verify',
     description: "Verify system",
+    disabled: false,
     execute(message, args){  
+      if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const Role = message.guild.roles.cache.find(r => r.name === 'Verified');
         const VerifySetup3 = new Discord.MessageEmbed()
         .setTitle(`Successfully verified ✔️`)

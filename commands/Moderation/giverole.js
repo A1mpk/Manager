@@ -2,9 +2,9 @@ const Discord = require('discord.js')
 module.exports = { 
     name: "giverole",
     description: "Give role comand.",
-    disabled: true,
+    disabled: false,
     execute(message, args){
-        if(this.disabled === true) return message.channel.send(`This command is 90% done.`)
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
           // Checking if they sent the role name after the @ WORKS
           try{
             if(message.member.hasPermission(['ADMINISTRATOR','MANAGE_ROLES'])){
@@ -27,9 +27,9 @@ module.exports = {
                     message.channel.send(`I cannot find the role "${Rolename}".`)
                 }
             }else message.channel.send(`You are not permitted to run this command due to the roles you currently have.`);
-          }catch(er){
-              message.channel.send(`That role/member is higher than me, I cannot accomplish this action.`)
-          }
+        }catch(er){
+            message.channel.send(`Something went wrong! Here are the possibles : Permission needed (role to high). How To Fix : Make the bot's role higher than the chosen role.`)
+        }
           
     }
 }

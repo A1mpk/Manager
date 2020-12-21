@@ -2,7 +2,9 @@ const Discord = require('discord.js')
 module.exports = {
     name: 'mute',
     description: "Mute member",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const channels = message.guild.channels.cache.filter(ch => ch.type !== 'text-channels');
         // CHECKING IF MUTE ROLE FOUND WORKS
         if(message.member.hasPermission(['ADMINISTRATOR','MUTE_MEMBERS'])){

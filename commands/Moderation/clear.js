@@ -3,7 +3,9 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'clear',
     description: "Clear's a amount of message.",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const ClearHElped = new Discord.MessageEmbed()
         .setTitle('CLEAR - MODERATION')
         .setDescription('Clears the amount of message.')

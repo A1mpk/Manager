@@ -4,7 +4,7 @@ const { Client, Collection, Structures, DiscordAPIError } = require('discord.js'
 const Discord = require('discord.js');
 const fs = require('fs');
 const mongoose = require('mongoose');
-const { send } = require('process');
+const { send, cpuUsage } = require('process');
 const guild = require('./commands/Moderation/guild');
 const avatar = require('./commands/normal/avatar');
 const client = new Client();
@@ -88,7 +88,7 @@ guild.channels.cache.forEach((channel) => {
   });
 })
 client.on('ready', () => {
-    console.log(`Manager is now online and running!`)
+    console.log(`I am in ${client.guilds.cache.size}.`)
     client.user.setActivity(`>help`, {type: "WATCHING"})
 })
 client.on('guildMemberRemove', member => {
@@ -252,7 +252,8 @@ client.on('message', message => {
     if(message.author.bot)return;
     if(message.channel.type === 'dm') return;
     if(message.content.startsWith(x + "uptime")){
-        
+    
+
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
         totalSeconds %= 86400;

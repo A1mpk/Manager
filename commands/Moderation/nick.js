@@ -2,7 +2,9 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'nick',
     description: "Nicks the message.member.userSetNickname(lol)",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const lol = message.content.slice(5)
         const LOL = new Discord.MessageEmbed()
         .setColor(3066993)

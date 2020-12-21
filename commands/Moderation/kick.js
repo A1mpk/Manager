@@ -3,7 +3,9 @@ const Discord = require('discord.js')
 module.exports = {
     name: 'kick',
     description: "kicks a member",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
 const Kick = new Discord.MessageEmbed()
          .setTitle('KICK - MODERATION')
          .setDescription('Kicks a member of the guild.')

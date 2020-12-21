@@ -3,7 +3,9 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'ban',
     description: 'a',
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const Ban = new Discord.MessageEmbed()
         .setTitle('BAN - MODERATION')
         .setDescription("Bans a member from the guild.")

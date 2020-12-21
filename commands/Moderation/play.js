@@ -4,7 +4,9 @@ const ytdl = require('ytdl-core');
 module.exports = { 
     name: 'play',
     description: 'PLAYS A NMUSDC',
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         var servers = {};
         const LOL = new Discord.MessageEmbed()
         .setColor(3066993)

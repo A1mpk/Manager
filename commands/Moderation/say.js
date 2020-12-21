@@ -2,7 +2,9 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'say',
     description: "Say command.",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         let args2 = message.content.slice("4")
         const everyone = "@everyone"
         const say = new Discord.MessageEmbed()

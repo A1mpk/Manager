@@ -3,7 +3,9 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'slowmode',
     description: "Slowmode to the channel.",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const aaa = message.content.split(' ').slice(1); 
         const amount = aaa.join(' ');
         const h69 = new Discord.MessageEmbed()

@@ -3,7 +3,9 @@ const client = new Discord.Client();
 module.exports = { 
     name: "report",
     description: "j",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         report = message.content.slice("7")
        const Report = new Discord.MessageEmbed()
        .setAuthor(`Report by ${message.member.user.tag}`)

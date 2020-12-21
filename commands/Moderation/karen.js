@@ -2,7 +2,9 @@ const Discord = require('discord.js')
 module.exports = {
     name: "karen",
     description: "Karen command ofc",
+    disabled: false,
     execute(message,args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         let karenquestions = [
             "Can I speak to the Manager?",
             "WOAH YOUNG HUMAN!What do you think you are doing?",

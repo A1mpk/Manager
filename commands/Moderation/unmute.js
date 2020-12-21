@@ -2,7 +2,9 @@ const Discord = require('discord.js')
 module.exports = {
     name: 'unmute',
     description: "UnMute member",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const MuteROle = message.guild.roles.cache.find(Role => Role.name === "Muted")
         const UserToMute = message.mentions.users.first();
         const Reason = message.content.slice(30);

@@ -2,7 +2,9 @@ const Discord = require('discord.js')
 module.exports = {
     name: 'help',
     description: "HELP COMMAND ",
+    disabled: false,
     execute(message, args){
+        if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         message.channel.send({
             embed:{
                 title: 'List of commands [37]',
