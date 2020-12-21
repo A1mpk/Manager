@@ -48,7 +48,7 @@ for(const file of commandFiles){
 const x = '>';
 /// ALL THE LISTENERS :
 client.on('guildCreate', guild => {
-    guild.channels.create('log')
+    guild.channels.create('logs')
     let defaultChannel = "";
 guild.channels.cache.forEach((channel) => {
   if(channel.type == "text" && defaultChannel == "") {
@@ -89,10 +89,13 @@ guild.channels.cache.forEach((channel) => {
 })
 client.on('ready', () => {
     console.log(`I am in ${client.guilds.cache.size}.`)
+    client.guilds.cache.forEach(ch => {
+        console.log(ch.name)
+    })
     client.user.setActivity(`>help`, {type: "WATCHING"})
 })
 client.on('guildMemberRemove', member => {
-    const Channel = member.guild.channels.cache.find(ch => ch.name === "log-test")
+    const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
     const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
     if(!Joins) return member.guild.channels.create("👋joins")
     const EmbedLeft = new Discord.MessageEmbed()
@@ -106,7 +109,11 @@ client.on('guildMemberRemove', member => {
         Channel.send(EmbedLeft)
     }else
    if(!Channel){
-    member.guild.channels.create("log-test")
+    member.guild.channels.create('logs', {
+        nsfw: false,
+        topic: 'Logging channel made for Mint.',
+        permissionOverwrites: member.guild.roles.everyone, SEND_MESSAGE: false, VIEW_CHANNEL:false
+    })
    } 
    if(Joins){
        Joins.send(EmbedLeft)
@@ -117,8 +124,8 @@ client.on('messageDelete', message => {
     
     if(message.author.bot) return;
 try{
-    const GuildChannel = message.guild.channels.cache.find(c=> c.name === "log-test")
-    if(!GuildChannel) return message.guild.channels.create("log-test")
+    const GuildChannel = message.guild.channels.cache.find(c=> c.name === "logs")
+    if(!GuildChannel) return message.guild.channels.create("logs")
     const MessageEmbed = new Discord.MessageEmbed()
     .setAuthor(`Message Deleted`)
     .addField(`Message :`, message)
@@ -141,8 +148,8 @@ try{
 })
 
 client.on('inviteCreate', invite => {
-    const guildChannel = invite.guild.channels.cache.find(c=> c.name === "log-test")
-    if(!guildChannel) return invite.guild.channels.create("log-test")
+    const guildChannel = invite.guild.channels.cache.find(c=> c.name === "logs")
+    if(!guildChannel) return invite.guild.channels.create("logs")
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Invite Created`)
     .addField(`Created by`, invite.inviter.tag)
@@ -157,8 +164,8 @@ client.on('inviteCreate', invite => {
     guildChannel.send(MessageEmbed2)
 } )
 client.on('inviteDelete', invite => {
-    const guildChannel = invite.guild.channels.cache.find(c=> c.name === "log-test")
-    if(!guildChannel) return invite.guild.channels.create("log-test")
+    const guildChannel = invite.guild.channels.cache.find(c=> c.name === "logs")
+    if(!guildChannel) return invite.guild.channels.create("logs")
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Invite Deleted`)
     .addField(`Deleted by`, invite.inviter.tag)
@@ -172,8 +179,8 @@ client.on('inviteDelete', invite => {
     guildChannel.send(MessageEmbed2)
 })
 client.on('emojiCreate', emoji => {
-    const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "log-test")
-    if(!guildChannel23) return emoji.guild.channels.create("log-test")
+    const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "logs")
+    if(!guildChannel23) return emoji.guild.channels.create("logs")
     const MessageEmbed = new Discord.MessageEmbed()
     .setAuthor(`Emoji Created`)
     .addField(`Emoji Name`, emoji.name)
@@ -186,8 +193,8 @@ client.on('emojiCreate', emoji => {
     guildChannel23.send(MessageEmbed)
 })
 client.on('emojiDelete', emoji => {
-    const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "log-test")
-    if(!guildChannel23) return emoji.guild.channels.create("log-test")
+    const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "logs")
+    if(!guildChannel23) return emoji.guild.channels.create("logs")
     const MessageEmbed = new Discord.MessageEmbed()
     .setAuthor(`Emoji Delete`)
     .addField(`Emoji Name`, emoji.name)
@@ -199,8 +206,8 @@ client.on('emojiDelete', emoji => {
     guildChannel23.send(MessageEmbed)
 })
 client.on('roleDelete', Role=> {
-    const role = Role.guild.channels.cache.find(c=> c.name === "log-test")
-    if(!role) return Role.guild.channels.create("log-test")
+    const role = Role.guild.channels.cache.find(c=> c.name === "logs")
+    if(!role) return Role.guild.channels.create("logs")
     const ROleInfo = new Discord.MessageEmbed()
     .setAuthor('Role Deleted')
     .addField(`Role Name`, Role.name)
@@ -230,8 +237,8 @@ client.on('guildMemberAdd', member => {
 ).then(member.guild.owner.send(`Member role was not found, therefore I have created another one, you can always change the permissions for the roles to however you like.`)) || member.send("I couldn't give you the member role. Please ask a moderator to give you it.")
 .catch(console.error);
   
-  const chja =  member.guild.channels.cache.find(ch => ch.name === "log-test")
-  if(!chja) return member.guild.channels.create('log-test')
+  const chja =  member.guild.channels.cache.find(ch => ch.name === "logs")
+  if(!chja) return member.guild.channels.create('logs')
   
   const Member = new Discord.MessageEmbed()
   .setDescription(`Hey ${member}, welcome to ${member.guild}.`)
@@ -251,6 +258,18 @@ client.on('guildMemberAdd', member => {
 client.on('message', message => {
     if(message.author.bot)return;
     if(message.channel.type === 'dm') return;
+   
+    if(message.content.startsWith(x +`credits`)){
+        const BotInfo = new Discord.MessageEmbed()
+        .setTitle(`Credits`)
+        .addField(`Co-Owner`, `Souxle#8217`)
+        .addField('Motivation : ', `SP`)
+        .addField('Profile Picture', `Friendly#9411 (Bot Owner)`)
+        .setThumbnail(message.guild.me.user.displayAvatarURL())
+        .setFooter(`Command raised by ${message.member.user.tag}`)
+        .setColor(3066993)
+        message.channel.send(BotInfo)
+    }
     if(message.content.startsWith(x + "uptime")){
     
 
@@ -288,13 +307,26 @@ if(message.content.startsWith( x + 'info')){
     .setColor("RED")
     .setTitle('Mint')
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, music to currency, currency to fun.`)
+   .setFooter(`Thank you for using Mint💓`)
     .addFields(
         { name: 'Version', value: '0.0.3', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size , inline: true },
+        {
+            name: "Invite me!",
+            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot)",inline:true
+          },
+          {
+            name: "Support Server",
+            value: "[Join Support Server](https://discord.gg/4A6vZTmStS).",inline:true
+          },
+          {
+            name: "Vote for me!",
+            value: "[Vote](https://top.gg/bot/725787532008095744/vote)",inline:true
+          },
     )
     .setThumbnail(message.client.user.displayAvatarURL())
-    
+
     message.channel.send(Info)
 }
 let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','whore','slut'] //words
