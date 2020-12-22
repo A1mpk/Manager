@@ -146,7 +146,6 @@ try{
 
            
 })
-
 client.on('inviteCreate', invite => {
     const guildChannel = invite.guild.channels.cache.find(c=> c.name === "logs")
     if(!guildChannel) return invite.guild.channels.create("logs")
@@ -306,7 +305,7 @@ if(message.content.startsWith( x + 'info')){
     const Info = new Discord.MessageEmbed()
     .setColor("RED")
     .setTitle('Mint')
-    .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, music to currency, currency to fun.`)
+    .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint💓`)
     .addFields(
         { name: 'Version', value: '0.0.3', inline: true },
