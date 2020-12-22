@@ -257,7 +257,10 @@ client.on('guildMemberAdd', member => {
 client.on('message', message => {
     if(message.author.bot)return;
     if(message.channel.type === 'dm') return;
-   
+   if(message.content === "https://cdn.discordapp.com/attachments/642149292806635536/790622588564799518/video0_82.mp4"){
+       message.delete()
+       message.channel.send(`Stop SENDIND THAT!!!#!@31#!#@%!@$`)
+   };
     if(message.content.startsWith(x +`credits`)){
         const BotInfo = new Discord.MessageEmbed()
         .setTitle(`Credits`)
