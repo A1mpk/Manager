@@ -270,7 +270,6 @@ client.on('message', async message => {
         const BotInfo = new Discord.MessageEmbed()
         .setTitle(`Credits`)
         .addField(`Co-Owner`, `Souxle#8217`)
-        .addField('Motivation : ', `SP`)
         .addField('Profile Picture', `Friendly#9411 (Bot Owner)`)
         .setThumbnail(message.guild.me.user.displayAvatarURL())
         .setFooter(`Command raised by ${message.member.user.tag}`)
