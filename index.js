@@ -445,7 +445,7 @@ for (var i in blacklisted) {
 
 
 client.mongoose.init();
-client.login(`NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.L7Hs7oXhmz--Bkw2Hf-t1Y9MM8o`);
+client.login(process.env.token);
 
 
 
