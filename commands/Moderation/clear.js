@@ -20,13 +20,13 @@ module.exports = {
                 if (isNaN(amount)) return message.channel.send(`That's not a number.`); 
                 
                 if (amount > 100) return message.channel.send(`Please enter an number below **100**.`); 
-                if (amount < 1) return message.channel.send(`You really want me to clear 1 and less messages?????`)
+                if (amount < 2) return message.channel.send(`You really want me to clear 1 and less messages?????`)
                 else
                 
                 message.channel.messages.fetch({ limit: amount }).then(messages => { 
                     message.channel.bulkDelete(messages 
                 )})
-                message.channel.send(`I have cleared ${amount} messages!`)
+                message.channel.send(`I have cleared **${amount}** messages!`).then(m => m.delete({timeout: 5000}))
             }else message.channel.send('You need `MANAGE_MESSAGES` to use this command.')
             
       

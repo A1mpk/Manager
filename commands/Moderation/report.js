@@ -26,7 +26,7 @@ module.exports = {
                 message.guild.owner.send(Report)
              }
     }catch(er){
-      return;      
+      message.channel.send(`The owner of this guild has turned their DM's off which makes it that I cannot text them.`)    
     }
     }
 }

@@ -7,7 +7,7 @@ module.exports = {
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         message.channel.send({
             embed:{
-                title: 'List of commands [37]',
+                title: 'List of commands [38]',
                 color: 3066993, 
                 fields:[
                     {
@@ -24,7 +24,7 @@ module.exports = {
                     },
                     {
                         name: '**🛠️ Utilities [14]**',
-                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,suggestion'
+                        value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,suggestion,credits'
                     }
                 ],
                 

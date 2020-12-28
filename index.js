@@ -1,6 +1,6 @@
 /// THE VARIABLES IMPORTANT!
 const { POINT_CONVERSION_HYBRID, EMFILE, S_IFBLK } = require('constants');
-const { Client, Collection, Structures, DiscordAPIError } = require('discord.js');
+const { Client, Collection, Structures, DiscordAPIError, Util, MessageEmbed} = require('discord.js');
 const Discord = require('discord.js');
 const fs = require('fs');
 const mongoose = require('mongoose');
@@ -18,7 +18,8 @@ const { Z_NEED_DICT } = require('zlib');
 const { error, memory } = require('console');
 const { getPackedSettings } = require('http2');
 const { name } = require('./commands/Moderation/guild');
-const ytdl = require('ytdl-core')
+// MUSIC VARIABLES :
+
 // COMMAND HANDLER
 config({
     path: `${__dirname}/.env`
@@ -47,6 +48,7 @@ for(const file of commandFiles){
 /// PREFIX
 const x = '>';
 /// ALL THE LISTENERS :
+
 client.on('guildCreate', guild => {
     guild.channels.create('logs')
     let defaultChannel = "";
@@ -149,6 +151,7 @@ try{
 client.on('inviteCreate', invite => {
     const guildChannel = invite.guild.channels.cache.find(c=> c.name === "logs")
     if(!guildChannel) return invite.guild.channels.create("logs")
+  
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Invite Created`)
     .addField(`Created by`, invite.inviter.tag)
@@ -254,9 +257,11 @@ client.on('guildMemberAdd', member => {
   
 })
 /// ALL THE COMMANDS HANDLER!
-client.on('message', message => {
+client.on('message', async message => {
     if(message.author.bot)return;
     if(message.channel.type === 'dm') return;
+
+   
    if(message.content === "https://cdn.discordapp.com/attachments/642149292806635536/790622588564799518/video0_82.mp4"){
        message.delete()
        message.channel.send(`Stop SENDIND THAT!!!#!@31#!#@%!@$`)
@@ -311,9 +316,9 @@ if(message.content.startsWith( x + 'info')){
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint💓`)
     .addFields(
-        { name: 'Version', value: '0.0.3', inline: true },
+        { name: 'Version', value: '0.0.5', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
-        { name: 'Users', value: message.client.users.cache.size , inline: true },
+        { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
             name: "Invite me!",
             value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot)",inline:true
@@ -348,7 +353,6 @@ for (var i in blacklisted) {
     if(command === 'kick'){
         client.commands.get('kick').execute(message, args)
     };
- 
     if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
     };
@@ -372,9 +376,6 @@ for (var i in blacklisted) {
     };
     if(command === 'help'){
     client.commands.get('help').execute(message, args)
-    };
-    if(command === 'play'){
-    client.commands.get('play').execute(message, args)
     };
     if(command === 'ban'){
         client.commands.get('ban').execute(message, args)
@@ -440,25 +441,11 @@ for (var i in blacklisted) {
     if(command === 'karen'){
         client.commands.get('karen').execute(message, args)
     };
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 });
-/// BOT LOGIN + DATA BASE LOGIN
+
+
 client.mongoose.init();
-client.login(process.env.token);
+client.login(`NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.L7Hs7oXhmz--Bkw2Hf-t1Y9MM8o`);
 
 
 
