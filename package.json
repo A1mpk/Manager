@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
+  "engines": {
+    "node": "v12.18.3"
+  },
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
