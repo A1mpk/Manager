@@ -18,8 +18,11 @@ const { Z_NEED_DICT } = require('zlib');
 const { error, memory } = require('console');
 const { getPackedSettings } = require('http2');
 const { name } = require('./commands/Moderation/guild');
-// MUSIC VARIABLES :
+const ytdl = require('ytdl-core');
+const Youtube = require('simple-youtube-api')
+const youtube = new Youtube("AIzaSyDRzH6PP1AR3FR5CYB6riNei4BSEdJqLf8")
 
+const queue = new Map();
 // COMMAND HANDLER
 config({
     path: `${__dirname}/.env`
@@ -62,7 +65,7 @@ guild.channels.cache.forEach((channel) => {
   defaultChannel.send({
     embed:{
         title: `Manager`,
-        color: 3066993, 
+        color: "ORANGE", 
         description: "Thanks for inviting me to your server! Here is a list of all my commands.",
         fields:[
             {
@@ -72,6 +75,10 @@ guild.channels.cache.forEach((channel) => {
             {
                 name: '**🤩 Fun [5]**',
                 value: 'pain,happy,8ball,say,karen'
+            },
+            {
+                name: '🎵 Music [9]',
+                value: 'play,skip,stop,pause,np,resume,volume,queue,loop'
             },
             {
                 name: '**👂 LISTENERS [8]**',
@@ -91,9 +98,7 @@ guild.channels.cache.forEach((channel) => {
 })
 client.on('ready', () => {
     console.log(`I am in ${client.guilds.cache.size}.`)
-    client.guilds.cache.forEach(ch => {
-        console.log(ch.name)
-    })
+ 
     client.user.setActivity(`>help`, {type: "WATCHING"})
 })
 client.on('guildMemberRemove', member => {
@@ -103,7 +108,7 @@ client.on('guildMemberRemove', member => {
     const EmbedLeft = new Discord.MessageEmbed()
     .setFooter(`We are now ${member.guild.memberCount} members.`)
     .setTimestamp()
-    .setColor(3066993)
+    .setColor("ORANGE")
     .setThumbnail(member.user.displayAvatarURL())
     .setAuthor(`Member Left`)
     .setDescription(`Sad momento! ${member} just left the group!`)
@@ -136,7 +141,7 @@ try{
     .setThumbnail(message.member.user.displayAvatarURL())
     .setTimestamp()
     .setFooter(`Deleted Message Log`)
-    .setColor(3066993)
+    .setColor("ORANGE")
     GuildChannel.send(MessageEmbed)
     }catch(err){
     return;
@@ -162,7 +167,7 @@ client.on('inviteCreate', invite => {
     .setThumbnail(invite.inviter.displayAvatarURL())
     .setTimestamp()
     .setFooter(`Invite Logger`)
-    .setColor(3066993)
+    .setColor("ORANGE")
     guildChannel.send(MessageEmbed2)
 } )
 client.on('inviteDelete', invite => {
@@ -177,7 +182,7 @@ client.on('inviteDelete', invite => {
     .setThumbnail(invite.inviter.displayAvatarURL())
     .setTimestamp()
     .setFooter(`Invite Delete Logger`)
-    .setColor(3066993)
+    .setColor("ORANGE")
     guildChannel.send(MessageEmbed2)
 })
 client.on('emojiCreate', emoji => {
@@ -191,7 +196,7 @@ client.on('emojiCreate', emoji => {
     .addField(`Emoji`, emoji)
     .setTimestamp()
     .setFooter(`Emoji Created`)
-    .setColor(3066993)
+    .setColor("ORANGE")
     guildChannel23.send(MessageEmbed)
 })
 client.on('emojiDelete', emoji => {
@@ -204,7 +209,7 @@ client.on('emojiDelete', emoji => {
     .addField('Emoji Animated', emoji.animated)
     .setTimestamp()
     .setFooter(`Emoji Deleted`)
-    .setColor(3066993)
+    .setColor("ORANGE")
     guildChannel23.send(MessageEmbed)
 })
 client.on('roleDelete', Role=> {
@@ -219,7 +224,7 @@ client.on('roleDelete', Role=> {
     .addField(`Role Mentionable`, Role.mentionable)
     .setTimestamp()
     .setThumbnail(Role.guild.iconURL())
-    .setColor(3066993)
+    .setColor("ORANGE")
     role.send(ROleInfo)
 })
 client.on('guildMemberAdd', member => {
@@ -245,7 +250,7 @@ client.on('guildMemberAdd', member => {
   const Member = new Discord.MessageEmbed()
   .setDescription(`Hey ${member}, welcome to ${member.guild}.`)
   .setThumbnail(member.user.displayAvatarURL())
-  .setColor(3066993)
+  .setColor("ORANGE")
   .setTitle(`Member Joined`)
   .setFooter(`${member.guild.memberCount} members.`)
   .setTimestamp()
@@ -259,24 +264,272 @@ client.on('guildMemberAdd', member => {
 /// ALL THE COMMANDS HANDLER!
 client.on('message', async message => {
     if(message.author.bot)return;
+    const serverQueue = queue.get(message.guild.id);
     if(message.channel.type === 'dm') return;
-
+    if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
+        execute(message, serverQueue);
+        return;
+      } else if (message.content.toLowerCase().includes(x +"skip".toLowerCase())) {
+        skip(message, serverQueue);
+        return;
+      } else if (message.content.toLowerCase().includes(x +"stop".toLowerCase())) {
+        stop(message, serverQueue);
+        return;
+      }else if(message.content.toLowerCase().includes(x +"volume".toLowerCase())){
+        volume(message, serverQueue)
+      }else if(message.content.toLowerCase().includes(x +"np".toLowerCase())){
+        np(message,serverQueue)
+      }else if(message.content.toLowerCase().includes(x +"queue".toLowerCase())){
+        Queue(message, serverQueue)
+      }else if(message.content.toLowerCase().includes(x +"pause".toLowerCase())){
+        pause(message, serverQueue)
+      }else if (message.content.toLowerCase().includes(x +"resume".toLowerCase())){
+        resume(message, serverQueue)
+      }else if(message.content.toLowerCase().includes(x +"loop".toLowerCase())){
+         loop(message, serverQueue)
+      }
+      async function execute(message, serverQueue) {
+        const args = message.content.slice(5)
+        const searchString = message.content.slice(5)
+        if(!args) return message.channel.send(`Please enter a song name or a youtube link for me to play!`)
+        const  url = args ? args.replace(/<(.+)>/g, '$1') : ''
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel)
+          return message.channel.send(
+            "You need to be in a voice channel to play music!"
+          );
+        const permissions = voiceChannel.permissionsFor(message.client.user);
+        if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+          return message.channel.send(
+            "I need the permissions to join and speak in your voice channel!"
+          );
+        }
+        try{ 
+          var video = await youtube.getVideoByID(url)
+        }catch {
+          try {
+            var videos = await youtube.searchVideos(searchString, 1)
+            var video = await youtube.getVideoByID(videos[0].id)
+          }catch {
+            return message.channel.send(`I couldn't find any search results`)
+          }
+        }
+      
+    
+        const song = {
+              id: video.id,
+              title: Util.escapeMarkdown(video.title),
+              url: `https://www.youtube.com/watch?v=${video.id}`,
+              author: video.channel.title,
+              channelURL: video.channel.url,
+             date: video.publishedAt,
+              minutes: video.duration.minutes,
+              seconds: video.duration.seconds,
+              hours: video.duration.hours,
+            
+         };
+      
+        if (!serverQueue) {
+          const queueContruct = {
+            textChannel: message.channel,
+            voiceChannel: voiceChannel,
+            connection: null,
+            songs: [],
+            volume: 5,
+            playing: true,
+            loop: false
+          };
+      
+          queue.set(message.guild.id, queueContruct);
+      
+          queueContruct.songs.push(song);
+      
+          try {
+            var connection = await voiceChannel.join();
+            queueContruct.connection = connection;
+            play(message.guild, queueContruct.songs[0]);
+          } catch (err) {
+            console.log(err);
+            queue.delete(message.guild.id);
+            return message.channel.send(err);
+          }
+        } else {
+         
+            const QueueAdded = new MessageEmbed()
+            .setAuthor(`🎵Added to queue🎵`)
+            .setDescription(`**Queued [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`)
+            .setColor("ORANGE")
+            .setTimestamp()
+          serverQueue.songs.push(song);
+          return message.channel.send(QueueAdded);
+          
+            
+        }
+      }
+      // QUEUE
+      function Queue(message, serverQueue){
+        if(!serverQueue)return message.channel.send(`The queue is empty!`)
+        const QueueEmbed = new MessageEmbed()
+        .setDescription(`
+        ${serverQueue.songs.map(song => `- **[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`).join(`\n`)}`)
+        .setColor("ORANGE")
+        .setTimestamp()
+        .setAuthor(`Queue`)
+      
+       message.channel.send(QueueEmbed)
+       return undefined
+        }
+      // SKIP
+      function skip(message, serverQueue) {
+        if (!message.member.voice.channel)
+          return message.channel.send(
+            "You have to be in a voice channel to stop the music!"
+          );
+        if (!serverQueue)
+          return  message.channel.send("There is nothing in the queue to skip! Add some music!");
+            serverQueue.connection.dispatcher.end();
+           
+        
+          
+        
+      }
+      // LOOP 
+      function loop(message, serverQueue){
+        if(!message.member.voice.channel) return message.channel.send(`You need to be in a voice channel to loop the song.`)
+        if(!serverQueue) return message.channel.send('The song queue is empty! Add some music.')
+    
+        serverQueue.loop = !serverQueue.loop
+        return message.channel.send(`${serverQueue.loop ? `**Enabled**` : `**Disabled**`} looping.`)
+      }
+      // STOP
+      function stop(message, serverQueue) {
+        if (!message.member.voice.channel)
+          return message.channel.send(
+            "You have to be in a voice channel to stop the music!"
+          );
+          
+        if (!serverQueue)
+          return message.channel.send("There is no song that I could stop!");
+          
+        serverQueue.songs = [];
+        message.channel.send(`I have stopped the music for you.`)
+        serverQueue.connection.dispatcher.end();
+      }
+      // VOLUME
+      function volume(message, serverQueue) {
+        const volumeArgs = message.content.slice(7)
+        const Playing = new MessageEmbed()
+        .setAuthor(`Volume`)
+        .setDescription(`🎵✅Successfully changed the volume to **${volumeArgs}**!`)
+        .setColor("ORANGE")
+        .setTimestamp()
+        
+       
+        if(!message.member.voice.channel)return message.channel.send(`You need to be in a voice channel`);
+          if(!serverQueue) return message.channel.send(`There is no music playing!`)
+          if(!volumeArgs)return message.channel.send(`The current volume is **${serverQueue.volume}**!`)
+          if(isNaN(volumeArgs)) return message.channel.send(`That is not a number!`);
+          if(volumeArgs > 10)return message.channel.send(`The maximum volume is 10!`)
+          serverQueue.volume = volumeArgs
+          serverQueue.connection.dispatcher.setVolumeLogarithmic(volumeArgs /5)
+          message.channel.send(Playing)
+          return undefined
+      }
+      
+      // NOW PLAYING
+      function np(message, serverQueue){
+        if(!serverQueue) return message.channel.send(`There is nothing playing!`);
+       if(!serverQueue.songs[0].hours){
+        const NowPlayingHours = new MessageEmbed()
+        .setAuthor(`🎵Currently Playing🎵`)
+        .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
+        .setColor("ORANGE")
+        .addFields(
+          { name: `Channel`, value: `[${serverQueue.songs[0].author}](${serverQueue.songs[0].channelURL})`, inline: true }, 
+          { name: `Duration`, value: `${serverQueue.songs[0].minutes}:${serverQueue.songs[0].seconds}`, inline: true }, 
+        )
+        .setTimestamp()
+         message.channel.send(NowPlayingHours)
+      }else if(!serverQueue.songs[0].minutes){
+        const NowPlayMinutes = new MessageEmbed()
+        .setAuthor(`🎵Currently Playing🎵`)
+        .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
+        .setColor("ORANGE")
+        .addFields(
+          { name: `Channel`, value: `[${serverQueue.songs[0].author}](${serverQueue.songs[0].channelURL})`, inline: true }, 
+          { name: `Duration`, value: `00:${serverQueue.songs[0].seconds}`, inline: true }, 
+        )
+        .setTimestamp()
+         message.channel.send(NowPlayMinutes)
+      }
+        
+      }
+      // RESUME
+      function resume(message,serverQueue){
+        if(!message.member.voice.channel)return message.channel.send('You need to be in a voice channel to resume the music.')
+        if(!serverQueue)return message.channel.send(`There is no music to resume.`)
+        if(serverQueue.playing) return message.channel.send(`The music is already playing.`)
+        serverQueue.playing = true
+        serverQueue.connection.dispatcher.resume()
+        message.channel.send(`I have resumed the music for you!`)
+        return undefined
+      }
+      // Seconds
+     
+      // PAUSE
+      function pause(message, serverQueue){
+        if(!message.member.voice.channel) return message.channel.send(`You need to be in a voice channel to pause the music!`)
+        if(!serverQueue) return message.channel.send(`There is no songs playing.`)
+        if(!serverQueue.playing)return message.channel.send(`The music is already paused.`)
+        serverQueue.playing = false
+        serverQueue.connection.dispatcher.pause()
+        message.channel.send(`I have paused the music.`)
+        return undefined
+      }
+      // PLAY
+      function play(guild, song) {
+        
+        const serverQueue = queue.get(guild.id);
+        if (!song) {
+          serverQueue.voiceChannel.leave();
+          queue.delete(guild.id);
+          return;
+        }
+       
+        
+        const Playing = new MessageEmbed()
+        .setAuthor(`🎵Now Playing🎵`)
+        .setDescription(`**Playing [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!**`)
+        .setColor("ORANGE")
+        .setTimestamp()
+       
+        const dispatcher = serverQueue.connection
+          .play(ytdl(song.url))
+          .on("finish", () => {
+            if(!serverQueue.loop)serverQueue.songs.shift();
+            play(guild, serverQueue.songs[0]);
+          })
+          .on("error", error => console.error(error));
+        dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+        serverQueue.textChannel.send(Playing);
+        
+      }
    
    if(message.content === "https://cdn.discordapp.com/attachments/642149292806635536/790622588564799518/video0_82.mp4"){
        message.delete()
        message.channel.send(`Stop SENDIND THAT!!!#!@31#!#@%!@$`)
    };
-    if(message.content.startsWith(x +`credits`)){
+    if(message.content.toLowerCase().includes(x +"credits".toLowerCase())){
         const BotInfo = new Discord.MessageEmbed()
         .setTitle(`Credits`)
         .addField(`Co-Owner`, `Souxle#8217`)
         .addField('Profile Picture', `Friendly#9411 (Bot Owner)`)
         .setThumbnail(message.guild.me.user.displayAvatarURL())
         .setFooter(`Command raised by ${message.member.user.tag}`)
-        .setColor(3066993)
+        .setColor("ORANGE")
         message.channel.send(BotInfo)
     }
-    if(message.content.startsWith(x + "uptime")){
+    if(message.content.toLowerCase().includes(x +"uptime".toLowerCase())){
     
 
         let totalSeconds = (client.uptime / 1000);
@@ -295,12 +548,12 @@ client.on('message', async message => {
         )
         .setTimestamp()
         .setFooter(`Uptime`)
-        .setColor(3066993)
+        .setColor("ORANGE")
         message.channel.send(UptimeEMbed)
 }
 if(message.content === `<@!${client.user.id}>`){
    const MyPRefixIs = new Discord.MessageEmbed()
-        .setColor(3066993)
+        .setColor("ORANGE")
         .setAuthor('Prefix')
         .setDescription('`>`')
         .setTimestamp()
@@ -308,12 +561,12 @@ if(message.content === `<@!${client.user.id}>`){
         
         
 }
-if(message.content.startsWith( x + 'info')){
+if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     const Info = new Discord.MessageEmbed()
     .setColor("RED")
     .setTitle('Mint')
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
-   .setFooter(`Thank you for using Mint💓`)
+   .setFooter(`Thank you for using Mint`)
     .addFields(
         { name: 'Version', value: '0.0.5', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
@@ -348,15 +601,15 @@ for (var i in blacklisted) {
 }
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
-    const command = args.shift().toLowerCase();
+    const command =args.shift().toLowerCase();
     if(command === 'kick'){
-        client.commands.get('kick').execute(message, args)
+        client.commands.get('kick').execute(message,args)
     };
     if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
     };
     if(command === 'announce'){
-    client.commands.get('announce').execute(message, args)
+    client.commands.get('announce').execute(message,args)
     };
     if(command === 'avatar'){
     client.commands.get('avatar').execute(message, args)

@@ -11,13 +11,13 @@ module.exports = {
             const Report = new Discord.MessageEmbed()
             .setAuthor(`Report by ${message.member.user.tag}`)
             .setDescription(`${report}`)
-            .setColor(3066993)
+            .setColor("ORANGE")
             .setFooter(`Command raised by ${message.member.user.tag}`)
              if (!report) {
                  const repportt = new Discord.MessageEmbed()
                 .setDescription("Sends a report to the owner of the guild.")
                 .addField("USAGE : `report <problem>`", '** **')
-                .setColor(3066993)
+                .setColor("ORANGE")
                 .setTitle('REPORT - UTILITIES')
                 message.channel.send(repportt)
              }

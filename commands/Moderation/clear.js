@@ -10,7 +10,7 @@ module.exports = {
         .setTitle('CLEAR - MODERATION')
         .setDescription('Clears the amount of message.')
         .addField("USAGE : `clear <amount>`", "** **")
-        .setColor(3066993)
+        .setColor("ORANGE")
         .setTimestamp()
         const aaa = message.content.split(' ').slice(1); 
         const amount = aaa.join(' ');

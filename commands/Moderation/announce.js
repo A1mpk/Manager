@@ -9,7 +9,7 @@ module.exports = {
          
             let args2 = message.content.slice("9")
             const custom_message = new Discord.MessageEmbed()
-            .setColor(3066993)
+            .setColor("ORANGE")
             .setAuthor('Announcement')
             .setDescription(args2)
             if(!args2){
@@ -18,7 +18,7 @@ module.exports = {
               .setDescription('Announces a important message.')
               .addField('USAGE : `announce <message>`', "** **")
               .setTimestamp()
-              .setColor(3066993)
+              .setColor("ORANGE")
               message.channel.send(ARGSNEEDED)
             }else
             if(args2){

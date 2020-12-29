@@ -10,9 +10,9 @@ module.exports = {
       .setDescription('Credits a user.')
       .addField('USAGE : `credit <message>`', "** **")
       .setTimestamp()
-      .setColor(3066993)
+      .setColor("ORANGE")
       const custo3m_message = new Discord.MessageEmbed()
-              .setColor(3066993)
+              .setColor("ORANGE")
               .setAuthor('Credits')
               .setDescription(`Credits to ${args}`)
         if(message.member.hasPermission("MANAGE_CHANNELS")){

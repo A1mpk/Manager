@@ -8,7 +8,7 @@ module.exports = {
         const idchannel = message.content.slice(10)
        if(!idchannel){
         const LOL = new Discord.MessageEmbed()
-        .setColor(3066993)
+        .setColor("ORANGE")
         .setAuthor('getUSERID - MODERATION')
         .setDescription(`Gets the id of the mentionned user.`)
         .addField('USAGE : `getUSERID <mentionUser>`', "** **")

@@ -7,7 +7,7 @@ module.exports = {
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const lol = message.content.slice(9)
         const LOL = new Discord.MessageEmbed()
-        .setColor(3066993)
+        .setColor("ORANGE")
         .setAuthor('BOT_NICK - MODERATION')
         .setDescription(`Changes the bot's nickname.`)
         .addField('USAGE : `bot_nick <nickname>`', "** **")

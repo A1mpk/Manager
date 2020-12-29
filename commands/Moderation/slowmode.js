@@ -12,7 +12,7 @@ module.exports = {
         .setTitle('SLOWMODE - MODERATION')
             .setDescription('Sets the message cooldown.')
             .addField("USAGE : `slowmode <seconds>`", "** **")
-            .setColor(3066993)
+            .setColor("ORANGE")
             .setTimestamp()
             if(message.member.hasPermission(['MANAGE_CHANNELS'])){
                 if (!amount) return message.channel.send(h69) 

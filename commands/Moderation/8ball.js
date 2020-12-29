@@ -13,7 +13,7 @@ module.exports = {
     ]
       const b = message.content.slice(6)
         const LOL = new Discord.MessageEmbed()
-        .setColor(3066993)
+        .setColor("ORANGE")
         .setAuthor('8ball - FUN')
         .setDescription(`8ball is a command that replies with Yes, No, Maybe`)
         .addField('USAGE : `8ball <message>`', "** **")

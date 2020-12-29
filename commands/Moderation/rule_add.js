@@ -17,12 +17,12 @@ module.exports = {
               .setDescription('Announces a important message.')
               .addField('USAGE : `rule_add <rules>`', "** **")
               .setTimestamp()
-              .setColor(3066993)
+              .setColor("ORANGE")
               message.channel.send(ARGSNEEDED2)
             }
 
               const custom4_message = new Discord.MessageEmbed()
-              .setColor(3066993)
+              .setColor("ORANGE")
               .setAuthor('Rules')
               .setDescription(`Welcome to **${message.guild.name}**, and here are the rules you should follow : 
               ${args3}`)

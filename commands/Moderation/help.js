@@ -7,8 +7,8 @@ module.exports = {
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         message.channel.send({
             embed:{
-                title: 'List of commands [38]',
-                color: 3066993, 
+                title: 'List of commands [44]',
+                color: "ORANGE", 
                 fields:[
                     {
                         name: '**😴 Moderation [10]**',
@@ -17,6 +17,10 @@ module.exports = {
                     {
                         name: '**🤩 Fun [3]**',
                         value: '8ball,say,karen'
+                    },
+                    {
+                        name: '🎵 Music [9]',
+                        value: 'play,skip,stop,pause,np,resume,volume,queue,loop'
                     },
                     {
                         name: '**👂 LISTENERS [8]**',
@@ -29,7 +33,7 @@ module.exports = {
                 ],
                 
                 footer: {
-                    text: "Love from Mint Support💓"
+                    text: "Love from Mint Support"
                 }
             }
             })
