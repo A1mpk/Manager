@@ -21,7 +21,12 @@ const { name } = require('./commands/Moderation/guild');
 const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api')
 const youtube = new Youtube("AIzaSyDRzH6PP1AR3FR5CYB6riNei4BSEdJqLf8")
-
+const Levels = require('discord-xp');
+const levels = require('discord-xp/models/levels');
+const canvacord = require("canvacord");
+const Canvacord = require('canvacord/src/Canvacord');
+const { discriminators } = require('discord-xp/models/levels');
+Levels.setURL("mongodb+srv://admin:LmVUsNQeLiYCsJfr@manager.hd8gy.mongodb.net/<DataBase505>?retryWrites=true&w=majority")
 const queue = new Map();
 // COMMAND HANDLER
 config({
@@ -266,6 +271,54 @@ client.on('message', async message => {
     if(message.author.bot)return;
     const serverQueue = queue.get(message.guild.id);
     if(message.channel.type === 'dm') return;
+    const randomXp = Math.floor(Math.random() * 2) + 1;
+    const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXp);
+    if(hasLeveledUp){
+      
+      const user = await Levels.fetch(message.author.id, message.guild.id);
+      message.channel.send(`Congratulations ${message.member.user.tag}, you just reached level ${user.level}`)
+    }
+
+    if(message.content.toLowerCase().includes( x + "rank".toLowerCase())){ 
+      
+      const target = message.author;
+      const user = await Levels.fetch(message.author.id, message.guild.id)
+      if(!user) return message.channel.send(`You dont have any xp yet, be more active in this guild to gain more xp!`)
+      const neededXP = Levels.xpFor(parseInt(user.level) + 1);
+      const Rank = new canvacord.Rank()
+      .setLevel(user.level)
+      .setBackground('COLOR','BLACK' )
+      .setAvatar(message.author.displayAvatarURL({dynamic: false, format: 'png'}))
+      .setCurrentXP(user.xp)
+      .setRequiredXP(neededXP)
+      .setStatus(target.presence.status)
+      .setProgressBar("WHITE", "COLOR")
+      .setUsername(target.username)
+      .setDiscriminator(target.discriminator)
+
+      Rank.build().then(
+        data => {
+          const attachments = new Discord.MessageAttachment(data, '')
+          message.channel.send(attachments)
+        }
+      )
+    }
+    if(message.content.toLowerCase().includes( x + "leaderboard".toLowerCase())){
+      const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, 10);
+     
+      if( rawLeaderboard.length < 1)return message.channel.send(`Yet no one is ranked.`)
+      
+      const leaderboard = Levels.computeLeaderboard(client, rawLeaderboard)
+
+      const lb = (await leaderboard).map( e => `**User :** ${e.username}#${e.discriminator}\n **Rank** : ${e.position} \n**Level**: ${e.level}\n**XP** : ${e.xp.toLocaleString()}`);
+      const LeaderBord = new MessageEmbed()
+      .setTitle(`Leaderboard in ${message.guild.name}`)
+      .setDescription(lb.join("\n\n\n"))
+      .setTimestamp()
+      .setColor("ORANGE")
+      message.channel.send(LeaderBord)
+    }
+
     if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
         execute(message, serverQueue);
         return;
@@ -322,7 +375,6 @@ client.on('message', async message => {
               url: `https://www.youtube.com/watch?v=${video.id}`,
               author: video.channel.title,
               channelURL: video.channel.url,
-             date: video.publishedAt,
               minutes: video.duration.minutes,
               seconds: video.duration.seconds,
               hours: video.duration.hours,
@@ -399,7 +451,7 @@ client.on('message', async message => {
         if(!serverQueue) return message.channel.send('The song queue is empty! Add some music.')
     
         serverQueue.loop = !serverQueue.loop
-        return message.channel.send(`${serverQueue.loop ? `**Enabled**` : `**Disabled**`} looping.`)
+        return message.channel.send(`${serverQueue.loop ? `**✅Enabled**` : `**✅Disabled**`} looping.`)
       }
       // STOP
       function stop(message, serverQueue) {
@@ -447,6 +499,7 @@ client.on('message', async message => {
         .addFields(
           { name: `Channel`, value: `[${serverQueue.songs[0].author}](${serverQueue.songs[0].channelURL})`, inline: true }, 
           { name: `Duration`, value: `${serverQueue.songs[0].minutes}:${serverQueue.songs[0].seconds}`, inline: true }, 
+          { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true }, 
         )
         .setTimestamp()
          message.channel.send(NowPlayingHours)
@@ -588,17 +641,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
 
     message.channel.send(Info)
 }
-let blacklisted = ['nigga','nigger','cunt','faggot','retard','retarded','retarted','whore','slut'] //words
 
-
-let foundInText = false;
-for (var i in blacklisted) { 
-  if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) foundInText = true;
-}
-
-  if (foundInText) {
-    message.delete()
-}
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
     const command =args.shift().toLowerCase();
@@ -623,9 +666,7 @@ for (var i in blacklisted) {
     if(command === 'guild'){
     client.commands.get('guild').execute(message, args)
     };
-    if(command === 'rank'){
-    client.commands.get('rank').execute(message, args)
-    };
+  
     if(command === 'help'){
     client.commands.get('help').execute(message, args)
     };
