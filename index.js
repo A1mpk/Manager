@@ -269,14 +269,15 @@ client.on('guildMemberAdd', member => {
 /// ALL THE COMMANDS HANDLER!
 client.on('message', async message => {
     if(message.author.bot)return;
+    
     const serverQueue = queue.get(message.guild.id);
     if(message.channel.type === 'dm') return;
-    const randomXp = Math.floor(Math.random() * 2) + 1;
+    const randomXp = Math.floor(Math.random() * 13) + 1;
     const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXp);
     if(hasLeveledUp){
-      
+    
       const user = await Levels.fetch(message.author.id, message.guild.id);
-      message.channel.send(`Congratulations ${message.member.user.tag}, you just reached level ${user.level}`)
+      message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
     }
 
     if(message.content.toLowerCase().includes( x + "rank".toLowerCase())){ 
@@ -293,6 +294,7 @@ client.on('message', async message => {
       .setRequiredXP(neededXP)
       .setStatus(target.presence.status)
       .setProgressBar("WHITE", "COLOR")
+      .setProgressBarTrack("GREY")
       .setUsername(target.username)
       .setDiscriminator(target.discriminator)
 
@@ -304,7 +306,7 @@ client.on('message', async message => {
       )
     }
     if(message.content.toLowerCase().includes( x + "leaderboard".toLowerCase())){
-      const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, 10);
+      const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id,5 );
      
       if( rawLeaderboard.length < 1)return message.channel.send(`Yet no one is ranked.`)
       
@@ -320,6 +322,7 @@ client.on('message', async message => {
     }
 
     if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
+      
         execute(message, serverQueue);
         return;
       } else if (message.content.toLowerCase().includes(x +"skip".toLowerCase())) {
@@ -340,7 +343,9 @@ client.on('message', async message => {
         resume(message, serverQueue)
       }else if(message.content.toLowerCase().includes(x +"loop".toLowerCase())){
          loop(message, serverQueue)
-      }
+      }else if(message.content.toLowerCase().includes(x +"clearqueue".toLowerCase())){
+        clearqueue(message, serverQueue)
+     }
       async function execute(message, serverQueue) {
         const args = message.content.slice(5)
         const searchString = message.content.slice(5)
@@ -397,7 +402,8 @@ client.on('message', async message => {
           queueContruct.songs.push(song);
       
           try {
-            var connection = await voiceChannel.join();
+            var connection = await voiceChannel.join()
+            connection.voice.setSelfDeaf(true);
             queueContruct.connection = connection;
             play(message.guild, queueContruct.songs[0]);
           } catch (err) {
@@ -491,6 +497,7 @@ client.on('message', async message => {
       // NOW PLAYING
       function np(message, serverQueue){
         if(!serverQueue) return message.channel.send(`There is nothing playing!`);
+        if(!serverQueue.songs[1])return message.channel.send(`Now playing **${serverQueue.songs[0].title}** by **${serverQueue.songs[0].author}**`)
        if(!serverQueue.songs[0].hours){
         const NowPlayingHours = new MessageEmbed()
         .setAuthor(`🎵Currently Playing🎵`)
@@ -511,11 +518,20 @@ client.on('message', async message => {
         .addFields(
           { name: `Channel`, value: `[${serverQueue.songs[0].author}](${serverQueue.songs[0].channelURL})`, inline: true }, 
           { name: `Duration`, value: `00:${serverQueue.songs[0].seconds}`, inline: true }, 
+          { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true },
         )
         .setTimestamp()
          message.channel.send(NowPlayMinutes)
       }
         
+      }
+      // CLEARQUEUE
+      function clearqueue(message, serverQueue){
+        if(!message.member.voice.channel)return message.channel.send(`You need to be in a voice channel to clear the queue`)
+        if(!serverQueue)return message.channel.send(`There is nothing in the queue.`)
+        serverQueue.songs.shift()
+      if(serverQueue.songs[0])return message.channel.send(`There is a song currently playing.`)
+        message.channel.send(`I have cleared the queue.`)
       }
       // RESUME
       function resume(message,serverQueue){
@@ -541,7 +557,7 @@ client.on('message', async message => {
       }
       // PLAY
       function play(guild, song) {
-        
+        message.guild.me.voice.serverDeaf
         const serverQueue = queue.get(guild.id);
         if (!song) {
           serverQueue.voiceChannel.leave();
@@ -738,7 +754,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
 
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login(`NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.qoTkG8wpTxupsGK1xa5DN7MT7CU`);
 
 
 
