@@ -754,7 +754,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
 
 
 client.mongoose.init();
-client.login(`NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.qoTkG8wpTxupsGK1xa5DN7MT7CU`);
+client.login(process.env.token);
 
 
 
