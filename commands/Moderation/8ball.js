@@ -9,7 +9,8 @@ module.exports = {
     let res = [
       "Yes.",
       "No.",
-      "Maybe."
+      "Maybe.",
+      "Are you crazy? Of course!"
     ]
       const b = message.content.slice(6)
         const LOL = new Discord.MessageEmbed()

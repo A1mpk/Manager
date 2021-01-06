@@ -12,6 +12,7 @@ module.exports = {
         .setDescription(`Changes the bot's nickname.`)
         .addField('USAGE : `bot_nick <nickname>`', "** **")
         .setTimestamp()
+        if(!message.guild.me.hasPermission(['MANAGE_NICKNAMES']))return message.channel.send('I don\`t have enough permissions. [`MANAGE_NICKNAMES]')
         try{
             if(message.member.hasPermission('ADMINISTRATOR')){
                 if(!lol){

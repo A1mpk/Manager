@@ -5,6 +5,7 @@ module.exports = {
     disabled: false,
     execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
+        if(!message.guild.me.hasPermission(['MANAGE_NICKNAMES']))return message.channel.send('I don\'t have enough permissions to ban a user. [`MANAGE_NICKNAMES`]');
         const lol = message.content.slice(5)
         const LOL = new Discord.MessageEmbed()
         .setColor("ORANGE")

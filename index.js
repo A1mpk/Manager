@@ -109,7 +109,7 @@ guild.channels.cache.forEach((channel) => {
 client.on('ready', () => {
     console.log(`I am in ${client.guilds.cache.size}.`)
  
-    client.user.setActivity(`>help`, {type: "WATCHING"})
+    client.user.setActivity(`>help || >info for support server :)`, {type: "WATCHING"})
 })
 client.on('guildMemberRemove',async member => {
   const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
@@ -198,6 +198,7 @@ client.on('inviteCreate', invite => {
     .setFooter(`Invite Logger`)
     .setColor("ORANGE")
     const channel = invite.guild.channels.cache.find(a => a.name === "logs")
+    if(!channel)return invite.guild.channels.create("logs")
     channel.send(MessageEmbed2)
 } )
 client.on('inviteDelete', invite => {
@@ -213,6 +214,7 @@ client.on('inviteDelete', invite => {
     .setFooter(`Invite Delete Logger`)
     .setColor("ORANGE")
     const channel = invite.guild.channels.cache.find(a => a.name === "logs")
+    if(!channel)return invite.guild.channels.create("logs")
     channel.send(MessageEmbed2)
 })
 client.on('emojiCreate', emoji => {
@@ -227,6 +229,7 @@ client.on('emojiCreate', emoji => {
     .setFooter(`Emoji Created`)
     .setColor("ORANGE")
     const channel = emoji.guild.channels.cache.find(a => a.name === "logs")
+    if(!channel)return emoji.guild.channels.create("logs")
     channel.send(MessageEmbed)
 })
 client.on('emojiDelete', emoji => {
@@ -262,6 +265,7 @@ client.on('guildMemberAdd', async member => {
   if(!Channel)return member.guild.channels.create("logs")
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
   if(!Joins) return member.guild.channels.create("👋joins")
+  if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
   const canvas = Canvas.createCanvas(506, 218)
   const ctx = canvas.getContext('2d')
   
@@ -305,9 +309,9 @@ try{
 /// ALL THE COMMANDS HANDLER!
 client.on('message', async message => {
     if(message.author.bot)return;
-  
-    const serverQueue = queue.get(message.guild.id);
     if(message.channel.type === 'dm') return;
+    const serverQueue = queue.get(message.guild.id);
+    
     const randomXp = Math.floor(Math.random() * 14) + 1;
     const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXp);
     if(hasLeveledUp){
@@ -694,17 +698,9 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
-            name: "Invite me!",
-            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot)",inline:true
-          },
-          {
-            name: "Support Server",
-            value: "[Join Support Server](https://discord.gg/4A6vZTmStS).",inline:true
-          },
-          {
-            name: "Vote for me!",
-            value: "[Vote](https://top.gg/bot/725787532008095744/vote)",inline:true
-          },
+            name: "Links",
+            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote)",inline:true
+          }
     )
     .setThumbnail(message.client.user.displayAvatarURL())
 

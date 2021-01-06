@@ -6,6 +6,7 @@ module.exports = {
     disabled: false,
     execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
+        if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`MANAGE_CHANNELS`]');
         const aaa = message.content.split(' ').slice(1); 
         const amount = aaa.join(' ');
         const h69 = new Discord.MessageEmbed()
@@ -14,6 +15,7 @@ module.exports = {
             .addField("USAGE : `slowmode <seconds>`", "** **")
             .setColor("ORANGE")
             .setTimestamp()
+            if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`MANAGE_CHANNELS`]');
             if(message.member.hasPermission(['MANAGE_CHANNELS'])){
                 if (!amount) return message.channel.send(h69) 
                 if (isNaN(amount)) return message.channel.send(`That's not a number.`); 

@@ -12,6 +12,7 @@ const Kick = new Discord.MessageEmbed()
          .addField("USAGE : `kick <user> <reason>`", "** **")
          .setColor("ORANGE")
          .setTimestamp()
+         if(!message.guild.me.hasPermission(['KICK_MEMBERS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`KICK_MEMBERS`]');
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need KICK_MEMBERS to use this command.');
          const Kuser = message.guild.member(message.mentions.users.first())
          if(!Kuser) return message.channel.send(Kick); 

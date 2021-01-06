@@ -6,6 +6,7 @@ module.exports = {
     execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
           // Checking if they sent the role name after the @ WORKS
+          if(!message.guild.me.hasPermission('MANAGE_ROLES'))return message.channel.send('I don`\t have enough permissions [`MANAGE_ROLES`]')
           try{
             if(message.member.hasPermission(['ADMINISTRATOR','MANAGE_ROLES'])){
                 const Rolename = message.content.slice(33)

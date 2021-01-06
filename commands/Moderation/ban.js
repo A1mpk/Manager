@@ -12,7 +12,7 @@ module.exports = {
         .addField("USAGE : `ban <user> <reason>`", "** **")
         .setTimestamp()
         .setColor("ORANGE")
-        
+        if(!message.guild.me.hasPermission(['BAN_MEMBERS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`BAN_MEMBERS`]');
         if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
         const Buser = message.guild.member(message.mentions.users.first())
         if(!Buser) return message.channel.send(Ban); 
