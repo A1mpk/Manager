@@ -16,6 +16,7 @@
     "ascii-table": "0.0.9",
     "canvacord": "^5.0.8",
     "canvas": "^2.6.1",
+    "discord-canvas": "^1.4.1",
     "discord-xp": "^1.1.7",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
@@ -28,6 +29,6 @@
     "opusscript": "0.0.7",
     "random-puppy": "^1.1.0",
     "simple-youtube-api": "^5.2.1",
-    "ytdl-core": "^4.2.1"
+    "ytdl-core": "^4.4.0"
   }
 }

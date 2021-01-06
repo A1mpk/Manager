@@ -14,7 +14,7 @@ client.mongoose = require('./utils/mongoose');
 client.categories = fs.readdirSync('./commands/');
 const { config } = require('dotenv');
 const { isRegExp } = require('util');
-const { Z_NEED_DICT } = require('zlib');
+const { Z_NEED_DICT, createGzip } = require('zlib');
 const { error, memory } = require('console');
 const { getPackedSettings } = require('http2');
 const { name } = require('./commands/Moderation/guild');
@@ -27,11 +27,16 @@ const canvacord = require("canvacord");
 const Canvacord = require('canvacord/src/Canvacord');
 const { discriminators } = require('discord-xp/models/levels');
 Levels.setURL("mongodb+srv://admin:LmVUsNQeLiYCsJfr@manager.hd8gy.mongodb.net/<DataBase505>?retryWrites=true&w=majority")
+const Canvas = require('canvas');
+const { waitForDebugger } = require('inspector');
 const queue = new Map();
+
+const { MAX_PACKET_SIZE } = require('opusscript');
 // COMMAND HANDLER
 config({
     path: `${__dirname}/.env`
 });
+
 ['command'].forEach(handler => {
     require(`./handlers/${handler}`)(client);
 });
@@ -106,38 +111,56 @@ client.on('ready', () => {
  
     client.user.setActivity(`>help`, {type: "WATCHING"})
 })
-client.on('guildMemberRemove', member => {
-    const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
-    const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
-    if(!Joins) return member.guild.channels.create("👋joins")
-    const EmbedLeft = new Discord.MessageEmbed()
-    .setFooter(`We are now ${member.guild.memberCount} members.`)
-    .setTimestamp()
-    .setColor("ORANGE")
-    .setThumbnail(member.user.displayAvatarURL())
-    .setAuthor(`Member Left`)
-    .setDescription(`Sad momento! ${member} just left the group!`)
-    if(Channel){
-        Channel.send(EmbedLeft)
-    }else
-   if(!Channel){
-    member.guild.channels.create('logs', {
-        nsfw: false,
-        topic: 'Logging channel made for Mint.',
-        permissionOverwrites: member.guild.roles.everyone, SEND_MESSAGE: false, VIEW_CHANNEL:false
+client.on('guildMemberRemove',async member => {
+  const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
+  if(!Channel)return member.guild.channels.create("logs")
+  const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
+  if(!Joins) return member.guild.channels.create("👋joins")
+  const canvas = Canvas.createCanvas(506, 218)
+  const ctx = canvas.getContext('2d')
+  
+  const background = await Canvas.loadImage(
+   'BLACK-KARD-NOT-RACIST.png'
+  )
+  
+  let x = 0
+  let y = 0
+  ctx.drawImage(background, x , y)
+  
+  
+  const pfp = await Canvas.loadImage(
+   member.user.displayAvatarURL({
+      format: 'png'
     })
-   } 
-   if(Joins){
-       Joins.send(EmbedLeft)
-   }
-   
+  )
+  x = canvas.width / 2 - pfp.width / 2
+  y =10
+  ctx.strokeStyle = 'WHITE';
+  ctx.drawImage(pfp,x, y)
+  
+  ctx.fillStyle = '#ffffff'
+  ctx.font =`25px sans-serif`
+  let text = `${member.user.tag} just left the group.`
+  x = canvas.width / 2 - ctx.measureText(text).width / 2
+  ctx.fillText(text, x, 45 + pfp.height)
+  
+  ctx.font = '20px sans-serif'
+  text = `${member.guild.memberCount} members!`
+  x = canvas.width / 2 - ctx.measureText(text).width / 2
+  ctx.fillText(text,x,80 + pfp.height)
+  const attachment = new Discord.MessageAttachment(canvas.toBuffer())
+
+try{
+  Channel.send(`Bye ${member}, we will miss you!`,attachment)
+  Joins.send(`Bye ${member}, we will miss you!`,attachment)
+}catch(er){
+  console.warn(`An error occured : ${er}`);
+}
 })
 client.on('messageDelete', message => {
     
     if(message.author.bot) return;
 try{
-    const GuildChannel = message.guild.channels.cache.find(c=> c.name === "logs")
-    if(!GuildChannel) return message.guild.channels.create("logs")
     const MessageEmbed = new Discord.MessageEmbed()
     .setAuthor(`Message Deleted`)
     .addField(`Message :`, message)
@@ -147,9 +170,11 @@ try{
     .setTimestamp()
     .setFooter(`Deleted Message Log`)
     .setColor("ORANGE")
-    GuildChannel.send(MessageEmbed)
-    }catch(err){
-    return;
+   
+       const channel = message.guild.channels.cache.find(a => a.name === "logs")
+       channel.send(MessageEmbed)
+    }catch(er){
+      return;
     }
 
 
@@ -159,8 +184,7 @@ try{
            
 })
 client.on('inviteCreate', invite => {
-    const guildChannel = invite.guild.channels.cache.find(c=> c.name === "logs")
-    if(!guildChannel) return invite.guild.channels.create("logs")
+   
   
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Invite Created`)
@@ -173,11 +197,11 @@ client.on('inviteCreate', invite => {
     .setTimestamp()
     .setFooter(`Invite Logger`)
     .setColor("ORANGE")
-    guildChannel.send(MessageEmbed2)
+    const channel = invite.guild.channels.cache.find(a => a.name === "logs")
+    channel.send(MessageEmbed2)
 } )
 client.on('inviteDelete', invite => {
-    const guildChannel = invite.guild.channels.cache.find(c=> c.name === "logs")
-    if(!guildChannel) return invite.guild.channels.create("logs")
+    
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Invite Deleted`)
     .addField(`Deleted by`, invite.inviter.tag)
@@ -188,11 +212,11 @@ client.on('inviteDelete', invite => {
     .setTimestamp()
     .setFooter(`Invite Delete Logger`)
     .setColor("ORANGE")
-    guildChannel.send(MessageEmbed2)
+    const channel = invite.guild.channels.cache.find(a => a.name === "logs")
+    channel.send(MessageEmbed2)
 })
 client.on('emojiCreate', emoji => {
-    const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "logs")
-    if(!guildChannel23) return emoji.guild.channels.create("logs")
+ 
     const MessageEmbed = new Discord.MessageEmbed()
     .setAuthor(`Emoji Created`)
     .addField(`Emoji Name`, emoji.name)
@@ -202,7 +226,8 @@ client.on('emojiCreate', emoji => {
     .setTimestamp()
     .setFooter(`Emoji Created`)
     .setColor("ORANGE")
-    guildChannel23.send(MessageEmbed)
+    const channel = emoji.guild.channels.cache.find(a => a.name === "logs")
+    channel.send(MessageEmbed)
 })
 client.on('emojiDelete', emoji => {
     const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "logs")
@@ -232,56 +257,68 @@ client.on('roleDelete', Role=> {
     .setColor("ORANGE")
     role.send(ROleInfo)
 })
-client.on('guildMemberAdd', member => {
- 
+client.on('guildMemberAdd', async member => {
+  const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
+  if(!Channel)return member.guild.channels.create("logs")
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
-  if(!Joins) return member.guild.channels.create("👋joins") 
-  const AutoRoleForSp = member.guild.roles.cache.find(role => role.name === "Member")
-  if(!AutoRoleForSp) return   member.guild.roles.create({
-    data: {
-      name: 'Member',
-      color: 'NONE',
-      permissions: ['SEND_MESSAGES', 'ADD_REACTIONS', 'SPEAK', 'SEND_TTS_MESSAGES', 'STREAM', 'CONNECT', 'USE_EXTERNAL_EMOJIS', 'READ_MESSAGE_HISTORY'],
-      
-    },
-    reason: 'Testing '
+  if(!Joins) return member.guild.channels.create("👋joins")
+  const canvas = Canvas.createCanvas(506, 218)
+  const ctx = canvas.getContext('2d')
+  
+  const background = await Canvas.loadImage(
+   'BLACK-KARD-NOT-RACIST.png'
+  )
+  
+  let x = 0
+  let y = 0
+  ctx.drawImage(background, x , y)
+  
+  
+  const pfp = await Canvas.loadImage(
+   member.user.displayAvatarURL({
+      format: 'png'
+    })
+  )
+  x = canvas.width / 2 - pfp.width / 2
+  y =10
+  ctx.strokeStyle = 'WHITE';
+  ctx.drawImage(pfp,x, y)
+  
+  ctx.fillStyle = '#ffffff'
+  ctx.font =`25px sans-serif`
+  let text = `Welcome ${member.user.tag}`
+  x = canvas.width / 2 - ctx.measureText(text).width / 2
+  ctx.fillText(text, x, 45 + pfp.height)
+  ctx.fillStyle = '#ffffff'
+  ctx.font = '20px sans-serif'
+  text = `${member.guild.memberCount}th member!`
+  x = canvas.width / 2 - ctx.measureText(text).width / 2
+  ctx.fillText(text,x,80 + pfp.height)
+  const attachment = new Discord.MessageAttachment(canvas.toBuffer())
+try{
+  Channel.send(`Hey ${member}, welcome to **${member.guild.name}**`,attachment)
+  Joins.send(`Hey ${member}, welcome to **${member.guild.name}**`,attachment)
+}catch(er){
+  console.warn('An error occured in the guildMemberAdd system!');
 }
-).then(member.guild.owner.send(`Member role was not found, therefore I have created another one, you can always change the permissions for the roles to however you like.`)) || member.send("I couldn't give you the member role. Please ask a moderator to give you it.")
-.catch(console.error);
-  
-  const chja =  member.guild.channels.cache.find(ch => ch.name === "logs")
-  if(!chja) return member.guild.channels.create('logs')
-  
-  const Member = new Discord.MessageEmbed()
-  .setDescription(`Hey ${member}, welcome to ${member.guild}.`)
-  .setThumbnail(member.user.displayAvatarURL())
-  .setColor("ORANGE")
-  .setTitle(`Member Joined`)
-  .setFooter(`${member.guild.memberCount} members.`)
-  .setTimestamp()
-  
-  
-  chja.send(Member)
-  Joins.send(Member)
-  if(AutoRoleForSp) return member.roles.add(AutoRoleForSp) 
-  
 })
 /// ALL THE COMMANDS HANDLER!
 client.on('message', async message => {
     if(message.author.bot)return;
-    
+  
     const serverQueue = queue.get(message.guild.id);
     if(message.channel.type === 'dm') return;
-    const randomXp = Math.floor(Math.random() * 13) + 1;
+    const randomXp = Math.floor(Math.random() * 14) + 1;
     const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXp);
     if(hasLeveledUp){
     
       const user = await Levels.fetch(message.author.id, message.guild.id);
       message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
     }
+  
 
-    if(message.content.toLowerCase().includes( x + "rank".toLowerCase())){ 
-      
+    if(message.content.toLowerCase().includes( x + "rank".toLowerCase())){
+        
       const target = message.author;
       const user = await Levels.fetch(message.author.id, message.guild.id)
       if(!user) return message.channel.send(`You dont have any xp yet, be more active in this guild to gain more xp!`)
@@ -297,7 +334,6 @@ client.on('message', async message => {
       .setProgressBarTrack("GREY")
       .setUsername(target.username)
       .setDiscriminator(target.discriminator)
-
       Rank.build().then(
         data => {
           const attachments = new Discord.MessageAttachment(data, '')
@@ -305,7 +341,8 @@ client.on('message', async message => {
         }
       )
     }
-    if(message.content.toLowerCase().includes( x + "leaderboard".toLowerCase())){
+
+    if(message.content.toLowerCase().includes( x + "leaderboard" .toLowerCase())){
       const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id,5 );
      
       if( rawLeaderboard.length < 1)return message.channel.send(`Yet no one is ranked.`)
@@ -412,14 +449,18 @@ client.on('message', async message => {
             return message.channel.send(err);
           }
         } else {
-         
-            const QueueAdded = new MessageEmbed()
-            .setAuthor(`🎵Added to queue🎵`)
-            .setDescription(`**Queued [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`)
-            .setColor("ORANGE")
-            .setTimestamp()
-          serverQueue.songs.push(song);
-          return message.channel.send(QueueAdded);
+         try{
+          const QueueAdded = new MessageEmbed()
+          .setAuthor(`🎵Added to queue🎵`)
+          .setDescription(`**Queued [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`)
+          .setColor("ORANGE")
+          .setTimestamp()
+        serverQueue.songs.push(song);
+        return message.channel.send(QueueAdded);
+         }catch(er){
+           message.channel.send(`An error occured : ${er}, **contact us if it happens again!**`)
+         }
+           
           
             
         }
@@ -443,6 +484,7 @@ client.on('message', async message => {
           return message.channel.send(
             "You have to be in a voice channel to stop the music!"
           );
+          if(!message.guild.me.voice)return message.channel.send(`There is nothing playing right now.`)
         if (!serverQueue)
           return  message.channel.send("There is nothing in the queue to skip! Add some music!");
             serverQueue.connection.dispatcher.end();
@@ -529,9 +571,20 @@ client.on('message', async message => {
       function clearqueue(message, serverQueue){
         if(!message.member.voice.channel)return message.channel.send(`You need to be in a voice channel to clear the queue`)
         if(!serverQueue)return message.channel.send(`There is nothing in the queue.`)
-        serverQueue.songs.shift()
-      if(serverQueue.songs[0])return message.channel.send(`There is a song currently playing.`)
-        message.channel.send(`I have cleared the queue.`)
+        try{
+          if(message.guild.me.voice){
+            serverQueue.songs.shift()
+            message.channel.send(`I have cleared the queue.`)
+            message.guild.me.voice.channel.leave()
+          }
+        }catch(er){
+         serverQueue.songs.shift()
+        }
+        
+
+        
+
+        
       }
       // RESUME
       function resume(message,serverQueue){
@@ -543,7 +596,7 @@ client.on('message', async message => {
         message.channel.send(`I have resumed the music for you!`)
         return undefined
       }
-      // Seconds
+     
      
       // PAUSE
       function pause(message, serverQueue){
@@ -717,6 +770,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     if(command === 'getid'){
     client.commands.get('getid').execute(message, args)
     };
+   
     if(command === 'getuserid'){
         client.commands.get('getuserid').execute(message, args)
     };
