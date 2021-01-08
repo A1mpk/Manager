@@ -115,6 +115,7 @@ client.on('guildMemberRemove',async member => {
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
+  if(!member.guild.me.hasPermission)return;
   const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
   if(!Channel)return member.guild.channels.create("logs")
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
@@ -264,6 +265,7 @@ client.on('roleDelete', Role=> {
     role.send(ROleInfo)
 })
 client.on('guildMemberAdd', async member => {
+  if(!member.guild.me.hasPermission)return;
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
