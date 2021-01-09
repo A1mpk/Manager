@@ -318,9 +318,12 @@ try{
 client.on('message', async message => {
     if(message.author.bot)return;
     if(message.channel.type === 'dm') return;
+    if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
+    if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+    if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const serverQueue = queue.get(message.guild.id);
     
-    const randomXp = Math.floor(Math.random() * 14) + 1;
+    const randomXp = Math.floor(Math.random() * 15) + 1;
     const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXp);
     if(hasLeveledUp){
     
@@ -588,9 +591,10 @@ client.on('message', async message => {
             serverQueue.songs.shift()
             message.channel.send(`I have cleared the queue.`)
             message.guild.me.voice.channel.leave()
+            serverQueue.connection.dispatcher.end()
           }
         }catch(er){
-         serverQueue.songs.shift()
+         return;
         }
         
 
@@ -704,7 +708,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
             name: "Links",
-            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote)",inline:true
+            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Alaska](https://discord.com/api/oauth2/authorize?client_id=691748432104390726&permissions=8&scope=bot) ",inline:true
           }
     )
     .setThumbnail(message.client.user.displayAvatarURL())
@@ -810,6 +814,3 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
 
 client.mongoose.init();
 client.login(process.env.token);
-
-
-

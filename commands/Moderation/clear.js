@@ -14,7 +14,10 @@ module.exports = {
         .setTimestamp()
         const aaa = message.content.split(' ').slice(1); 
         const amount = aaa.join(' ');
-       if(!message.guild.me.hasPermission('DELETE_MESSAGES'))return message.channel.send('I don\`t have enough permission. [`DELETE_MESSAGES`]')
+       
+       if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
+       if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+       if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
             if(message.member.hasPermission('MANAGE_MESSAGES')){
                 if (!amount) return message.channel.send(ClearHElped) 
                 if (isNaN(amount)) return message.channel.send(`That's not a number.`); 

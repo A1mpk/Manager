@@ -5,6 +5,9 @@ module.exports = {
     disabled: false,
     execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
+        if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
+        if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+        if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
         const idchannel = message.content.slice(10)
        if(!idchannel){
         const LOL = new Discord.MessageEmbed()
