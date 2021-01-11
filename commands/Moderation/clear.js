@@ -14,7 +14,7 @@ module.exports = {
         .setTimestamp()
         const aaa = message.content.split(' ').slice(1); 
         const amount = aaa.join(' ');
-       
+       if(!message.guild.me.hasPermission('MANAGE_MESSAGES'))
        if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
        if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
        if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
