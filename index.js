@@ -63,6 +63,7 @@ const x = '>';
 /// ALL THE LISTENERS :
 
 client.on('guildCreate', guild => {
+
     guild.channels.create('logs')
     let defaultChannel = "";
 guild.channels.cache.forEach((channel) => {
@@ -99,10 +100,6 @@ guild.channels.cache.forEach((channel) => {
                 value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update,suggestion'
             }
         ],
-        
-        footer: {
-            text: `Friendly`
-        }
     }
   });
 })
@@ -113,7 +110,7 @@ client.on('ready', () => {
 })
 client.on('guildMemberRemove',async member => {
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
-  if(member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+  if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
   const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
   if(!Channel)return member.guild.channels.create("logs")
@@ -161,7 +158,9 @@ try{
 }
 })
 client.on('messageDelete', message => {
-    
+  if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
+  if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+  if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
     if(message.author.bot) return;
 try{
     const MessageEmbed = new Discord.MessageEmbed()
@@ -187,7 +186,9 @@ try{
            
 })
 client.on('inviteCreate', invite => {
-   
+  if(!invite.guild.me.hasPermission('SEND_MESSAGES'))return;
+  if(!invite.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+  if(!invite.guild.me.hasPermission("VIEW_CHANNEL"))return;
   
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Invite Created`)
@@ -205,7 +206,9 @@ client.on('inviteCreate', invite => {
     channel.send(MessageEmbed2)
 } )
 client.on('inviteDelete', invite => {
-    
+  if(!invite.guild.me.hasPermission('SEND_MESSAGES'))return;
+  if(!invite.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+  if(!invite.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Invite Deleted`)
     .addField(`Deleted by`, invite.inviter.tag)
@@ -221,7 +224,9 @@ client.on('inviteDelete', invite => {
     channel.send(MessageEmbed2)
 })
 client.on('emojiCreate', emoji => {
- 
+  if(!emoji.guild.me.hasPermission('SEND_MESSAGES'))return;
+  if(!emoji.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+  if(!emoji.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const MessageEmbed = new Discord.MessageEmbed()
     .setAuthor(`Emoji Created`)
     .addField(`Emoji Name`, emoji.name)
@@ -236,6 +241,9 @@ client.on('emojiCreate', emoji => {
     channel.send(MessageEmbed)
 })
 client.on('emojiDelete', emoji => {
+  if(!emoji.guild.me.hasPermission('SEND_MESSAGES'))return;
+  if(!emoji.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+  if(!emoji.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "logs")
     if(!guildChannel23) return emoji.guild.channels.create("logs")
     const MessageEmbed = new Discord.MessageEmbed()
@@ -249,6 +257,9 @@ client.on('emojiDelete', emoji => {
     guildChannel23.send(MessageEmbed)
 })
 client.on('roleDelete', Role=> {
+  if(!Role.guild.me.hasPermission('SEND_MESSAGES'))return;
+  if(!Role.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+  if(!Role.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const role = Role.guild.channels.cache.find(c=> c.name === "logs")
     if(!role) return Role.guild.channels.create("logs")
     const ROleInfo = new Discord.MessageEmbed()
@@ -265,7 +276,7 @@ client.on('roleDelete', Role=> {
 })
 client.on('guildMemberAdd', async member => {
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
-  if(member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+  if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
   const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
   if(!Channel)return member.guild.channels.create("logs")
@@ -309,7 +320,7 @@ try{
   Channel.send(`Hey ${member}, welcome to **${member.guild.name}**`,attachment)
   Joins.send(`Hey ${member}, welcome to **${member.guild.name}**`,attachment)
 }catch(er){
-  console.warn('An error occured in the guildMemberAdd system!');
+  console.warn(`Error : ${er}`);
 }
 })
 /// ALL THE COMMANDS HANDLER!
@@ -811,4 +822,4 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
 
 
 client.mongoose.init();
-client.login(process.env.token);
+client.login(`NzI1Nzg3NTMyMDA4MDk1NzQ0.XvT0UA.9WQ-78JijkbVPKU9xtCnqJh2kUQ`);
