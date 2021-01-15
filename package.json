@@ -29,6 +29,6 @@
     "opusscript": "0.0.7",
     "random-puppy": "^1.1.0",
     "simple-youtube-api": "^5.2.1",
-    "ytdl-core": "^4.4.0"
+    "ytdl-core": "^4.4.3"
   }
 }

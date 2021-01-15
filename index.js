@@ -103,11 +103,13 @@ guild.channels.cache.forEach((channel) => {
     }
   });
 })
+
 client.on('ready', () => {
     console.log(`I am in ${client.guilds.cache.size}.`)
  
-    client.user.setActivity(`>help || >info for support server :)`, {type: "WATCHING"})
+    client.user.setActivity(`>help || updates coming soon might go offline`, {type: "WATCHING"})
 })
+
 client.on('guildMemberRemove',async member => {
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
@@ -164,14 +166,14 @@ client.on('messageDelete', message => {
     if(message.author.bot) return;
 try{
     const MessageEmbed = new Discord.MessageEmbed()
-    .setAuthor(`Message Deleted`)
-    .addField(`Message :`, message)
-    .addField('Sent by', message.member.user.tag)
-    .addField('Deleted in', message.channel.name)
-    .setThumbnail(message.member.user.displayAvatarURL())
+    .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL())
+    .setDescription(`**Message sent by ${message.member} deleted in ${message.channel}. "${message.content}"**`, )
+
+    
     .setTimestamp()
-    .setFooter(`Deleted Message Log`)
-    .setColor("ORANGE")
+    .setFooter(`Author : ${message.author.id} | Message ID : ${message.channel.id}`)
+    
+    .setColor("RED")
    
        const channel = message.guild.channels.cache.find(a => a.name === "logs")
        channel.send(MessageEmbed)
@@ -191,16 +193,11 @@ client.on('inviteCreate', invite => {
   if(!invite.guild.me.hasPermission("VIEW_CHANNEL"))return;
   
     const MessageEmbed2 = new Discord.MessageEmbed()
-    .setAuthor(`Invite Created`)
-    .addField(`Created by`, invite.inviter.tag)
-    .addField(`Expire Date`, invite.expiresAt)
-    .addField('Uses ', invite.maxUses)
-    .addField('Channel for invite', invite.channel)
-    .addField(`Invite URL`, invite.url)
-    .setThumbnail(invite.inviter.displayAvatarURL())
+    .setAuthor(`${invite.inviter.tag}`,invite.inviter.displayAvatarURL())
     .setTimestamp()
-    .setFooter(`Invite Logger`)
-    .setColor("ORANGE")
+    .setDescription(`**An invite has been created by ${invite.inviter} for ${invite.channel}.**`)
+    .setFooter(`Inviter:  ${invite.inviter.id} | Link: ${invite.url}`)
+    .setColor("BLUE")
     const channel = invite.guild.channels.cache.find(a => a.name === "logs")
     if(!channel)return invite.guild.channels.create("logs")
     channel.send(MessageEmbed2)
@@ -209,16 +206,13 @@ client.on('inviteDelete', invite => {
   if(!invite.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!invite.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!invite.guild.me.hasPermission("VIEW_CHANNEL"))return;
-    const MessageEmbed2 = new Discord.MessageEmbed()
-    .setAuthor(`Invite Deleted`)
-    .addField(`Deleted by`, invite.inviter.tag)
-    .addField(`Expire Date`, invite.expiresAt)
-    .addField('Uses ', invite.maxUses)
-    .addField('Channel for invite', invite.channel)
-    .setThumbnail(invite.inviter.displayAvatarURL())
-    .setTimestamp()
-    .setFooter(`Invite Delete Logger`)
-    .setColor("ORANGE")
+   
+  const MessageEmbed2 = new Discord.MessageEmbed()
+  .setAuthor(`${invite.inviter.tag}`,invite.inviter.displayAvatarURL())
+  .setTimestamp()
+  .setDescription(`**Invite made  by ${invite.inviter} has been deleted.**`)
+  .setFooter(`Inviter:  ${invite.inviter.id}  `)
+  .setColor("BLUE")
     const channel = invite.guild.channels.cache.find(a => a.name === "logs")
     if(!channel)return invite.guild.channels.create("logs")
     channel.send(MessageEmbed2)
@@ -227,18 +221,15 @@ client.on('emojiCreate', emoji => {
   if(!emoji.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!emoji.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!emoji.guild.me.hasPermission("VIEW_CHANNEL"))return;
-    const MessageEmbed = new Discord.MessageEmbed()
-    .setAuthor(`Emoji Created`)
-    .addField(`Emoji Name`, emoji.name)
-    .addField(`Emoji Created At`, emoji.createdAt)
-    .addField('Emoji Animated', emoji.animated)
-    .addField(`Emoji`, emoji)
+    const MessageEmbed2 = new Discord.MessageEmbed()
+    .setAuthor(emoji.name)
     .setTimestamp()
-    .setFooter(`Emoji Created`)
-    .setColor("ORANGE")
+    .setDescription(`*Emoji "${emoji.name}" has been created! ${emoji}*`)
+    
+    .setColor("PURPLE")
     const channel = emoji.guild.channels.cache.find(a => a.name === "logs")
     if(!channel)return emoji.guild.channels.create("logs")
-    channel.send(MessageEmbed)
+    channel.send(MessageEmbed2)
 })
 client.on('emojiDelete', emoji => {
   if(!emoji.guild.me.hasPermission('SEND_MESSAGES'))return;
@@ -246,15 +237,14 @@ client.on('emojiDelete', emoji => {
   if(!emoji.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "logs")
     if(!guildChannel23) return emoji.guild.channels.create("logs")
-    const MessageEmbed = new Discord.MessageEmbed()
-    .setAuthor(`Emoji Delete`)
-    .addField(`Emoji Name`, emoji.name)
-    .addField(`Emoji Created At`, emoji.createdAt)
-    .addField('Emoji Animated', emoji.animated)
+    const MessageEmbed2 = new Discord.MessageEmbed()
+    .setAuthor(`${emoji.name}`)
     .setTimestamp()
-    .setFooter(`Emoji Deleted`)
-    .setColor("ORANGE")
-    guildChannel23.send(MessageEmbed)
+    .setThumbnail(emoji.guild.iconURL())
+    .setDescription(`*Emoji "${emoji.name}" has been deleted!*`)
+    .setThumbnail(emoji.guild.iconURL({dynamic: false}))
+    .setColor("PURPLE")
+    guildChannel23.send(MessageEmbed2)
 })
 client.on('roleDelete', Role=> {
   if(!Role.guild.me.hasPermission('SEND_MESSAGES'))return;
@@ -263,15 +253,11 @@ client.on('roleDelete', Role=> {
     const role = Role.guild.channels.cache.find(c=> c.name === "logs")
     if(!role) return Role.guild.channels.create("logs")
     const ROleInfo = new Discord.MessageEmbed()
-    .setAuthor('Role Deleted')
-    .addField(`Role Name`, Role.name)
-    .addField(`Role Creation Date`, Role.createdAt)
-    .addField(`Role Color`, Role.color)
-    .addField(`Role Hoist`, Role.hoist)
-    .addField(`Role Mentionable`, Role.mentionable)
+    .setAuthor(Role.name)
+   .setDescription(`Role ${Role.name} has been deleted.`)
     .setTimestamp()
     .setThumbnail(Role.guild.iconURL())
-    .setColor("ORANGE")
+    .setColor("PURPLE")
     role.send(ROleInfo)
 })
 client.on('guildMemberAdd', async member => {
@@ -404,9 +390,7 @@ client.on('message', async message => {
         resume(message, serverQueue)
       }else if(message.content.toLowerCase().includes(x +"loop".toLowerCase())){
          loop(message, serverQueue)
-      }else if(message.content.toLowerCase().includes(x +"clearqueue".toLowerCase())){
-        clearqueue(message, serverQueue)
-     }
+      }
       async function execute(message, serverQueue) {
         const args = message.content.slice(5)
         const searchString = message.content.slice(5)
@@ -453,7 +437,7 @@ client.on('message', async message => {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: 5,
+            volume: 2,
             playing: true,
             loop: false
           };
@@ -551,6 +535,7 @@ client.on('message', async message => {
        
         if(!message.member.voice.channel)return message.channel.send(`You need to be in a voice channel`);
           if(!serverQueue) return message.channel.send(`There is no music playing!`)
+          
           if(!volumeArgs)return message.channel.send(`The current volume is **${serverQueue.volume}**!`)
           if(isNaN(volumeArgs)) return message.channel.send(`That is not a number!`);
           if(volumeArgs > 10)return message.channel.send(`The maximum volume is 10!`)
@@ -563,7 +548,7 @@ client.on('message', async message => {
       // NOW PLAYING
       function np(message, serverQueue){
         if(!serverQueue) return message.channel.send(`There is nothing playing!`);
-        if(!serverQueue.songs[1])return message.channel.send(`Now playing **${serverQueue.songs[0].title}** by **${serverQueue.songs[0].author}**`)
+        if(!serverQueue.songs[1])return message.channel.send(`Currently playing **${serverQueue.songs[0].title}** by **${serverQueue.songs[0].author}**`)
        if(!serverQueue.songs[0].hours){
         const NowPlayingHours = new MessageEmbed()
         .setAuthor(`🎵Currently Playing🎵`)
@@ -591,26 +576,7 @@ client.on('message', async message => {
       }
         
       }
-      // CLEARQUEUE
-      function clearqueue(message, serverQueue){
-        if(!message.member.voice.channel)return message.channel.send(`You need to be in a voice channel to clear the queue`)
-        if(!serverQueue)return message.channel.send(`There is nothing in the queue.`)
-        try{
-          if(message.guild.me.voice){
-            serverQueue.songs.shift()
-            message.channel.send(`I have cleared the queue.`)
-            message.guild.me.voice.channel.leave()
-            serverQueue.connection.dispatcher.end()
-          }
-        }catch(er){
-         return;
-        }
-        
-
-        
-
-        
-      }
+      
       // RESUME
       function resume(message,serverQueue){
         if(!message.member.voice.channel)return message.channel.send('You need to be in a voice channel to resume the music.')
@@ -635,7 +601,7 @@ client.on('message', async message => {
       }
       // PLAY
       function play(guild, song) {
-        message.guild.me.voice.serverDeaf
+        
         const serverQueue = queue.get(guild.id);
         if (!song) {
           serverQueue.voiceChannel.leave();
