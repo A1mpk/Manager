@@ -13,8 +13,8 @@ module.exports = {
         const LOL = new Discord.MessageEmbed()
         .setColor("ORANGE")
         .setAuthor('getID - MODERATION')
-        .setDescription(`Gets the id of the mentionned channel.`)
-        .addField('USAGE : `getID <channelName>`', "** **")
+        .setDescription('`>getid <channelName>` - This is a getid command, it returns with the ID of the channel.')
+        
         .addField('CHANNEL ID ', message.channel.id)
         .setTimestamp()
            message.channel.send(LOL)

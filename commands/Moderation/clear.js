@@ -8,8 +8,8 @@ module.exports = {
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const ClearHElped = new Discord.MessageEmbed()
         .setTitle('CLEAR - MODERATION')
-        .setDescription('Clears the amount of message.')
-        .addField("USAGE : `clear <amount>`", "** **")
+        .setDescription('`>clear <amount>` - This is just a clear command, it clears the amount of messages asked for.')
+       
         .setColor("ORANGE")
         .setTimestamp()
         const aaa = message.content.split(' ').slice(1); 

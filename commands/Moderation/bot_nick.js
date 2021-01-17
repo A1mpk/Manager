@@ -12,8 +12,7 @@ module.exports = {
         const LOL = new Discord.MessageEmbed()
         .setColor("ORANGE")
         .setAuthor('BOT_NICK - MODERATION')
-        .setDescription(`Changes the bot's nickname.`)
-        .addField('USAGE : `bot_nick <nickname>`', "** **")
+        .setDescription('`>bot_nick <nickname>` - This is just a bot_nick command, it will change the nickname of the [bot](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot).')
         .setTimestamp()
         if(!message.guild.me.hasPermission(['MANAGE_NICKNAMES']))return message.channel.send('I don\`t have enough permissions. [`MANAGE_NICKNAMES]')
         try{

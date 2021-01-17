@@ -13,8 +13,8 @@ module.exports = {
         const LOL = new Discord.MessageEmbed()
         .setColor("ORANGE")
         .setAuthor('NICK - MODERATION')
-        .setDescription(`Changes your nickname.`)
-        .addField('USAGE : `nick <nickname>`', "** **")
+        .setDescription('`>nick <nickname>` - This is a nickname command which can only change your nickname on the server.')
+      
         .setTimestamp()
        if(message.member === message.guild.owner){
             message.channel.send(`I cannot change the Owner's nickname.`)

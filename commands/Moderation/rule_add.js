@@ -17,8 +17,8 @@ module.exports = {
             if(!args3){
               const ARGSNEEDED2 = new Discord.MessageEmbed()
               .setTitle('RULE_ADD - MODERATION')
-              .setDescription('Announces a important message.')
-              .addField('USAGE : `rule_add <rules>`', "** **")
+              .setDescription('`>rule_add <rules>` - This command is designed to add rules for the guild. It does comes with a sample phrase starting with "Welcome to server name, and here are the rules you should follow :". From there you will have to complete the rules. You can also use customizable fonts!')
+           
               .setTimestamp()
               .setColor("ORANGE")
               message.channel.send(ARGSNEEDED2)

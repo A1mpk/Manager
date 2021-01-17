@@ -11,8 +11,8 @@ module.exports = {
         if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
 const Kick = new Discord.MessageEmbed()
          .setTitle('KICK - MODERATION')
-         .setDescription('Kicks a member of the guild.')
-         .addField("USAGE : `kick <user> <reason>`", "** **")
+         .setDescription('`>kick <user> <reason>` - This is a kick command, it kicks the mentionned user if provided with a reason!')
+       
          .setColor("ORANGE")
          .setTimestamp()
          if(!message.guild.me.hasPermission(['KICK_MEMBERS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`KICK_MEMBERS`]');

@@ -11,8 +11,8 @@ module.exports = {
         const amount = aaa.join(' ');
         const h69 = new Discord.MessageEmbed()
         .setTitle('SLOWMODE - MODERATION')
-            .setDescription('Sets the message cooldown.')
-            .addField("USAGE : `slowmode <seconds>`", "** **")
+            .setDescription('`>slowmode <amount>` - This is a slowmode command which sets the message cooldown for this channel.')
+          
             .setColor("ORANGE")
             .setTimestamp()
             if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`MANAGE_CHANNELS`]');

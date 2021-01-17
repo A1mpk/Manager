@@ -12,9 +12,9 @@ module.exports = {
         const everyone = "@everyone"
         const say = new Discord.MessageEmbed()
         .setAuthor('SAY - FUN')
-        .setDescription('Deletes your message and sents the same message as the bots message.')
+        .setDescription('`>say <message>` - This is a say command, it repeats your message.')
         .setTimestamp()
-        .addField("USAGE : `say <message>`", "** **")
+    
         .setColor("ORANGE")
       if(!args2){
           message.channel.send(say)

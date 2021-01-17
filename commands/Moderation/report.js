@@ -18,8 +18,8 @@ module.exports = {
             .setFooter(`Command raised by ${message.member.user.tag}`)
              if (!report) {
                  const repportt = new Discord.MessageEmbed()
-                .setDescription("Sends a report to the owner of the guild.")
-                .addField("USAGE : `report <problem>`", '** **')
+                .setDescription("`>report <issue>` - This is a report command, it will simply send a DM to the owner of the guild your report. From there, they will have to contact you shortly.")
+              
                 .setColor("ORANGE")
                 .setTitle('REPORT - UTILITIES')
                 message.channel.send(repportt)

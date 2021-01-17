@@ -12,15 +12,14 @@ module.exports = {
     let res = [
       "Yes.",
       "No.",
-      "Maybe.",
-      "Are you crazy? Of course!"
+      "Maybe."
     ]
       const b = message.content.slice(6)
         const LOL = new Discord.MessageEmbed()
         .setColor("ORANGE")
-        .setAuthor('8ball - FUN')
-        .setDescription(`8ball is a command that replies with Yes, No, Maybe`)
-        .addField('USAGE : `8ball <message>`', "** **")
+        .setAuthor('8BALL - FUN')
+        .setDescription('`>8ball <prediction>` - This is just the 8ball command, it will return a yes, no or maybe to your question. Praise the godly 8ball.')
+        
         .setTimestamp()
        if(!b){
         message.channel.send(LOL)

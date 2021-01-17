@@ -15,6 +15,7 @@ module.exports = {
         .setDescription(`__What's new?__`)
         .addField( 'Music Commands','>help for info.')
         .addField(`Canvas Welcome!`, `This is a new feature from Mint! It will send welcome messages as canvas! Soon features : Customizable welcome messsage, Configurable settings for logging.`)
+      
         .setFooter(`From Mint Support`)
       message.channel.send(update)
     }

@@ -11,8 +11,8 @@ module.exports = {
         if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
         const Ban = new Discord.MessageEmbed()
         .setTitle('BAN - MODERATION')
-        .setDescription("Bans a member from the guild.")
-        .addField("USAGE : `ban <user> <reason>`", "** **")
+        .setDescription("`>ban <user> <reason>` - This will just ban the mentionned if provided with a reason.")
+        
         .setTimestamp()
         .setColor("ORANGE")
         if(!message.guild.me.hasPermission(['BAN_MEMBERS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`BAN_MEMBERS`]');

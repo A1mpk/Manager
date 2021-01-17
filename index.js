@@ -107,7 +107,7 @@ guild.channels.cache.forEach((channel) => {
 client.on('ready', () => {
     console.log(`I am in ${client.guilds.cache.size}.`)
  
-    client.user.setActivity(`>help || updates coming soon might go offline`, {type: "WATCHING"})
+    client.user.setActivity(`>help || verification setup next?`, {type: "WATCHING"})
 })
 
 client.on('guildMemberRemove',async member => {
@@ -669,8 +669,7 @@ if(message.content === `<@!${client.user.id}>`){
         .setTimestamp()
         message.channel.send(MyPRefixIs)
         
-        
-}
+}       
 if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     const Info = new Discord.MessageEmbed()
     .setColor("RED")
