@@ -20,6 +20,7 @@ module.exports = {
           message.channel.send(say)
       }else
       if(args2){
+          if(args2.match('@everyone'))return message.channel.send(`Message cannot contain @.everyone.`);
           message.delete()
           message.channel.send(args2)
       };

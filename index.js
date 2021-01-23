@@ -80,7 +80,7 @@ guild.channels.cache.forEach((channel) => {
         description: "Thanks for inviting me to your server! Here is a list of all my commands.",
         fields:[
             {
-                name: '**😴 Moderation [10]**',
+                name: '**😴 Moderation**',
                 value: 'ban,kick,mute,bot_nick,rule_add,slowmode,unmute,clear,announce,lock,giverole'
             },     
             {
@@ -107,7 +107,7 @@ guild.channels.cache.forEach((channel) => {
 client.on('ready', () => {
     console.log(`I am in ${client.guilds.cache.size}.`)
  
-    client.user.setActivity(`>help || verification setup next?`, {type: "WATCHING"})
+    client.user.setActivity(`>help || >info`, {type: "WATCHING"})
 })
 
 client.on('guildMemberRemove',async member => {
@@ -394,7 +394,15 @@ client.on('message', async message => {
       async function execute(message, serverQueue) {
         const args = message.content.slice(5)
         const searchString = message.content.slice(5)
-        if(!args) return message.channel.send(`Please enter a song name or a youtube link for me to play!`)
+        if(!args){
+          const Kick = new Discord.MessageEmbed()
+         .setTitle('PLAY - MUSIC')
+         .setDescription('`>play <query>` - This is a play command, it plays music in a voice channel. The query can either be a link or a YouTube keyword.')
+       
+         .setColor("ORANGE")
+         .setTimestamp()
+         return message.channel.send(Kick)
+        }
         const  url = args ? args.replace(/<(.+)>/g, '$1') : ''
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel)
@@ -555,9 +563,9 @@ client.on('message', async message => {
         .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
         .setColor("ORANGE")
         .addFields(
-          { name: `Channel`, value: `[${serverQueue.songs[0].author}](${serverQueue.songs[0].channelURL})`, inline: true }, 
           { name: `Duration`, value: `${serverQueue.songs[0].minutes}:${serverQueue.songs[0].seconds}`, inline: true }, 
           { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true }, 
+          { name: `Looping`, value: serverQueue.loop, inline: true },
         )
         .setTimestamp()
          message.channel.send(NowPlayingHours)
@@ -682,7 +690,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
             name: "Links",
-            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Alaska](https://discord.com/api/oauth2/authorize?client_id=691748432104390726&permissions=8&scope=bot) ",inline:true
+            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Alaska](https://discord.com/api/oauth2/authorize?client_id=691748432104390726&permissions=8&scope=bot) |** ** | [Prover](https://discord.com/api/oauth2/authorize?client_id=801956345736593408&permissions=8&scope=bot) ",inline:true
           }
     )
     .setThumbnail(message.client.user.displayAvatarURL())
