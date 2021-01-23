@@ -73,35 +73,35 @@ guild.channels.cache.forEach((channel) => {
     }
   }
 })
-  defaultChannel.send({
-    embed:{
-        title: `Manager`,
-        color: "ORANGE", 
-        description: "Thanks for inviting me to your server! Here is a list of all my commands.",
-        fields:[
-            {
-                name: '**😴 Moderation**',
-                value: 'ban,kick,mute,bot_nick,rule_add,slowmode,unmute,clear,announce,lock,giverole'
-            },     
-            {
-                name: '**🤩 Fun [5]**',
-                value: 'pain,happy,8ball,say,karen'
-            },
-            {
-                name: '🎵 Music [9]',
-                value: 'play,skip,stop,pause,np,resume,volume,queue,loop'
-            },
-            {
-                name: '**👂 LISTENERS [8]**',
-                value: 'InviteCreate/Delete, RoleDelete, EmojiCreate/Delete, messageDelete, GuildMemberAdd/Remove'
-            },
-            {
-                name: '**🛠️ Utilities [14]**',
-                value: 'help,invite,update,membercount,verify,info,avatar,guild,getid,getuserid,report,nick,update,suggestion'
-            }
-        ],
-    }
-  });
+defaultChannel.send({
+  embed:{
+      title: 'List of commands ',
+      color: "ORANGE", 
+      fields:[
+          {
+              name: '**😴 Moderation**',
+              value: ' `>help Moderation || help m_list_2` - This section helps keep your server and community safe, secure and in control with these commands at your disposal.'
+          },     
+          {
+              name: '**🤩 Fun **',
+              value: '`>help fun` - This section can keep your server fun & enjoyable with these commands.'
+          },
+          {
+              name: '🎵 Music ',
+              value: '`>help music || help mu_list_2` - This section is made for playing musics, if bored & want to find out new tracks, members of this server can always play a track to keep the server comfortable.'
+          },
+          {
+              name: '**👂 LISTENERS **',
+              value: '`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.'
+          },
+          {
+              name: '**🛠️ Utilities [14]**',
+              value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
+          }
+      ],
+      
+  }
+  })
 })
 
 client.on('ready', () => {

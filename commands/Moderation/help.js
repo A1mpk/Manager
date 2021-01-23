@@ -12,7 +12,7 @@ module.exports = {
         if(!Words){
             message.channel.send({
                 embed:{
-                    title: 'List of commands [44]',
+                    title: 'List of commands ',
                     color: "ORANGE", 
                     fields:[
                         {
@@ -37,9 +37,7 @@ module.exports = {
                         }
                     ],
                     
-                    footer: {
-                        text: "Love from Mint Support"
-                    }
+                
                 }
                 })
         }else if(Words.toLowerCase().includes("Moderation".toLowerCase())){
