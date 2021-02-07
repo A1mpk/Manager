@@ -4,7 +4,7 @@ const { Client, Collection, Structures, DiscordAPIError, Util, MessageEmbed} = r
 const Discord = require('discord.js');
 const fs = require('fs');
 const mongoose = require('mongoose');
-const { send, cpuUsage } = require('process');
+const { send, cpuUsage, title } = require('process');
 const guild = require('./commands/Moderation/guild');
 const avatar = require('./commands/normal/avatar');
 const client = new Client();
@@ -15,7 +15,7 @@ client.categories = fs.readdirSync('./commands/');
 const { config } = require('dotenv');
 const { isRegExp } = require('util');
 const { Z_NEED_DICT, createGzip } = require('zlib');
-const { error, memory } = require('console');
+const { error, memory, time, timeStamp } = require('console');
 const { getPackedSettings } = require('http2');
 const { name } = require('./commands/Moderation/guild');
 const ytdl = require('ytdl-core');
@@ -30,8 +30,11 @@ Levels.setURL("mongodb+srv://admin:LmVUsNQeLiYCsJfr@manager.hd8gy.mongodb.net/<D
 const Canvas = require('canvas');
 const { waitForDebugger } = require('inspector');
 const queue = new Map();
-
+const YTCHANNEL = 'UC6TrH3NVyfUiJJDeibzNjgQ'
 const { MAX_PACKET_SIZE } = require('opusscript');
+const ms = require('ms');
+const { author } = require('canvacord');
+const data = require('canvacord/src/Plugins');
 // COMMAND HANDLER
 config({
     path: `${__dirname}/.env`
@@ -105,7 +108,7 @@ defaultChannel.send({
 })
 
 client.on('ready', () => {
-    console.log(`I am in ${client.guilds.cache.size}.`)
+  
  
     client.user.setActivity(`>help || >info`, {type: "WATCHING"})
 })
@@ -269,7 +272,7 @@ client.on('guildMemberAdd', async member => {
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
   if(!Joins) return member.guild.channels.create("👋joins")
 
-  const canvas = Canvas.createCanvas(506, 218)
+  const canvas = Canvas.createCanvas(1000, 333)
   const ctx = canvas.getContext('2d')
   
   const background = await Canvas.loadImage(
@@ -325,32 +328,122 @@ client.on('message', async message => {
       const user = await Levels.fetch(message.author.id, message.guild.id);
       message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
     }
+ 
   
 
-    if(message.content.toLowerCase().includes( x + "rank".toLowerCase())){
-        
-      const target = message.author;
-      const user = await Levels.fetch(message.author.id, message.guild.id)
-      if(!user) return message.channel.send(`You dont have any xp yet, be more active in this guild to gain more xp!`)
-      const neededXP = Levels.xpFor(parseInt(user.level) + 1);
-      const Rank = new canvacord.Rank()
-      .setLevel(user.level)
-      .setBackground('COLOR','BLACK' )
-      .setAvatar(message.author.displayAvatarURL({dynamic: false, format: 'png'}))
-      .setCurrentXP(user.xp)
-      .setRequiredXP(neededXP)
-      .setStatus(target.presence.status)
-      .setProgressBar("WHITE", "COLOR")
-      .setProgressBarTrack("GREY")
-      .setUsername(target.username)
-      .setDiscriminator(target.discriminator)
-      Rank.build().then(
-        data => {
-          const attachments = new Discord.MessageAttachment(data, '')
-          message.channel.send(attachments)
-        }
-      )
-    }
+if(message.content.startsWith(x + 'spotify')){
+
+
+let user;
+if (message.mentions.users.first()) {
+  user = message.mentions.users.first();
+} else {
+  user = message.author;
+}
+
+let convert = require('parse-ms')
+
+let status = user.presence.activities[0];
+
+if (user.presence.activities.length === 0 || status.name !== "Spotify" && status.type !== "LISTENING") return message.channel.send("This user isn't listening the Spotify.");
+
+if (status !== null && status.type === "LISTENING" && status.name === "Spotify" && status.assets !== null) {
+  let image = `https://i.scdn.co/image/${status.assets.largeImage.slice(8)}`,
+      url = `https://open.spotify.com/track/${status.syncID}`,
+      name = status.details,
+      artist = status.state,
+      album = status.assets.largeText,
+      timeStart = status.timestamps.start,
+      timeEnd = status.timestamps.end,
+      timeConvert = convert(timeEnd - timeStart);
+  
+  let minutes = timeConvert.minutes < 10 ? `0${timeConvert.minutes}` : timeConvert.minutes;
+  let seconds = timeConvert.seconds < 10 ? `0${timeConvert.seconds}` : timeConvert.seconds;
+  
+  let time = `${minutes}:${seconds}`;
+  
+  const embed = new Discord.MessageEmbed()
+  .setAuthor("Spotify", "https://th.bing.com/th/id/R51a2b615791a987a46af18beed1ac882?rik=ihrJdQVay12aqA&riu=http%3a%2f%2fmedia.idownloadblog.com%2fwp-content%2fuploads%2f2016%2f02%2fSpotify-App-Icon-Large.png&ehk=69W%2bQrgPsZ2wP0g5JEZQs47EbsdD%2fNOV6VgsVsRHgIQ%3d&risl=&pid=ImgRaw")
+  .setColor(0x1ED768)
+  .setThumbnail(image)
+  .addField("Name:", name)
+  .addField("Album:", album)
+  .addField("Artist:", artist)
+  .addField("Duration:", time)
+  .addField("Listen on Spotify", `[\`${artist} - ${name}\`](${url})`, false)
+  message.channel.send(embed)
+}
+}
+  
+ 
+
+if(message.content.startsWith(x + 'rank')){
+  const mesag = message.content.slice(5)
+
+  const target = message.author 
+  const user = await Levels.fetch(target.id,message.guild.id)
+  if(!user) return message.channel.send(`You dont have any xp yet, be more active in this guild to gain more xp!`)
+  const neededXP2 = Levels.xpFor(parseInt(user.level) + 1);
+
+
+  const canvas = Canvas.createCanvas(1000, 333)
+  const ctx = canvas.getContext('2d')
+
+  const background = await Canvas.loadImage(
+   'e6ebf158fdda736ebda149875ff15e48bb0d3178_hq.jpg'
+  )
+
+
+ctx.drawImage(background,0,0, canvas.width, canvas.height)
+
+ctx.beginPath();
+ctx.lineWidth = 4;
+ctx.strokeStyle = 'WHITE';
+ctx.globalAlpha = 0.2;
+ctx.fillStyle = "#000000";
+ctx.fillRect(180, 216, 770, 65);
+ctx.fill();
+ctx.globalAlpha = 1;
+ctx.strokeRect(180,216,770,65);
+ctx.stroke();
+
+ctx.fillStyle = "#ffffff";
+ctx.globalAlpha = 0.6;
+ctx.fillRect(180, 216, 65 )
+ctx.fill();
+ctx.globalAlpha = 1;
+
+ctx.font = " bold 36px Manrope";
+ctx.textAlign = "center";
+ctx.fillStyle = " WHITE";
+ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
+
+ctx.textAlign = "left";
+ctx.fillText(`${target.tag}`, 300, 120);
+
+ctx.font = " bold 50px Manrope";
+ctx.fillText("LEVEL", 300,180);
+ctx.fillText(user.level, 470 , 180);
+
+ctx.arc(170, 160 , 120 , 0, Math.PI * 2, true);
+ctx.lineWidth = 6;
+
+
+ctx.strokeStyle = "WHITE" ;
+ctx.stroke();
+ctx.closePath();
+ctx.clip();
+const avatar = await Canvas.loadImage(target.displayAvatarURL({format: 'png'}, ));
+ctx.drawImage(avatar, 40,40,250,250)
+
+
+
+
+
+  const attachment = new Discord.MessageAttachment(canvas.toBuffer() , "rank.png")
+  message.channel.send(attachment)
+}
+   
 
     if(message.content.toLowerCase().includes( x + "leaderboard" .toLowerCase())){
       const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id,5 );
@@ -390,6 +483,8 @@ client.on('message', async message => {
         resume(message, serverQueue)
       }else if(message.content.toLowerCase().includes(x +"loop".toLowerCase())){
          loop(message, serverQueue)
+      }else if(message.content.toLowerCase().includes(x + "shuffle")){
+        shuffle(message, serverQueue)
       }
       async function execute(message, serverQueue) {
         const args = message.content.slice(5)
@@ -447,7 +542,8 @@ client.on('message', async message => {
             songs: [],
             volume: 2,
             playing: true,
-            loop: false
+            loop: false,
+            shuffle: false
           };
       
           queue.set(message.guild.id, queueContruct);
@@ -471,6 +567,7 @@ client.on('message', async message => {
           .setDescription(`**Queued [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`)
           .setColor("ORANGE")
           .setTimestamp()
+        
         serverQueue.songs.push(song);
         return message.channel.send(QueueAdded);
          }catch(er){
@@ -530,6 +627,17 @@ client.on('message', async message => {
         serverQueue.songs = [];
         message.channel.send(`I have stopped the music for you.`)
         serverQueue.connection.dispatcher.end();
+      }
+      // SHUFFLE
+      function shuffle(message, serverQueue){
+        if(!message.member.voice.channel)return message.channel.send(`You are not in a voice channel, please join one.`)
+        if(!serverQueue)return message.channel.send(`There is no songs in the queue to shuffle.`)
+
+        serverQueue.shuffle = !serverQueue.shuffle
+        
+        return message.channel.send(`${serverQueue.shuffle ? `**✅Enabled**` : `**✅Disabled**`} shuffle mode.`)
+        
+        
       }
       // VOLUME
       function volume(message, serverQueue) {
@@ -616,7 +724,7 @@ client.on('message', async message => {
           queue.delete(guild.id);
           return;
         }
-       
+      
         
         const Playing = new MessageEmbed()
         .setAuthor(`🎵Now Playing🎵`)
@@ -628,6 +736,11 @@ client.on('message', async message => {
           .play(ytdl(song.url))
           .on("finish", () => {
             if(!serverQueue.loop)serverQueue.songs.shift();
+           if(serverQueue.shuffle){
+            message.channel.send(`Shuffle is still in-progress, you may re-disable shuffling in case of repetitive messages.`)
+            serverQueue.shuffle != serverQueue.shuffle
+           }
+          
             play(guild, serverQueue.songs[0]);
           })
           .on("error", error => console.error(error));

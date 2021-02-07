@@ -27,8 +27,10 @@
     "ms": "^2.1.2",
     "nodemon": "^2.0.4",
     "opusscript": "0.0.7",
+    "parse-ms": "^2.1.0",
     "random-puppy": "^1.1.0",
     "simple-youtube-api": "^5.2.1",
+    "youtube-notification": "^1.1.0",
     "ytdl-core": "^4.4.3"
   }
 }

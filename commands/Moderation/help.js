@@ -123,6 +123,7 @@ module.exports = {
             .addField('report','`>report <issue>` - This is just a report command, it sends a report to the owner of the guild.')
             .addField('suggestion', '`>suggestion <suggestions>` - This is just a suggestion command, after you enter your suggestions it sends it in a suggestions channel where the Owner/Administrator can view it.')
             .addField('credit', '`>credit <user> <reason>` - This is just a credit command, it credits the user you mentionned with the reason.')
+            .addField('spotify', '`>spotify <user> - This command is just a spotify command, it shows basic information about the track a mentionned user is listening to.`')
             message.channel.send(u_list_2)
         }
        
