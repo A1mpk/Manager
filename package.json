@@ -17,6 +17,7 @@
     "canvacord": "^5.0.8",
     "canvas": "^2.6.1",
     "discord-canvas": "^1.4.1",
+    "discord-rpc": "^3.1.4",
     "discord-xp": "^1.1.7",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",

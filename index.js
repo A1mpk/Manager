@@ -59,8 +59,35 @@ for(const file of commandFiles){
 
     client.commands.set(command.name, command);
 }
-// PREMIUM START???
 
+// PREMIUM START???
+const RPC = require('discord-rpc')
+
+
+const rpc = new RPC.Client({ transport: 'ipc' })
+rpc.on('ready', () => {
+rpc.request('SET_ACTIVITY', {
+
+pid: process.pid,
+activity : {
+details : "Mint Creator",
+assets : {
+large_image : "hwalloween",
+large_text : "Mint",
+small_image : "6817_discord_verified",
+small_text: "Verified Bot"
+},
+
+buttons : [{label : "Support Server" , url : "https://discord.gg/fBbnrRe8gg"}, {label: "Website", url : "https://sites.google.com/view/mint2020-com/home"}]
+}
+
+})
+
+})
+rpc.login({
+  clientId: "725787532008095744",
+  clientSecret: "jIM3AapNCMHsa-TI2_m2DT8ReHDw56gv"
+})
 /// PREFIX
 const x = '>';
 /// ALL THE LISTENERS :
@@ -263,6 +290,11 @@ client.on('roleDelete', Role=> {
     .setColor("PURPLE")
     role.send(ROleInfo)
 })
+// Rich presence 
+
+
+
+
 client.on('guildMemberAdd', async member => {
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
@@ -272,7 +304,7 @@ client.on('guildMemberAdd', async member => {
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
   if(!Joins) return member.guild.channels.create("👋joins")
 
-  const canvas = Canvas.createCanvas(1000, 333)
+  const canvas = Canvas.createCanvas(506, 218)
   const ctx = canvas.getContext('2d')
   
   const background = await Canvas.loadImage(
@@ -313,6 +345,7 @@ try{
 }
 })
 /// ALL THE COMMANDS HANDLER!
+
 client.on('message', async message => {
     if(message.author.bot)return;
     if(message.channel.type === 'dm') return;
@@ -390,7 +423,7 @@ if(message.content.startsWith(x + 'rank')){
   const ctx = canvas.getContext('2d')
 
   const background = await Canvas.loadImage(
-   'e6ebf158fdda736ebda149875ff15e48bb0d3178_hq.jpg'
+   '801095.jpg'
   )
 
 
@@ -654,7 +687,7 @@ ctx.drawImage(avatar, 40,40,250,250)
           
           if(!volumeArgs)return message.channel.send(`The current volume is **${serverQueue.volume}**!`)
           if(isNaN(volumeArgs)) return message.channel.send(`That is not a number!`);
-          if(volumeArgs > 10)return message.channel.send(`The maximum volume is 10!`)
+          if(volumeArgs > 5)return message.channel.send(`The maximum volume is 5!`)
           serverQueue.volume = volumeArgs
           serverQueue.connection.dispatcher.setVolumeLogarithmic(volumeArgs /5)
           message.channel.send(Playing)
@@ -663,33 +696,22 @@ ctx.drawImage(avatar, 40,40,250,250)
       
       // NOW PLAYING
       function np(message, serverQueue){
+        const disabled = true
+        if(this.disabled === true)return;
         if(!serverQueue) return message.channel.send(`There is nothing playing!`);
         if(!serverQueue.songs[1])return message.channel.send(`Currently playing **${serverQueue.songs[0].title}** by **${serverQueue.songs[0].author}**`)
-       if(!serverQueue.songs[0].hours){
         const NowPlayingHours = new MessageEmbed()
         .setAuthor(`🎵Currently Playing🎵`)
         .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
         .setColor("ORANGE")
         .addFields(
-          { name: `Duration`, value: `${serverQueue.songs[0].minutes}:${serverQueue.songs[0].seconds}`, inline: true }, 
+          { name: `Duration`, value: `${time}`, inline: true }, 
           { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true }, 
           { name: `Looping`, value: serverQueue.loop, inline: true },
         )
         .setTimestamp()
          message.channel.send(NowPlayingHours)
-      }else if(!serverQueue.songs[0].minutes){
-        const NowPlayMinutes = new MessageEmbed()
-        .setAuthor(`🎵Currently Playing🎵`)
-        .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
-        .setColor("ORANGE")
-        .addFields(
-          { name: `Channel`, value: `[${serverQueue.songs[0].author}](${serverQueue.songs[0].channelURL})`, inline: true }, 
-          { name: `Duration`, value: `00:${serverQueue.songs[0].seconds}`, inline: true }, 
-          { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true },
-        )
-        .setTimestamp()
-         message.channel.send(NowPlayMinutes)
-      }
+      
         
       }
       
