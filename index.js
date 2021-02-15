@@ -518,6 +518,10 @@ ctx.drawImage(avatar, 40,40,250,250)
          loop(message, serverQueue)
       }else if(message.content.toLowerCase().includes(x + "shuffle")){
         shuffle(message, serverQueue)
+      }else if(message.content.toLowerCase().includes(x + "leave")){
+        leave(message, serverQueue)
+      }else if(message.content.toLowerCase().includes(x + 'join'.toLowerCase())){
+        join(message,serverQueue)
       }
       async function execute(message, serverQueue) {
         const args = message.content.slice(5)
@@ -584,7 +588,9 @@ ctx.drawImage(avatar, 40,40,250,250)
           queueContruct.songs.push(song);
       
           try {
+               
             var connection = await voiceChannel.join()
+            
             connection.voice.setSelfDeaf(true);
             queueContruct.connection = connection;
             play(message.guild, queueContruct.songs[0]);
@@ -595,14 +601,21 @@ ctx.drawImage(avatar, 40,40,250,250)
           }
         } else {
          try{
-          const QueueAdded = new MessageEmbed()
-          .setAuthor(`🎵Added to queue🎵`)
-          .setDescription(`**Queued [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`)
-          .setColor("ORANGE")
-          .setTimestamp()
-        
-        serverQueue.songs.push(song);
-        return message.channel.send(QueueAdded);
+           if(!message.guild.me.voice.channel){
+             message.channel.send(`I am not in a voice channel, run the command >join to make me join`)
+             console.log(serverQueue.playing)
+           }else 
+           if(message.guild.me.voice.channel){
+            const QueueAdded = new MessageEmbed()
+            .setAuthor(`🎵Added to queue🎵`)
+            .setDescription(`**Queued [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`)
+            .setColor("ORANGE")
+            .setTimestamp()
+          
+          serverQueue.songs.push(song);
+          return message.channel.send(QueueAdded);
+           }
+         
          }catch(er){
            message.channel.send(`An error occured : ${er}, **contact us if it happens again!**`)
          }
@@ -672,6 +685,28 @@ ctx.drawImage(avatar, 40,40,250,250)
         
         
       }
+      function leave(message, serverQueue){
+        if(!message.guild.me.voice)return message.channel.send(`I am not connected in a voice channel.`)
+        if(serverQueue){
+          queue.delete(message.guild.id,)
+          message.member.voice.channel.leave()
+          
+          
+          message.channel.send(`I have left the voice channel.`)
+        }
+
+            }
+       function join(message, serverQueue){
+         if(!message.member.voice)return message.channel.send(`You are not in a voice channel.`)
+         if(!serverQueue)return message.member.voice.channel.join()
+         else
+         message.member.voice.channel.join()
+         message.channel.send(`Joining ${message.member.voice.channel.name}`)
+         queue.delete(message.guild.id)
+        
+         
+         
+       }
       // VOLUME
       function volume(message, serverQueue) {
         const volumeArgs = message.content.slice(7)
@@ -772,16 +807,6 @@ ctx.drawImage(avatar, 40,40,250,250)
       }
    
   
-    if(message.content.toLowerCase().includes(x +"credits".toLowerCase())){
-        const BotInfo = new Discord.MessageEmbed()
-        .setTitle(`Credits`)
-        .addField(`Co-Owner`, `Souxle#8217`)
-        .addField('Profile Picture', `Friendly#9411 (Bot Owner)`)
-        .setThumbnail(message.guild.me.user.displayAvatarURL())
-        .setFooter(`Command raised by ${message.member.user.tag}`)
-        .setColor("ORANGE")
-        message.channel.send(BotInfo)
-    }
     if(message.content.toLowerCase().includes(x +"uptime".toLowerCase())){
     
 
@@ -820,7 +845,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint`)
     .addFields(
-        { name: 'Version', value: '0.0.5', inline: true },
+        { name: 'Version', value: '2.0.1', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {

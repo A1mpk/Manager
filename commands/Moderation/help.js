@@ -90,7 +90,8 @@ module.exports = {
           .addField(`queue`, '`>queue` - This is just a queue command, it will show the current queue of the tracks in this server.')
           .addField(`volume`, '`>volume` - This is a volume command, it will change the volume of the bot.')
           .addField(`loop`, '`>loop` - This is a loop command, it loops the track over and over.')
-          
+          .addField('leave', '`>leave` - This command is a leave command, it leaves the current voice channel & deletes the queue.')
+          .addField(`join`, '`>join` - This is just a join command, it deletes the queue, joins the voice channel.')
           message.channel.send(Music2)
         }else if(Words.toLowerCase().includes("listeners".toLowerCase())){
             const Listeners = new Discord.MessageEmbed()
