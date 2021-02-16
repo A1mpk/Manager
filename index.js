@@ -686,26 +686,25 @@ ctx.drawImage(avatar, 40,40,250,250)
         
       }
       function leave(message, serverQueue){
-        if(!message.member.voice)return message.channel.send(`Connect to a voice channel for me to leave.`)
-        if(!message.guild.me.voice)return message.channel.send(`I am not connected in a voice channel.`)
-        if(message.guild.me.voice){
+        if(!message.member.voice.channel)return message.channel.send(`Connect to a voice channel for me to leave.`)
+        if(!message.guild.me.voice.channel)return message.channel.send(`I am not connected in a voice channel.`)
+    else
           queue.delete(message.guild.id,)
           message.member.voice.channel.leave()
         
           message.channel.send(`I have left the voice channel.`)
-        }
+        
 
             }
        function join(message, serverQueue){
-         if(!message.member.voice)return message.channel.send(`You are not in a voice channel.`)
+         if(!message.member.voice.channel)return message.channel.send(`You are not in a voice channel.`)
         if(message.guild.me.voice.channel)return message.channel.send(`I am already connected to a voice channel.`)
         
          else
-         if(!message.guild.me.voice.channel){
           message.member.voice.channel.join()
           message.channel.send(`Joining ${message.member.voice.channel.name}`)
           queue.delete(message.guild.id)
-         }
+         
         
         
          
