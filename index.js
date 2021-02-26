@@ -361,6 +361,16 @@ client.on('message', async message => {
       const user = await Levels.fetch(message.author.id, message.guild.id);
       message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
     }
+   
+    
+    if(message.content.startsWith(`guild`)){
+  const guild =   client.guilds.cache.find(guild => guild.id === "806066477315784704")
+ const channel =  guild.channels.cache.first()
+ const per = guild.owner.user.tag
+ const invite = channel.createInvite({unique: true})
+ message.channel.send(per)
+
+    }
  
   
 
@@ -394,7 +404,6 @@ if (status !== null && status.type === "LISTENING" && status.name === "Spotify" 
   let seconds = timeConvert.seconds < 10 ? `0${timeConvert.seconds}` : timeConvert.seconds;
   
   let time = `${minutes}:${seconds}`;
-  
   const embed = new Discord.MessageEmbed()
   .setAuthor("Spotify", "https://th.bing.com/th/id/R51a2b615791a987a46af18beed1ac882?rik=ihrJdQVay12aqA&riu=http%3a%2f%2fmedia.idownloadblog.com%2fwp-content%2fuploads%2f2016%2f02%2fSpotify-App-Icon-Large.png&ehk=69W%2bQrgPsZ2wP0g5JEZQs47EbsdD%2fNOV6VgsVsRHgIQ%3d&risl=&pid=ImgRaw")
   .setColor(0x1ED768)
@@ -710,6 +719,7 @@ ctx.drawImage(avatar, 40,40,250,250)
          
          
        }
+    
       // VOLUME
       function volume(message, serverQueue) {
         const volumeArgs = message.content.slice(7)
@@ -914,6 +924,15 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     if(command === 'nick'){
     client.commands.get('nick').execute(message, args)
     };
+    if(command === 'gaymeter'){
+      client.commands.get('gaymeter').execute(message, args)
+      };
+      if(command === 'simpmeter'){
+        client.commands.get('simpmeter').execute(message, args)
+        };
+        if(command === 'dogwater'){
+          client.commands.get('dogwater').execute(message, args)
+          };
     if(command === 'bot_nick'){
     client.commands.get('bot_nick').execute(message, args)
     };

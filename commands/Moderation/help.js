@@ -69,6 +69,10 @@ module.exports = {
           .addField(`karen`, '`>karen` - This is a karen command, it returns with questions & messages which you will you have to reply to. Once finished you will know who won.')
           .addField(`8ball`, '`>8ball <prediction>` - This is just the 8ball command, it will return a yes, no or maybe to your question.')
           .addField(`say`, '`>say <message>` - This is a say command, it repeats your message.')
+          .addField(`simpmeter`, '`>simpmeter <user>` - This is a simpmeter command, it shows how much of a simp you are.')
+          .addField(`dogwater`, '`>dogwater <user>` - This is a dogwater command, it shows how dogwater you literally are.')
+          .addField(`gaymeter`, '`>gaymeter <user>` - This is a gaymeter command, it shows how gay you are.')
+
           message.channel.send(Fun)
         }else if(Words.toLowerCase().includes("Music".toLowerCase())){
             const Music = new Discord.MessageEmbed()
