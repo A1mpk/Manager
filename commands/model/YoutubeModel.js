@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
-const YoutubeSchema = mongoose.Schema({
+const guildSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    guildID: String,
-    guildName: String
+    channelID: String,
+    serverChannelID: String
    
 });
 
-module.exports = mongoose.model('youtube-notif', YoutubeSchema, 'youtube-notif')
+module.exports = mongoose.model('youtube-notification', guildSchema, 'youtube-notification')

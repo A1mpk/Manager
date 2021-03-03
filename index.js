@@ -61,7 +61,8 @@ for(const file of commandFiles){
 }
 
 // PREMIUM START???
-const RPC = require('discord-rpc')
+const RPC = require('discord-rpc');
+const e = require('express');
 
 
 const rpc = new RPC.Client({ transport: 'ipc' })
@@ -70,23 +71,23 @@ rpc.request('SET_ACTIVITY', {
 
 pid: process.pid,
 activity : {
-details : "Mint Creator",
+details : "newsforgamers",
 assets : {
-large_image : "hwalloween",
-large_text : "Mint",
-small_image : "6817_discord_verified",
-small_text: "Verified Bot"
+large_image : "e39",
+large_text : "BBC",
+small_image : "e39",
+small_text: "BEST NEWS"
 },
 
-buttons : [{label : "Support Server" , url : "https://discord.gg/fBbnrRe8gg"}, {label: "Website", url : "https://sites.google.com/view/newsforgamers/home"}]
+buttons : [{label : "SUBSCRIBE" , url : "https://www.youtube.com/channel/UCAA4P3xK4bTsDDcW8c21q5w"}, {label: "Website", url : "https://sites.google.com/view/newsforgamers/home"}]
 }
 
 })
 
 })
 rpc.login({
-  clientId: "725787532008095744",
-  clientSecret: "jIM3AapNCMHsa-TI2_m2DT8ReHDw56gv"
+  clientId: "816732886870523935",
+  clientSecret: "t5tp_u5YfKJC4BQVTXwj82wRc3kORXxh"
 })
 /// PREFIX
 const x = '>';
@@ -363,14 +364,7 @@ client.on('message', async message => {
     }
    
     
-    if(message.content.startsWith(`guild`)){
-  const guild =   client.guilds.cache.find(guild => guild.id === "806066477315784704")
- const channel =  guild.channels.cache.first()
- const per = guild.owner.user.tag
- const invite = channel.createInvite({unique: true})
- message.channel.send(per)
-
-    }
+ 
  
   
 
@@ -502,7 +496,7 @@ ctx.drawImage(avatar, 40,40,250,250)
       .setColor("ORANGE")
       message.channel.send(LeaderBord)
     }
-
+   
     if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
       
         execute(message, serverQueue);
@@ -589,6 +583,7 @@ ctx.drawImage(avatar, 40,40,250,250)
             volume: 2,
             playing: true,
             loop: false,
+            queueloop: false,
             shuffle: false
           };
       
@@ -663,11 +658,26 @@ ctx.drawImage(avatar, 40,40,250,250)
       }
       // LOOP 
       function loop(message, serverQueue){
+        const LoopType = message.content.slice(5)
         if(!message.member.voice.channel) return message.channel.send(`You need to be in a voice channel to loop the song.`)
         if(!serverQueue) return message.channel.send('The song queue is empty! Add some music.')
-    
+        
+       if(!LoopType){
+        if(serverQueue.queueloop)return message.channel.send(`Looping the queue is already enabled.`)
         serverQueue.loop = !serverQueue.loop
         return message.channel.send(`${serverQueue.loop ? `**✅Enabled**` : `**✅Disabled**`} looping.`)
+       }else
+       // LOOP THE WHOLE QUEUE
+       if(LoopType){
+        if(LoopType.toLowerCase().includes("queue".toLowerCase())){
+          if(serverQueue.loop)return message.channel.send(`Looping the song is already enabled.`)
+          serverQueue.queueloop = !serverQueue.queueloop
+          return message.channel.send(`${serverQueue.queueloop ? `**✅Enabled**` : `**✅Disabled**`} looping **queue**.`)
+          // INVALID COMMAND
+        }else
+         message.channel.send(`"${LoopType}" is an invalid loop type.`)
+       }
+        
       }
       // STOP
       function stop(message, serverQueue) {
@@ -745,7 +755,7 @@ ctx.drawImage(avatar, 40,40,250,250)
       // NOW PLAYING
       function np(message, serverQueue){
         const disabled = true
-        if(this.disabled === true)return;
+        if(this.disabled === true)return message.channel.send("This command is currently disabled. `Duration doesn't work.`")
         if(!serverQueue) return message.channel.send(`There is nothing playing!`);
         if(!serverQueue.songs[1])return message.channel.send(`Currently playing **${serverQueue.songs[0].title}** by **${serverQueue.songs[0].author}**`)
         const NowPlayingHours = new MessageEmbed()
@@ -805,11 +815,16 @@ ctx.drawImage(avatar, 40,40,250,250)
         const dispatcher = serverQueue.connection
           .play(ytdl(song.url))
           .on("finish", () => {
-            if(!serverQueue.loop)serverQueue.songs.shift();
-           if(serverQueue.shuffle){
-            message.channel.send(`Shuffle is still in-progress, you may re-disable shuffling in case of repetitive messages.`)
-            serverQueue.shuffle != serverQueue.shuffle
-           }
+            if(!serverQueue.loop){
+              if(serverQueue.queueloop)return 
+              else if(!serverQueue.queueloop){
+                serverQueue.songs.shift();
+              }
+            }
+            if (serverQueue.queueloop === true) serverQueue.songs.push(serverQueue.songs.shift());
+            else serverQueue.songs.shift();
+
+        
           
             play(guild, serverQueue.songs[0]);
           })
@@ -819,6 +834,39 @@ ctx.drawImage(avatar, 40,40,250,250)
         
       }
    
+  if(message.content.startsWith("meme")){
+    const randomPuppy = require("random-puppy")
+    let reddit = [
+      "meme",
+      "animemes",
+      "MemesOfAnime",
+      "animememes",
+      "AnimeFunny",
+      "dankmemes",
+      "dankmeme",
+      "wholesomememes",
+      "MemeEconomy",
+      "techsupportanimals",
+      "meirl",
+      "me_irl",
+      "2meirl4meirl",
+      "AdviceAnimals"
+  ]
+
+  let subreddit = reddit[Math.floor(Math.random() * reddit.length)];
+
+
+
+  randomPuppy(subreddit).then(async url => {
+          await message.channel.send({
+              files: [{
+                  attachment: url,
+                  name: 'meme.png'
+              }]
+          }).then(() => message.channel.stopTyping());
+  }).catch(console.log("Error"));
+
+};
   
     if(message.content.toLowerCase().includes(x +"uptime".toLowerCase())){
     

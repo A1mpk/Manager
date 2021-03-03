@@ -33,8 +33,8 @@ module.exports = {
                message.channel.send(`Something went wrong, please run the command again.`)
         }
         if(Role){
-            const guildchannel = message.guild.channels.cache.find(ch=> ch.name === "log-test")
-       if(!guildchannel)return message.guild.owner.send(`Hello, I cannot find a channel named "log-test" in your guild ${message.guild.name}, please create one.`)
+            const guildchannel = message.guild.channels.cache.find(ch=> ch.name === "logs")
+       if(!guildchannel)return message.guild.owner.send(`Channel attribute "logs" was not found.`)
        const VerifySetup = new Discord.MessageEmbed()
        .setTitle(`Member Verified ✔️`)
        .setDescription(`${message.member} has been verified`) 
