@@ -1,40 +1,20 @@
 /// THE VARIABLES IMPORTANT!
-const { POINT_CONVERSION_HYBRID, EMFILE, S_IFBLK } = require('constants');
 const { Client, Collection, Structures, DiscordAPIError, Util, MessageEmbed} = require('discord.js');
 const Discord = require('discord.js');
 const fs = require('fs');
-const mongoose = require('mongoose');
-const { send, cpuUsage, title } = require('process');
-const guild = require('./commands/Moderation/guild');
-const avatar = require('./commands/normal/avatar');
 const client = new Client();
 client.commands = new Collection();
 client.aliases = new Collection();
 client.mongoose = require('./utils/mongoose');
 client.categories = fs.readdirSync('./commands/');
 const { config } = require('dotenv');
-const { isRegExp } = require('util');
-const { Z_NEED_DICT, createGzip } = require('zlib');
-const { error, memory, time, timeStamp } = require('console');
-const { getPackedSettings } = require('http2');
-const { name } = require('./commands/Moderation/guild');
 const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api')
 const youtube = new Youtube("AIzaSyDRzH6PP1AR3FR5CYB6riNei4BSEdJqLf8")
 const Levels = require('discord-xp');
-const levels = require('discord-xp/models/levels');
-const canvacord = require("canvacord");
-const Canvacord = require('canvacord/src/Canvacord');
-const { discriminators } = require('discord-xp/models/levels');
 Levels.setURL("mongodb+srv://admin:LmVUsNQeLiYCsJfr@manager.hd8gy.mongodb.net/<DataBase505>?retryWrites=true&w=majority")
 const Canvas = require('canvas');
-const { waitForDebugger } = require('inspector');
 const queue = new Map();
-const YTCHANNEL = 'UC6TrH3NVyfUiJJDeibzNjgQ'
-const { MAX_PACKET_SIZE } = require('opusscript');
-const ms = require('ms');
-const { author } = require('canvacord');
-const data = require('canvacord/src/Plugins');
 // COMMAND HANDLER
 config({
     path: `${__dirname}/.env`
@@ -139,6 +119,11 @@ client.on('ready', () => {
   
  
     client.user.setActivity(`>help || >info`, {type: "WATCHING"})
+})
+
+client.on('error', error => {
+   console.log(`An error occured : ${error.message}`)
+   process.exit(1);
 })
 
 client.on('guildMemberRemove',async member => {
@@ -412,7 +397,6 @@ if (status !== null && status.type === "LISTENING" && status.name === "Spotify" 
 }
   
  
-
 if(message.content.startsWith(x + 'rank')){
   const mesag = message.content.slice(5)
 
@@ -584,7 +568,8 @@ ctx.drawImage(avatar, 40,40,250,250)
             playing: true,
             loop: false,
             queueloop: false,
-            shuffle: false
+            shuffle: false,
+
           };
       
           queue.set(message.guild.id, queueContruct);
@@ -633,7 +618,7 @@ ctx.drawImage(avatar, 40,40,250,250)
         if(!serverQueue)return message.channel.send(`The queue is empty!`)
         const QueueEmbed = new MessageEmbed()
         .setDescription(`
-        ${serverQueue.songs.map(song => `- **[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`).join(`\n`)}`)
+        ${serverQueue.songs.map(song => `  ${song.position} - **[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`).join(`\n`)}`)
         .setColor("ORANGE")
         .setTimestamp()
         .setAuthor(`Queue`)
@@ -663,14 +648,14 @@ ctx.drawImage(avatar, 40,40,250,250)
         if(!serverQueue) return message.channel.send('The song queue is empty! Add some music.')
         
        if(!LoopType){
-        if(serverQueue.queueloop)return message.channel.send(`Looping the queue is already enabled.`)
+       
         serverQueue.loop = !serverQueue.loop
         return message.channel.send(`${serverQueue.loop ? `**✅Enabled**` : `**✅Disabled**`} looping.`)
        }else
        // LOOP THE WHOLE QUEUE
        if(LoopType){
         if(LoopType.toLowerCase().includes("queue".toLowerCase())){
-          if(serverQueue.loop)return message.channel.send(`Looping the song is already enabled.`)
+          
           serverQueue.queueloop = !serverQueue.queueloop
           return message.channel.send(`${serverQueue.queueloop ? `**✅Enabled**` : `**✅Disabled**`} looping **queue**.`)
           // INVALID COMMAND
@@ -755,17 +740,18 @@ ctx.drawImage(avatar, 40,40,250,250)
       // NOW PLAYING
       function np(message, serverQueue){
         const disabled = true
-        if(this.disabled === true)return message.channel.send("This command is currently disabled. `Duration doesn't work.`")
+        if(disabled)return message.channel.send("Embed version is no longer supported due to an error.")
         if(!serverQueue) return message.channel.send(`There is nothing playing!`);
         if(!serverQueue.songs[1])return message.channel.send(`Currently playing **${serverQueue.songs[0].title}** by **${serverQueue.songs[0].author}**`)
         const NowPlayingHours = new MessageEmbed()
-        .setAuthor(`🎵Currently Playing🎵`)
+        .setAuthor(`Currently Playing`)
         .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
         .setColor("ORANGE")
         .addFields(
           { name: `Duration`, value: `${time}`, inline: true }, 
           { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true }, 
           { name: `Looping`, value: serverQueue.loop, inline: true },
+          { name: `Queue Looping`, value: serverQueue.queueloop, inline: true },
         )
         .setTimestamp()
          message.channel.send(NowPlayingHours)
@@ -805,24 +791,35 @@ ctx.drawImage(avatar, 40,40,250,250)
           return;
         }
       
-        
         const Playing = new MessageEmbed()
-        .setAuthor(`🎵Now Playing🎵`)
-        .setDescription(`**Playing [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!**`)
+        .setAuthor(`Now Playing`, `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`)
+        .setDescription(`[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!`)
         .setColor("ORANGE")
-        .setTimestamp()
-       
+        .setFooter(message.author.tag, message.author.displayAvatarURL())
+    
         const dispatcher = serverQueue.connection
           .play(ytdl(song.url))
           .on("finish", () => {
+            if (serverQueue.queueloop === true){
+              serverQueue.songs.push(serverQueue.songs.shift());
+            }else 
             if(!serverQueue.loop){
-              if(serverQueue.queueloop)return 
-              else if(!serverQueue.queueloop){
-                serverQueue.songs.shift();
+              serverQueue.songs.shift()
+            }else
+            if(serverQueue.loop){
+              if(serverQueue.queueloop){
+                serverQueue.queueloop = !serverQueue.queueloop
+                message.channel.send("I have disabled queue looping due to loop being enabled.")
+              }
+            }else
+            if(serverQueue.queueloop){
+              if(serverQueue.loop){
+                serverQueue.loop = !serverQueue.loop
+                message.channel.send("I have disabled track looping due to queue loop being enabled.")
               }
             }
-            if (serverQueue.queueloop === true) serverQueue.songs.push(serverQueue.songs.shift());
-            else serverQueue.songs.shift();
+            
+            
 
         
           
@@ -911,7 +908,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
             name: "Links",
-            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Alaska](https://discord.com/api/oauth2/authorize?client_id=691748432104390726&permissions=8&scope=bot) |** ** | [Prover](https://discord.com/api/oauth2/authorize?client_id=801956345736593408&permissions=8&scope=bot) ",inline:true
+            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Website](https://sites.google.com/view/mint2020-com/home) ",inline:true
           }
     )
     .setThumbnail(message.client.user.displayAvatarURL())
