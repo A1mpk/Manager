@@ -20,12 +20,12 @@ module.exports = {
               .setDescription('`>rule_add <rules>` - This command is designed to add rules for the guild. It does comes with a sample phrase starting with "Welcome to server name, and here are the rules you should follow :". From there you will have to complete the rules. You can also use customizable fonts!')
            
               .setTimestamp()
-              .setColor("ORANGE")
+              .setColor(3447003)
               message.channel.send(ARGSNEEDED2)
             }
 
               const custom4_message = new Discord.MessageEmbed()
-              .setColor("ORANGE")
+              .setColor(3447003)
               .setAuthor('Rules')
               .setDescription(`Welcome to **${message.guild.name}**, and here are the rules you should follow : 
               ${args3}`)

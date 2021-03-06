@@ -15,7 +15,7 @@ module.exports = {
         .setDescription('`>say <message>` - This is a say command, it repeats your message.')
         .setTimestamp()
     
-        .setColor("ORANGE")
+        .setColor(3447003)
       if(!args2){
           message.channel.send(say)
       }else

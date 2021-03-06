@@ -11,7 +11,7 @@ module.exports = {
         if(!message.guild.me.hasPermission(['MANAGE_NICKNAMES']))return message.channel.send('I don\'t have enough permissions to ban a user. [`MANAGE_NICKNAMES`]');
         const lol = message.content.slice(5)
         const LOL = new Discord.MessageEmbed()
-        .setColor("ORANGE")
+        .setColor(3447003)
         .setAuthor('NICK - MODERATION')
         .setDescription('`>nick <nickname>` - This is a nickname command which can only change your nickname on the server.')
       

@@ -12,7 +12,7 @@ module.exports = {
      const InviteEmbed = new Discord.MessageEmbed()
      .setAuthor('INVITE ME')
      .setDescription('https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot')
-     .setColor("ORANGE")
+     .setColor(3447003)
      .setFooter(`Command raised by ${message.member.user.tag}`)
      message.channel.send(InviteEmbed)
     }

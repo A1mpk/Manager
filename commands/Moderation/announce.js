@@ -12,7 +12,7 @@ module.exports = {
          
             let args2 = message.content.slice("9")
             const custom_message = new Discord.MessageEmbed()
-            .setColor("ORANGE")
+            .setColor(3447003)
           
             .setDescription(args2)
             if(!args2){
@@ -21,7 +21,7 @@ module.exports = {
               .setDescription('`>announce <announcement>` - This will just post your announcement as an [embed](https://gyazo.com/b91ebad4add6fd5233dfbec22d2170eb).')
             
               .setTimestamp()
-              .setColor("ORANGE")
+              .setColor(3447003)
               message.channel.send(ARGSNEEDED)
             }else
             if(args2){

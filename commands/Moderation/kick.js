@@ -13,7 +13,7 @@ const Kick = new Discord.MessageEmbed()
          .setTitle('KICK - MODERATION')
          .setDescription('`>kick <user> <reason>` - This is a kick command, it kicks the mentionned user if provided with a reason!')
        
-         .setColor("ORANGE")
+         .setColor(3447003)
          .setTimestamp()
          if(!message.guild.me.hasPermission(['KICK_MEMBERS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`KICK_MEMBERS`]');
          if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send('You need KICK_MEMBERS to use this command.');
@@ -21,7 +21,7 @@ const Kick = new Discord.MessageEmbed()
          if(!Kuser) return message.channel.send(Kick); 
          let kReason = args.join(" ").slice(22);
          const KickMod = new Discord.MessageEmbed()
-         .setColor("ORANGE")
+         .setColor(3447003)
          .setTitle('ERROR')
          .setDescription('I cant kick that person.')
          .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")

@@ -10,7 +10,7 @@ module.exports = {
         .setTitle('CLEAR - MODERATION')
         .setDescription('`>clear <amount>` - This is just a clear command, it clears the amount of messages asked for.')
        
-        .setColor("ORANGE")
+        .setColor(3447003)
         .setTimestamp()
         const aaa = message.content.split(' ').slice(1); 
         const amount = aaa.join(' ');

@@ -13,7 +13,7 @@ module.exports = {
             message.channel.send({
                 embed:{
                     title: 'List of commands ',
-                    color: "ORANGE", 
+                    color: 3447003, 
                     fields:[
                         {
                             name: '**😴 Moderation**',
@@ -49,12 +49,12 @@ module.exports = {
           .addField(`unmute`, '`>unmute <user> <reason>` - This is an unmute command, it mutes the mentionned user if provided with a reason!')
           .addField(`bot_nick`, '`>bot_nick <nickname>` - This is a bot_nick command, it changes the bot\'s nickname.')
           .setFooter(`>help M_list_2 to see the other moderation commands.`)
-         .setColor("ORANGE")
+         .setColor(3447003)
          .setTimestamp()
           message.channel.send(ModerationHelp)
         }else if(Words.toLowerCase().includes("M_list_2".toLowerCase())){
             const ModerationHelp2 = new Discord.MessageEmbed()
-            .setColor(`ORANGE`)
+            .setColor(3447003)
             .setAuthor(`MODERATION 2 - CATEGORY`)
             .setFooter(`>help Moderation for first list of commands.`)
             .addField(`slowmode`,'`slowmode <seconds>` - This is a slowmode command, it increases the slowmode of the channel to the chosen one.')
@@ -64,7 +64,7 @@ module.exports = {
           message.channel.send(ModerationHelp2)
         }else if(Words.toLowerCase().includes("fun".toLowerCase())){
             const Fun = new Discord.MessageEmbed()
-            .setColor(`ORANGE`)
+            .setColor(3447003)
             .setAuthor(`FUN - CATEGORY`)
           .addField(`karen`, '`>karen` - This is a karen command, it returns with questions & messages which you will you have to reply to. Once finished you will know who won.')
           .addField(`8ball`, '`>8ball <prediction>` - This is just the 8ball command, it will return a yes, no or maybe to your question.')
@@ -76,7 +76,7 @@ module.exports = {
           message.channel.send(Fun)
         }else if(Words.toLowerCase().includes("Music".toLowerCase())){
             const Music = new Discord.MessageEmbed()
-            .setColor(`ORANGE`)
+            .setColor(3447003)
             .setAuthor(`MUSIC- CATEGORY`)
           .addField(`play`, '`>play <query>` - This is a play command, it plays track in a voice channel. The query can either be a link or a YouTube keyword.')
           .addField(`skip`, '`>skip` - This is just the skip command, it will skip the current track if being played.')
@@ -88,7 +88,7 @@ module.exports = {
           message.channel.send(Music)
         }else if(Words.toLowerCase().includes("Mu_list_2".toLowerCase())){
             const Music2 = new Discord.MessageEmbed()
-            .setColor(`ORANGE`)
+            .setColor(3447003)
             .setAuthor(`MUSIC 2 - CATEGORY`)
             .addField('np', '`>np` - This is a now-playing command, it shows the currently playing track.') 
           .addField(`queue`, '`>queue` - This is just a queue command, it will show the current queue of the tracks in this server.')
@@ -100,7 +100,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("listeners".toLowerCase())){
             const Listeners = new Discord.MessageEmbed()
             .setAuthor(`LISTENERS - CATEGORY`)
-            .setColor("ORANGE")
+            .setColor(3447003)
             .addField('MessageDelete', 'This is from the logging category, it log\'s every deleted messages into the logging channel.')
             .addField(`InviteCreate/Delete`, 'This is a logging function, it logs it in the logging channel whenever an invite is created/deleted.')
             .addField('RoleDelete','This is a logging function, it log\'s it in the logging channel whenever a role is deleted.')
@@ -110,7 +110,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("Utilities".toLowerCase())){
             const Utilities = new Discord.MessageEmbed()
             .setAuthor(`UTILITIES - CATEGORY`)
-            .setColor("ORANGE")
+            .setColor(3447003)
             .addField('invite', '`>invite` - This is just an invite command, it sends you an invite link so you can invite Mint.')
             .addField(`update`, '`>update` - This is just an update command, it shows you the newest updates of Mint.')
             .addField('membercount','`>membercount` - This is just a membercount command, it shows the amount of members in the server.')
@@ -120,7 +120,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("u_list_2".toLowerCase())){
             const u_list_2 = new Discord.MessageEmbed()
             .setAuthor(`UTILITIES 2 - CATEGORY`)
-            .setColor("ORANGE")
+            .setColor(3447003)
             .addField('avatar', '`>avatar <mentionuser>` - This is just an avatar command, it shows you the avatar of the mentionned user.')
             .addField(`guild`, '`>guild` - This is just a guild command, it shows you information about the server.')
             .addField('getID','`>getID <channel>` - This is just a getID command, it shows you the ID of the channel name you wrote.')

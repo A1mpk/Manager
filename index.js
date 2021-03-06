@@ -87,7 +87,7 @@ guild.channels.cache.forEach((channel) => {
 defaultChannel.send({
   embed:{
       title: 'List of commands ',
-      color: "ORANGE", 
+      color: 3447003, 
       fields:[
           {
               name: '**😴 Moderation**',
@@ -385,7 +385,7 @@ if (status !== null && status.type === "LISTENING" && status.name === "Spotify" 
   let time = `${minutes}:${seconds}`;
   const embed = new Discord.MessageEmbed()
   .setAuthor("Spotify", "https://th.bing.com/th/id/R51a2b615791a987a46af18beed1ac882?rik=ihrJdQVay12aqA&riu=http%3a%2f%2fmedia.idownloadblog.com%2fwp-content%2fuploads%2f2016%2f02%2fSpotify-App-Icon-Large.png&ehk=69W%2bQrgPsZ2wP0g5JEZQs47EbsdD%2fNOV6VgsVsRHgIQ%3d&risl=&pid=ImgRaw")
-  .setColor(0x1ED768)
+  .setColor(3447003)
   .setThumbnail(image)
   .addField("Name:", name)
   .addField("Album:", album)
@@ -477,7 +477,7 @@ ctx.drawImage(avatar, 40,40,250,250)
       .setTitle(`Leaderboard in ${message.guild.name}`)
       .setDescription(lb.join("\n\n\n"))
       .setTimestamp()
-      .setColor("ORANGE")
+      .setColor(3447003)
       message.channel.send(LeaderBord)
     }
    
@@ -518,7 +518,7 @@ ctx.drawImage(avatar, 40,40,250,250)
          .setTitle('PLAY - MUSIC')
          .setDescription('`>play <query>` - This is a play command, it plays music in a voice channel. The query can either be a link or a YouTube keyword.')
        
-         .setColor("ORANGE")
+         .setColor(3447003)
          .setTimestamp()
          return message.channel.send(Kick)
         }
@@ -598,7 +598,7 @@ ctx.drawImage(avatar, 40,40,250,250)
             const QueueAdded = new MessageEmbed()
             .setAuthor(`🎵Added to queue🎵`)
             .setDescription(`**Queued [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`)
-            .setColor("ORANGE")
+            .setColor(3447003)
             .setTimestamp()
           
           serverQueue.songs.push(song);
@@ -619,7 +619,7 @@ ctx.drawImage(avatar, 40,40,250,250)
         const QueueEmbed = new MessageEmbed()
         .setDescription(`
         ${serverQueue.songs.map(song => `  ${song.position} - **[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`).join(`\n`)}`)
-        .setColor("ORANGE")
+        .setColor(3447003)
         .setTimestamp()
         .setAuthor(`Queue`)
       
@@ -721,7 +721,7 @@ ctx.drawImage(avatar, 40,40,250,250)
         const Playing = new MessageEmbed()
         .setAuthor(`Volume`)
         .setDescription(`🎵✅Successfully changed the volume to **${volumeArgs}**!`)
-        .setColor("ORANGE")
+        .setColor(3447003)
         .setTimestamp()
         
        
@@ -746,7 +746,7 @@ ctx.drawImage(avatar, 40,40,250,250)
         const NowPlayingHours = new MessageEmbed()
         .setAuthor(`Currently Playing`)
         .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
-        .setColor("ORANGE")
+        .setColor(3447003)
         .addFields(
           { name: `Duration`, value: `${time}`, inline: true }, 
           { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true }, 
@@ -794,7 +794,7 @@ ctx.drawImage(avatar, 40,40,250,250)
         const Playing = new MessageEmbed()
         .setAuthor(`Now Playing`, `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`)
         .setDescription(`[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!`)
-        .setColor("ORANGE")
+        .setColor(3447003)
         .setFooter(message.author.tag, message.author.displayAvatarURL())
     
         const dispatcher = serverQueue.connection
@@ -884,12 +884,12 @@ ctx.drawImage(avatar, 40,40,250,250)
         )
         .setTimestamp()
         .setFooter(`Uptime`)
-        .setColor("ORANGE")
+        .setColor(3447003)
         message.channel.send(UptimeEMbed)
 }
 if(message.content === `<@!${client.user.id}>`){
    const MyPRefixIs = new Discord.MessageEmbed()
-        .setColor("ORANGE")
+        .setColor(3447003)
         .setAuthor('Prefix')
         .setDescription('`>`')
         .setTimestamp()
@@ -898,7 +898,7 @@ if(message.content === `<@!${client.user.id}>`){
 }       
 if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     const Info = new Discord.MessageEmbed()
-    .setColor("RED")
+    .setColor(3447003)
     .setTitle('Mint')
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint`)

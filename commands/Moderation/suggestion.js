@@ -34,7 +34,7 @@ module.exports = {
             const Embed = new Discord.MessageEmbed()
             .setTitle(collected.first())
             .addField('What is your suggestion?', collected.last())
-           .setColor("RED")
+           .setColor(3447003)
            .setThumbnail(message.author.displayAvatarURL())
            .setTimestamp()
            .setFooter(`By ${message.member.user.tag}`)
