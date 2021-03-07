@@ -75,7 +75,6 @@ const x = '>';
 
 client.on('guildCreate', guild => {
 
-    guild.channels.create('logs')
     let defaultChannel = "";
 guild.channels.cache.forEach((channel) => {
   if(channel.type == "text" && defaultChannel == "") {
@@ -84,35 +83,40 @@ guild.channels.cache.forEach((channel) => {
     }
   }
 })
-defaultChannel.send({
-  embed:{
-      title: 'List of commands ',
-      color: 3447003, 
-      fields:[
-          {
-              name: '**😴 Moderation**',
-              value: ' `>help Moderation || help m_list_2` - This section helps keep your server and community safe, secure and in control with these commands at your disposal.'
-          },     
-          {
-              name: '**🤩 Fun **',
-              value: '`>help fun` - This section can keep your server fun & enjoyable with these commands.'
-          },
-          {
-              name: '🎵 Music ',
-              value: '`>help music || help mu_list_2` - This section is made for playing musics, if bored & want to find out new tracks, members of this server can always play a track to keep the server comfortable.'
-          },
-          {
-              name: '**👂 LISTENERS **',
-              value: '`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.'
-          },
-          {
-              name: '**🛠️ Utilities [14]**',
-              value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
-          }
-      ],
-      
-  }
-  })
+try{
+  defaultChannel.send({
+    embed:{
+        title: 'List of commands ',
+        color: 3447003, 
+        fields:[
+            {
+                name: '**😴 Moderation**',
+                value: ' `>help Moderation || help m_list_2` - This section helps keep your server and community safe, secure and in control with these commands at your disposal.'
+            },     
+            {
+                name: '**🤩 Fun **',
+                value: '`>help fun` - This section can keep your server fun & enjoyable with these commands.'
+            },
+            {
+                name: '🎵 Music ',
+                value: '`>help music || help mu_list_2` - This section is made for playing musics, if bored & want to find out new tracks, members of this server can always play a track to keep the server comfortable.'
+            },
+            {
+                name: '**👂 LISTENERS **',
+                value: '`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.'
+            },
+            {
+                name: '**🛠️ Utilities [14]**',
+                value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
+            }
+        ],
+        
+    }
+    })
+}catch{
+  return console.log(`I didnt have permission.`)
+}
+
 })
 
 client.on('ready', () => {
@@ -131,9 +135,9 @@ client.on('guildMemberRemove',async member => {
   if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
   const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
-  if(!Channel)return member.guild.channels.create("logs")
+  if(!Channel)return;
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
-  if(!Joins) return member.guild.channels.create("👋joins")
+  if(!Joins) return;
   const canvas = Canvas.createCanvas(506, 218)
   const ctx = canvas.getContext('2d')
   
@@ -192,6 +196,7 @@ try{
     .setColor("RED")
    
        const channel = message.guild.channels.cache.find(a => a.name === "logs")
+       if(!channel)return;
        channel.send(MessageEmbed)
     }catch(er){
       return;
@@ -215,7 +220,7 @@ client.on('inviteCreate', invite => {
     .setFooter(`Inviter:  ${invite.inviter.id} | Link: ${invite.url}`)
     .setColor("BLUE")
     const channel = invite.guild.channels.cache.find(a => a.name === "logs")
-    if(!channel)return invite.guild.channels.create("logs")
+    if(!channel)return;
     channel.send(MessageEmbed2)
 } )
 client.on('inviteDelete', invite => {
@@ -230,7 +235,7 @@ client.on('inviteDelete', invite => {
   .setFooter(`Inviter:  ${invite.inviter.id}  `)
   .setColor("BLUE")
     const channel = invite.guild.channels.cache.find(a => a.name === "logs")
-    if(!channel)return invite.guild.channels.create("logs")
+    if(!channel)return;
     channel.send(MessageEmbed2)
 })
 client.on('emojiCreate', emoji => {
@@ -244,7 +249,7 @@ client.on('emojiCreate', emoji => {
     
     .setColor("PURPLE")
     const channel = emoji.guild.channels.cache.find(a => a.name === "logs")
-    if(!channel)return emoji.guild.channels.create("logs")
+    if(!channel)return;
     channel.send(MessageEmbed2)
 })
 client.on('emojiDelete', emoji => {
@@ -252,7 +257,7 @@ client.on('emojiDelete', emoji => {
   if(!emoji.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!emoji.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "logs")
-    if(!guildChannel23) return emoji.guild.channels.create("logs")
+    if(!guildChannel23) return;
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`${emoji.name}`)
     .setTimestamp()
@@ -267,7 +272,7 @@ client.on('roleDelete', Role=> {
   if(!Role.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!Role.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const role = Role.guild.channels.cache.find(c=> c.name === "logs")
-    if(!role) return Role.guild.channels.create("logs")
+    if(!role) return;
     const ROleInfo = new Discord.MessageEmbed()
     .setAuthor(Role.name)
    .setDescription(`Role ${Role.name} has been deleted.`)
@@ -286,9 +291,9 @@ client.on('guildMemberAdd', async member => {
   if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
   const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
-  if(!Channel)return member.guild.channels.create("logs")
+  if(!Channel)return;
   const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
-  if(!Joins) return member.guild.channels.create("👋joins")
+  if(!Joins) return;
 
   const canvas = Canvas.createCanvas(506, 218)
   const ctx = canvas.getContext('2d')
@@ -596,8 +601,8 @@ ctx.drawImage(avatar, 40,40,250,250)
            }else 
            if(message.guild.me.voice.channel){
             const QueueAdded = new MessageEmbed()
-            .setAuthor(`🎵Added to queue🎵`)
-            .setDescription(`**Queued [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`)
+            .setAuthor(`Added to queue`, `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`)
+            .setDescription(`[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})`)
             .setColor(3447003)
             .setTimestamp()
           
@@ -618,7 +623,7 @@ ctx.drawImage(avatar, 40,40,250,250)
         if(!serverQueue)return message.channel.send(`The queue is empty!`)
         const QueueEmbed = new MessageEmbed()
         .setDescription(`
-        ${serverQueue.songs.map(song => `  ${song.position} - **[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`).join(`\n`)}`)
+        ${serverQueue.songs.map(song => `  **[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`).join(`\n`)}`)
         .setColor(3447003)
         .setTimestamp()
         .setAuthor(`Queue`)
@@ -739,8 +744,8 @@ ctx.drawImage(avatar, 40,40,250,250)
       
       // NOW PLAYING
       function np(message, serverQueue){
-        const disabled = true
-        if(disabled)return message.channel.send("Embed version is no longer supported due to an error.")
+        const disabled = false
+        if(disabled)return message.channel.send("Embed version containing duration is no longer supported due to an error.")
         if(!serverQueue) return message.channel.send(`There is nothing playing!`);
         if(!serverQueue.songs[1])return message.channel.send(`Currently playing **${serverQueue.songs[0].title}** by **${serverQueue.songs[0].author}**`)
         const NowPlayingHours = new MessageEmbed()
@@ -748,7 +753,7 @@ ctx.drawImage(avatar, 40,40,250,250)
         .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
         .setColor(3447003)
         .addFields(
-          { name: `Duration`, value: `${time}`, inline: true }, 
+          { name: `Duration`, value: `Disabled`, inline: true }, 
           { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true }, 
           { name: `Looping`, value: serverQueue.loop, inline: true },
           { name: `Queue Looping`, value: serverQueue.queueloop, inline: true },
@@ -903,7 +908,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint`)
     .addFields(
-        { name: 'Version', value: '2.0.1', inline: true },
+        { name: 'Version', value: '2.0.2', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {

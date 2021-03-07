@@ -48,7 +48,7 @@ module.exports = {
           .addField(`mute`, '`>mute <user> <reason>` - This is a mute command, it mutes the mentionned user if provided with a reason!')
           .addField(`unmute`, '`>unmute <user> <reason>` - This is an unmute command, it mutes the mentionned user if provided with a reason!')
           .addField(`bot_nick`, '`>bot_nick <nickname>` - This is a bot_nick command, it changes the bot\'s nickname.')
-          .setFooter(`>help M_list_2 to see the other moderation commands.`)
+        
          .setColor(3447003)
          .setTimestamp()
           message.channel.send(ModerationHelp)
@@ -100,6 +100,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("listeners".toLowerCase())){
             const Listeners = new Discord.MessageEmbed()
             .setAuthor(`LISTENERS - CATEGORY`)
+            .setDescription(`_To enable logging for this guild, do not forget to create a text channel named "logs"!_`)
             .setColor(3447003)
             .addField('MessageDelete', 'This is from the logging category, it log\'s every deleted messages into the logging channel.')
             .addField(`InviteCreate/Delete`, 'This is a logging function, it logs it in the logging channel whenever an invite is created/deleted.')
@@ -128,9 +129,9 @@ module.exports = {
             .addField('report','`>report <issue>` - This is just a report command, it sends a report to the owner of the guild.')
             .addField('suggestion', '`>suggestion <suggestions>` - This is just a suggestion command, after you enter your suggestions it sends it in a suggestions channel where the Owner/Administrator can view it.')
             .addField('credit', '`>credit <user> <reason>` - This is just a credit command, it credits the user you mentionned with the reason.')
-            .addField('spotify', '`>spotify <user> - This command is just a spotify command, it shows basic information about the track a mentionned user is listening to.`')
+            .addField('spotify', '`>spotify <user>` - This command is just a spotify command, it shows basic information about the track a mentionned user is listening to.')
             message.channel.send(u_list_2)
-        }
+        }else return message.channel.send(`Category *${Words}* does not exist.`)
        
             
             
