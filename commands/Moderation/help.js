@@ -107,6 +107,7 @@ module.exports = {
             .addField('RoleDelete','This is a logging function, it log\'s it in the logging channel whenever a role is deleted.')
             .addField('EmojiCreate/Delete', 'This is a logging function, it log\'s it in the logging channel whenever a Emoji is created/deleted.')
             .addField('GuildMemberAdd/Remove','This is a logging function, it log\'s it in the logging channel whenever a member joins/leave.')
+            .addField('Autorole','`>autorole_add <roleID>` - This is just the autorole command, everytime a user joins it gives them that role.')
             message.channel.send(Listeners)
         }else if(Words.toLowerCase().includes("Utilities".toLowerCase())){
             const Utilities = new Discord.MessageEmbed()

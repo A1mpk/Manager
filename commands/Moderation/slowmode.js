@@ -6,7 +6,7 @@ module.exports = {
     disabled: false,
     execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
-        if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`MANAGE_CHANNELS`]');
+        if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to manage channels. [`MANAGE_CHANNELS`]');
         const aaa = message.content.split(' ').slice(1); 
         const amount = aaa.join(' ');
         const h69 = new Discord.MessageEmbed()
@@ -15,7 +15,7 @@ module.exports = {
           
             .setColor(3447003)
             .setTimestamp()
-            if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`MANAGE_CHANNELS`]');
+            if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to manage channels.. [`MANAGE_CHANNELS`]');
             if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
             if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
             if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;

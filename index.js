@@ -51,22 +51,22 @@ rpc.request('SET_ACTIVITY', {
 
 pid: process.pid,
 activity : {
-details : "newsforgamers",
+details : "Working on Mint..",
 assets : {
-large_image : "e39",
-large_text : "BBC",
-small_image : "e39",
-small_text: "BEST NEWS"
+large_image : "hwalloween",
+large_text : "Invite Mint",
+small_image : "6817_discord_verified",
+small_text: "thanks..."
 },
 
-buttons : [{label : "SUBSCRIBE" , url : "https://www.youtube.com/channel/UCAA4P3xK4bTsDDcW8c21q5w"}, {label: "Website", url : "https://sites.google.com/view/newsforgamers/home"}]
+buttons : [{label : "Invite" , url : "https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot"}, {label: "Website", url : "https://sites.google.com/view/mint2020-com/home"}]
 }
 
 })
 
 })
 rpc.login({
-  clientId: "816732886870523935",
+  clientId: "725787532008095744",
   clientSecret: "t5tp_u5YfKJC4BQVTXwj82wRc3kORXxh"
 })
 /// PREFIX
@@ -108,7 +108,8 @@ try{
             {
                 name: '**🛠️ Utilities [14]**',
                 value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
-            }
+            },
+         
         ],
         
     }
@@ -128,6 +129,7 @@ client.on('ready', () => {
 client.on('error', error => {
    console.log(`An error occured : ${error.message}`)
    process.exit(1);
+
 })
 
 client.on('guildMemberRemove',async member => {
@@ -287,6 +289,7 @@ client.on('roleDelete', Role=> {
 
 
 client.on('guildMemberAdd', async member => {
+  
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
@@ -329,6 +332,26 @@ client.on('guildMemberAdd', async member => {
   ctx.fillText(text,x,80 + pfp.height)
   const attachment = new Discord.MessageAttachment(canvas.toBuffer())
 try{
+  const AutoRoleSchema = require("./commands/model/AutoRole")
+  const cache = {} 
+  let data = cache[member.guild.id]
+
+  if (!data) {
+    
+
+ 
+      try {
+        const result = await AutoRoleSchema.findOne({ _id: member.guild.id})
+       if(!result)return;
+        cache[member.guild.id] = data = [result.autorole]
+      }catch(er){
+        console.log(er)
+      }
+  } 
+  const actualrole = member.guild.roles.cache.find(role => data[0] === role.id)
+    if(!actualrole)return;
+    member.roles.add(actualrole)
+ 
   Channel.send(`Hey ${member}, welcome to **${member.guild.name}**`,attachment)
   Joins.send(`Hey ${member}, welcome to **${member.guild.name}**`,attachment)
 }catch(er){
@@ -1025,6 +1048,9 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     if(command === 'karen'){
         client.commands.get('karen').execute(message, args)
     };
+    if(command === 'autorole_add'){
+      client.commands.get('autorole_add').execute(message, args)
+  };
 });
 
 
