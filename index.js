@@ -367,14 +367,34 @@ client.on('message', async message => {
     if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
     if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const serverQueue = queue.get(message.guild.id);
-    
-    const randomXp = Math.floor(Math.random() * 15) + 1;
-    const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXp);
-    if(hasLeveledUp){
-    
-      const user = await Levels.fetch(message.author.id, message.guild.id);
-      message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
-    }
+    const LevelsSchema = require("./commands/model/levels")
+    const cache = {} 
+    let data = cache[message.guild.id]
+  
+    if (!data) {
+      
+  
+   
+        try {
+          const result = await LevelsSchema.findOne({ guildID: message.guild.id})
+         if(!result)return;
+          cache[message.guild.id] = data = [result.levels]
+        }catch(er){
+          console.log(er)
+        }
+    } 
+    const actualdarta = data[0]
+   
+      const randomXp = Math.floor(Math.random() * 15) + 1;
+      const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXp);
+      if(hasLeveledUp){
+        if(actualdarta === "false")return;
+      
+        const user = await Levels.fetch(message.author.id, message.guild.id);
+        message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
+      }
+     
+     
    
     
  
@@ -1051,6 +1071,9 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     if(command === 'autorole_add'){
       client.commands.get('autorole_add').execute(message, args)
   };
+  if(command === 'levels'){
+    client.commands.get('levels').execute(message, args)
+};
 });
 
 
