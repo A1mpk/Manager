@@ -9,7 +9,7 @@ module.exports = async (client, guild) => {
         _id: mongoose.Types.ObjectId(),
         guildID: guild.id,
         guildName: guild.name,
-        prefix: String,
+        
         
     });
     guild.save()

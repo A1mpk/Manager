@@ -482,7 +482,7 @@ ctx.fillRect(180, 216, 65 )
 ctx.fill();
 ctx.globalAlpha = 1;
 
-ctx.font = " bold 36px Manrope";
+ctx.font = "bold 36px manrope";
 ctx.textAlign = "center";
 ctx.fillStyle = " WHITE";
 ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
@@ -490,7 +490,7 @@ ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
 ctx.textAlign = "left";
 ctx.fillText(`${target.tag}`, 300, 120);
 
-ctx.font = " bold 50px Manrope";
+ctx.font = "bold 50px manrope ";
 ctx.fillText("LEVEL", 300,180);
 ctx.fillText(user.level, 470 , 180);
 
