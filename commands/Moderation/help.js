@@ -136,15 +136,15 @@ module.exports = {
             .addField('credit', '`>credit <user> <reason>` - This is just a credit command, it credits the user you mentionned with the reason.')
             .addField('spotify', '`>spotify <user>` - This command is just a spotify command, it shows basic information about the track a mentionned user is listening to.')
             message.channel.send(u_list_2)
-        }else if(Words.toLowerCase().includes("u_list_2".toLowerCase())){
+        }else if(Words.toLowerCase().includes("levels".toLowerCase())){
             const Levelling = new Discord.MessageEmbed()
             .setAuthor(`UTILITIES 2 - CATEGORY`)
             .setColor(3447003)
             .addField('rank', '`>rank`- This is a rank command, it shows your level and XP.')
             .addField('leaderboard', '`>leaderboard`- This is a leaderboard command, it shows the top 5 leaderboard.')
-            .addField(`levels`, '`>levels (true/false)` - This is the levels command, if the input is set to true, it levelling will be enabled in this guild.(This doesnt prevent you from receiving XP, it just disables the random message.)')
+            .addField(`levels`, '`>levels (enable/disable)` - This is the levels command, if the input is set to true, it levelling will be enabled in this guild.')
             message.channel.send(Levelling)
-        }else return message.channel.send(`The category **${Words}* does not exist.`)
+        }else return message.channel.send(`The category **${Words}** does not exist.`)
        
             
             

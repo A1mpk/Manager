@@ -7,8 +7,16 @@ module.exports = {
     async execute(message, args){
        const ANswer = message.content.slice(7)
        if(!message.member.hasPermission("ADMINISTRATOR"))return message.channel.send(`You do not have ADMINISTRATOR mode to use this command.`)
-       if(!ANswer)return message.channel.send('Your options are either `true` or `false`.')
-       if(ANswer.toLowerCase().includes("true".toLowerCase())){
+       if(!ANswer){
+        const LEvelsNoNo = new Discord.MessageEmbed()
+        .setAuthor('LEVELS - LEVELLING')
+            .setDescription('`>levels (enable/disable)` - This is the levels command, if the input is set to true, it levelling will be enabled in this guild.')
+            .setTimestamp()
+        
+            .setColor(3447003)
+            message.channel.send(LEvelsNoNo)
+       }else
+       if(ANswer.toLowerCase().includes("enable".toLowerCase())){
         try {
   
             try {
@@ -17,7 +25,7 @@ module.exports = {
                   guildID: message.guild.id,
                 },
                 {
-                    levels: 'true',
+                    levels: 'enable',
                     guildID: message.guild.id,
                     guildName: message.guild.name
                   
@@ -35,7 +43,7 @@ module.exports = {
     }catch(er){
     message.channel.send(er)
     };
-    }else if(ANswer.toLowerCase().includes("false".toLowerCase())){
+    }else if(ANswer.toLowerCase().includes("disable".toLowerCase())){
 
         try {
   
@@ -45,7 +53,7 @@ module.exports = {
                   guildID: message.guild.id,
                 },
                 {
-                    levels: 'false',
+                    levels: 'disable',
                     guildID: message.guild.id,
                     guildName: message.guild.name
                   
@@ -64,7 +72,10 @@ module.exports = {
     message.channel.send(er)
 
     }
-}else message.channel.send(`That is not an option. [True or False.]`)
+
+  }else message.channel.send(`That is not an option.`) 
+
+
        
     }
 
