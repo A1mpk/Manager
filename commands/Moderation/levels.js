@@ -10,7 +10,7 @@ module.exports = {
        if(!ANswer){
         const LEvelsNoNo = new Discord.MessageEmbed()
         .setAuthor('LEVELS - LEVELLING')
-            .setDescription('`>levels (enable/disable)` - This is the levels command, if the input is set to true, it levelling will be enabled in this guild.')
+            .setDescription('`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, it levelling will be enabled in this guild.')
             .setTimestamp()
         
             .setColor(3447003)

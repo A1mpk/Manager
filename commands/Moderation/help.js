@@ -138,7 +138,7 @@ module.exports = {
             message.channel.send(u_list_2)
         }else if(Words.toLowerCase().includes("levels".toLowerCase())){
             const Levelling = new Discord.MessageEmbed()
-            .setAuthor(`UTILITIES 2 - CATEGORY`)
+            .setAuthor(`LEVELS - CATEGORY`)
             .setColor(3447003)
             .addField('rank', '`>rank`- This is a rank command, it shows your level and XP.')
             .addField('leaderboard', '`>leaderboard`- This is a leaderboard command, it shows the top 5 leaderboard.')
