@@ -42,9 +42,6 @@ for(const file of commandFiles){
 
 // PREMIUM START???
 const RPC = require('discord-rpc');
-const e = require('express');
-
-
 const rpc = new RPC.Client({ transport: 'ipc' })
 rpc.on('ready', () => {
 rpc.request('SET_ACTIVITY', {
@@ -109,6 +106,10 @@ try{
                 name: '**🛠️ Utilities [14]**',
                 value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
             },
+            {
+                name: '**Levelling**',
+                value: '`>help levels` - This section is about Levelling, This is a really short category. [3commands]'
+            }
          
         ],
         
