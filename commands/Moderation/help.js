@@ -30,12 +30,12 @@ module.exports = {
                             value: '`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.'
                         },
                         {
-                            name: '**🛠️ Utilities [14]**',
+                            name: '**🛠️ Utilities **',
                             value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
                         },
                         {
-                            name: '**Levelling**',
-                            value: '`>help levels` - This section is about Levelling, This is a really short category. '
+                            name: '**⚙️ Configuration**',
+                            value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
                         }
                     ],
                     
@@ -62,7 +62,6 @@ module.exports = {
             .addField(`slowmode`,'`slowmode <seconds>` - This is a slowmode command, it increases the slowmode of the channel to the chosen one.')
           .addField(`clear`, '`>clear <amount>` - This is a clear command, it deletes the amount of messages wanted.')
           .addField(`announce`, '`>announce <message>` - This is just an announce command, it announces a announcement as an embed format.')
-          .addField(`lock`, '`>lock` - This is a lock command, it make\'s it that no one can talk in it. For a fully working Raid bot you can invite [Prover](https://discord.com/api/oauth2/authorize?client_id=801956345736593408&permissions=8&scope=bot).')
           message.channel.send(ModerationHelp2)
         }else if(Words.toLowerCase().includes("fun".toLowerCase())){
             const Fun = new Discord.MessageEmbed()
@@ -134,13 +133,13 @@ module.exports = {
             .addField('credit', '`>credit <user> <reason>` - This is just a credit command, it credits the user you mentionned with the reason.')
             .addField('spotify', '`>spotify <user>` - This command is just a spotify command, it shows basic information about the track a mentionned user is listening to.')
             message.channel.send(u_list_2)
-        }else if(Words.toLowerCase().includes("levels".toLowerCase())){
+        }else if(Words.toLowerCase().includes("configs".toLowerCase())){
             const Levelling = new Discord.MessageEmbed()
-            .setAuthor(`LEVELS - CATEGORY`)
+            .setAuthor(`CONFIGS - CATEGORY`)
             .setColor(3447003)
-            .addField('rank', '`>rank`- This is a rank command, it shows your level and XP.')
-            .addField('leaderboard', '`>leaderboard`- This is a leaderboard command, it shows the top 5 leaderboard.')
-            .addField(`levels`, '`>levels (enable/disable)` - This is the levels command, if the input is set to true, it levelling will be enabled in this guild.')
+          .addField('levels', '`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, it levelling will be enabled in this guild.')
+          .addField(`autorole_add`, '`>autorole_add` - This is a autorole_add command, it gives the mentionned role to every new members joining this guild.')
+          .addField(`autorole_remove`, '`>autorole_remove` - This is a autorole_remove command, it resets the autorole system in this guild, making it fresh.')
             message.channel.send(Levelling)
         }else return message.channel.send(`The category **${Words}** does not exist.`)
        
