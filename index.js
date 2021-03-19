@@ -368,30 +368,30 @@ client.on('message', async message => {
     if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
     if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const serverQueue = queue.get(message.guild.id);
-    const LevelsSchema = require("./commands/model/levels")
-    const cache = {} 
-    let data = cache[message.guild.id]
-  
-    if (!data) {
-      
-  
-   
-        try {
-          const result = await LevelsSchema.findOne({ guildID: message.guild.id})
-         if(!result)return;
-          cache[message.guild.id] = data = [result.levels]
-        }catch(er){
-          console.log(er)
-        }
-    } 
-    const actualdarta = data[0]
+
    
       const randomXp = Math.floor(Math.random() * 15) + 1;
       const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomXp);
       if(hasLeveledUp){
-        if(actualdarta === "disable")return;
+        const LevelsSchema = require("./commands/model/levels")
+        const cache = {} 
+        let data = cache[message.guild.id]
       
-        const user = await Levels.fetch(message.author.id, message.guild.id);
+        if (!data) {
+          
+      
+       
+            try {
+              const result = await LevelsSchema.findOne({guildID: message.guild.id})
+             if(!result)return;
+              cache[message.guild.id] = data = [result.levels]
+              
+            }catch(er){
+              console.log(er)
+            }
+        }
+        
+        if(data[0] === "disable")return;
         message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
       }
      
@@ -447,7 +447,24 @@ if (status !== null && status.type === "LISTENING" && status.name === "Spotify" 
   
  
 if(message.content.startsWith(x + 'rank')){
-  if(data[0] === "disable")return message.channel.send(`Levelling system has been disabled for this guild.`)
+  const LevelsSchema = require("./commands/model/levels")
+  const cache = {} 
+  let data = cache[message.guild.id]
+
+  if (!data) {
+    
+
+ 
+      try {
+        const result = await LevelsSchema.findOne({guildID: message.guild.id})
+       if(!result)return;
+        cache[message.guild.id] = data = [result.levels]
+        
+      }catch(er){
+        console.log(er)
+      }
+  }
+  if(data[0] === "disable")return message.channel.send(`Levelling system is currently disabled in this guild.`)
   const mesag = message.content.slice(5)
 
   const target = message.author 
@@ -516,7 +533,24 @@ ctx.drawImage(avatar, 40,40,250,250)
    
 
     if(message.content.toLowerCase().includes( x + "leaderboard" .toLowerCase())){
-      if(data[0] === "disable")return message.channel.send(`Levelling system has been disabled for this guild.`)
+      const LevelsSchema = require("./commands/model/levels")
+      const cache = {} 
+      let data = cache[message.guild.id]
+    
+      if (!data) {
+        
+    
+     
+          try {
+            const result = await LevelsSchema.findOne({guildID: message.guild.id})
+           if(!result)return;
+            cache[message.guild.id] = data = [result.levels]
+            
+          }catch(er){
+            console.log(er)
+          }
+      }
+      if(data[0] === "disable")return message.channel.send(`Levelling system is currently disabled in this guild.`)
       const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id,5 );
      
       if( rawLeaderboard.length < 1)return message.channel.send(`Yet no one is ranked.`)

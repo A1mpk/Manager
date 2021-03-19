@@ -17,6 +17,7 @@ module.exports = async (client, guild) => {
     .catch( err => console.error(err));
 
     console.log(`I have joined a guild.`)
+    
   
    
 };

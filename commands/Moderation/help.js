@@ -5,9 +5,7 @@ module.exports = {
     disabled: false,
     execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
-        if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-        if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-        if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
+       
         const Words = message.content.slice(5)
         if(!Words){
             message.channel.send({
@@ -37,7 +35,7 @@ module.exports = {
                         },
                         {
                             name: '**Levelling**',
-                            value: '`>help levels` - This section is about Levelling, This is a really short category. [3commands]'
+                            value: '`>help levels` - This section is about Levelling, This is a really short category. '
                         }
                     ],
                     
