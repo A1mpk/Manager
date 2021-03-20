@@ -44,29 +44,26 @@ for(const file of commandFiles){
 const RPC = require('discord-rpc');
 const rpc = new RPC.Client({ transport: 'ipc' })
 rpc.on('ready', () => {
-  rpc.request('SET_ACTIVITY', {
-  
-  pid: process.pid,
-  activity : {
-  details : "VSC(Mint)",
-  assets : {
-  large_image : "e39",
-  large_text : "BBC",
-  small_image : "e39",
-  small_text: "BEST NEWS"
-  },
-  
-  buttons : [{label : "Invite" , url : "https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot"}, {label: "Website", url : "https://sites.google.com/view/newsforgamers/home"}]
-  }
-  
+rpc.request('SET_ACTIVITY', {
 
+pid: process.pid,
+activity : {
+details : "Working on Mint..",
+assets : {
+large_image : "hwalloween",
+large_text : "Invite Mint",
+small_image : "6817_discord_verified",
+small_text: "thanks..."
+},
 
+buttons : [{label : "Invite" , url : "https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot"}, {label: "Website", url : "https://sites.google.com/view/mint2020-com/home"}]
+}
 
 })
 
 })
 rpc.login({
-  clientId: "816732886870523935",
+  clientId: "725787532008095744",
   clientSecret: "t5tp_u5YfKJC4BQVTXwj82wRc3kORXxh"
 })
 /// PREFIX
@@ -501,7 +498,7 @@ ctx.fillRect(180, 216, 65 )
 ctx.fill();
 ctx.globalAlpha = 1;
 
-ctx.font = "bold 36px Arial";
+ctx.font = "Sans Bold Not-Rotated 36px";
 ctx.textAlign = "center";
 ctx.fillStyle = " WHITE";
 ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
@@ -509,7 +506,7 @@ ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
 ctx.textAlign = "left";
 ctx.fillText(`${target.tag}`, 300, 120);
 
-ctx.font = "bold 50px Arial";
+ctx.font = "Sans Bold Not-Rotated 50px ";
 ctx.fillText("LEVEL", 300,180);
 ctx.fillText(user.level, 470 , 180);
 
