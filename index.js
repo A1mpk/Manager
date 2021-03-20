@@ -134,11 +134,7 @@ client.on('ready', () => {
     client.user.setActivity(`>help || >info`, {type: "WATCHING"})
 })
 
-client.on('error', error => {
-   console.log(`An error occured : ${error.message}`)
-   process.exit(1);
 
-})
 
 client.on('guildMemberRemove',async member => {
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
