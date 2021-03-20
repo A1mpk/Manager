@@ -369,12 +369,9 @@ try{
 /// ALL THE COMMANDS HANDLER!
 
 client.on('message', async message => {
-    if(message.author.bot)return;
-    if(message.channel.type === 'dm') return;
-    if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-    if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-    if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
-    const serverQueue = queue.get(message.guild.id);
+  if(message.author.bot)return;
+  if(message.channel.type === 'dm') return;
+  const serverQueue = queue.get(message.guild.id);
 
    
       const randomXp = Math.floor(Math.random() * 15) + 1;
@@ -980,15 +977,7 @@ ctx.drawImage(avatar, 40,40,250,250)
         .setColor(3447003)
         message.channel.send(UptimeEMbed)
 }
-if(message.content === `<@!${client.user.id}>`){
-   const MyPRefixIs = new Discord.MessageEmbed()
-        .setColor(3447003)
-        .setAuthor('Prefix')
-        .setDescription('`>`')
-        .setTimestamp()
-        message.channel.send(MyPRefixIs)
-        
-}       
+    
 if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
   
     const Info = new Discord.MessageEmbed()
@@ -997,7 +986,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint`)
     .addFields(
-        { name: 'Version', value: '2.0.2', inline: true },
+        { name: 'Version', value: '2.0.3', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
