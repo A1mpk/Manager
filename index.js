@@ -975,7 +975,6 @@ ctx.drawImage(avatar, 40,40,250,250)
 }
     
 if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
-  
     const Info = new Discord.MessageEmbed()
     .setColor(3447003)
     .setTitle('Mint')
@@ -1063,7 +1062,6 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     if(command === 'getid'){
     client.commands.get('getid').execute(message, args)
     };
-    
    
     if(command === 'getuserid'){
         client.commands.get('getuserid').execute(message, args)
