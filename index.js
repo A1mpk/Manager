@@ -44,26 +44,29 @@ for(const file of commandFiles){
 const RPC = require('discord-rpc');
 const rpc = new RPC.Client({ transport: 'ipc' })
 rpc.on('ready', () => {
-rpc.request('SET_ACTIVITY', {
+  rpc.request('SET_ACTIVITY', {
+  
+  pid: process.pid,
+  activity : {
+  details : "VSC(Mint)",
+  assets : {
+  large_image : "e39",
+  large_text : "BBC",
+  small_image : "e39",
+  small_text: "BEST NEWS"
+  },
+  
+  buttons : [{label : "Invite" , url : "https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot"}, {label: "Website", url : "https://sites.google.com/view/newsforgamers/home"}]
+  }
+  
 
-pid: process.pid,
-activity : {
-details : "Working on Mint..",
-assets : {
-large_image : "hwalloween",
-large_text : "Invite Mint",
-small_image : "6817_discord_verified",
-small_text: "thanks..."
-},
 
-buttons : [{label : "Invite" , url : "https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot"}, {label: "Website", url : "https://sites.google.com/view/mint2020-com/home"}]
-}
 
 })
 
 })
 rpc.login({
-  clientId: "725787532008095744",
+  clientId: "816732886870523935",
   clientSecret: "t5tp_u5YfKJC4BQVTXwj82wRc3kORXxh"
 })
 /// PREFIX
@@ -109,6 +112,10 @@ try{
             {
                 name: '**Levelling**',
                 value: '`>help levels` - This section is about Levelling, This is a really short category. [3commands]'
+            },
+            {
+                name: '**⚙️ Configuration**',
+                value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
             }
          
         ],
@@ -127,7 +134,11 @@ client.on('ready', () => {
     client.user.setActivity(`>help || >info`, {type: "WATCHING"})
 })
 
+client.on('error', error => {
+   console.log(`An error occured : ${error.message}`)
+   process.exit(1);
 
+})
 
 client.on('guildMemberRemove',async member => {
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
@@ -358,9 +369,12 @@ try{
 /// ALL THE COMMANDS HANDLER!
 
 client.on('message', async message => {
-  if(message.author.bot)return;
-  if(message.channel.type === 'dm') return;
-  const serverQueue = queue.get(message.guild.id);
+    if(message.author.bot)return;
+    if(message.channel.type === 'dm') return;
+    if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
+    if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
+    if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
+    const serverQueue = queue.get(message.guild.id);
 
    
       const randomXp = Math.floor(Math.random() * 15) + 1;
@@ -385,8 +399,9 @@ client.on('message', async message => {
         }
         
         if(data[0] === "disable")return;
+        const user = await Levels.fetch(message.author.id, message.guild.id);
         message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
-      }
+      };
      
      
    
@@ -450,7 +465,7 @@ if(message.content.startsWith(x + 'rank')){
  
       try {
         const result = await LevelsSchema.findOne({guildID: message.guild.id})
-       if(!result)return;
+       if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
         cache[message.guild.id] = data = [result.levels]
         
       }catch(er){
@@ -493,7 +508,7 @@ ctx.fillRect(180, 216, 65 )
 ctx.fill();
 ctx.globalAlpha = 1;
 
-ctx.font = "bold 36px manrope";
+ctx.font = "bold 36px Arial";
 ctx.textAlign = "center";
 ctx.fillStyle = " WHITE";
 ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
@@ -501,7 +516,7 @@ ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
 ctx.textAlign = "left";
 ctx.fillText(`${target.tag}`, 300, 120);
 
-ctx.font = "bold 50px manrope ";
+ctx.font = "bold 50px Arial";
 ctx.fillText("LEVEL", 300,180);
 ctx.fillText(user.level, 470 , 180);
 
@@ -522,7 +537,7 @@ ctx.drawImage(avatar, 40,40,250,250)
 
   const attachment = new Discord.MessageAttachment(canvas.toBuffer() , "rank.png")
   message.channel.send(attachment)
-}
+};
    
 
     if(message.content.toLowerCase().includes( x + "leaderboard" .toLowerCase())){
@@ -536,7 +551,7 @@ ctx.drawImage(avatar, 40,40,250,250)
      
           try {
             const result = await LevelsSchema.findOne({guildID: message.guild.id})
-           if(!result)return;
+           if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
             cache[message.guild.id] = data = [result.levels]
             
           }catch(er){
@@ -557,7 +572,7 @@ ctx.drawImage(avatar, 40,40,250,250)
       .setTimestamp()
       .setColor(3447003)
       message.channel.send(LeaderBord)
-    }
+    };
    
     if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
       
@@ -965,15 +980,24 @@ ctx.drawImage(avatar, 40,40,250,250)
         .setColor(3447003)
         message.channel.send(UptimeEMbed)
 }
-    
+if(message.content === `<@!${client.user.id}>`){
+   const MyPRefixIs = new Discord.MessageEmbed()
+        .setColor(3447003)
+        .setAuthor('Prefix')
+        .setDescription('`>`')
+        .setTimestamp()
+        message.channel.send(MyPRefixIs)
+        
+}       
 if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
+  
     const Info = new Discord.MessageEmbed()
     .setColor(3447003)
     .setTitle('Mint')
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint`)
     .addFields(
-        { name: 'Version', value: '2.0.3', inline: true },
+        { name: 'Version', value: '2.0.2', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
@@ -1054,6 +1078,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     if(command === 'getid'){
     client.commands.get('getid').execute(message, args)
     };
+    
    
     if(command === 'getuserid'){
         client.commands.get('getuserid').execute(message, args)
@@ -1073,6 +1098,12 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     if(command === 'suggestion'){
         client.commands.get('suggestion').execute(message, args)
     };
+    if(command === 'autorole_remove'){
+      client.commands.get('autorole_remove').execute(message, args)
+  };
+  if(command === 'loggings'){
+    client.commands.get('loggings').execute(message, args)
+};
     if(command === 'mute'){
         client.commands.get('mute').execute(message, args)
     };
