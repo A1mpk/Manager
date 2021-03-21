@@ -109,10 +109,6 @@ try{
             {
                 name: '**Levelling**',
                 value: '`>help levels` - This section is about Levelling, This is a really short category. [3commands]'
-            },
-            {
-                name: '**⚙️ Configuration**',
-                value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
             }
          
         ],
@@ -389,9 +385,8 @@ client.on('message', async message => {
         }
         
         if(data[0] === "disable")return;
-        const user = await Levels.fetch(message.author.id, message.guild.id);
         message.channel.send(`Congratulations <@${message.member.user.id}>, you just reached level ${user.level}.`)
-      };
+      }
      
      
    
@@ -455,7 +450,7 @@ if(message.content.startsWith(x + 'rank')){
  
       try {
         const result = await LevelsSchema.findOne({guildID: message.guild.id})
-       if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
+       if(!result)return;
         cache[message.guild.id] = data = [result.levels]
         
       }catch(er){
@@ -498,7 +493,7 @@ ctx.fillRect(180, 216, 65 )
 ctx.fill();
 ctx.globalAlpha = 1;
 
-ctx.font = "Sans Bold Not-Rotated 36px";
+ctx.font = "bold 36px manrope";
 ctx.textAlign = "center";
 ctx.fillStyle = " WHITE";
 ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
@@ -506,7 +501,7 @@ ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
 ctx.textAlign = "left";
 ctx.fillText(`${target.tag}`, 300, 120);
 
-ctx.font = "Sans Bold Not-Rotated 50px ";
+ctx.font = "bold 50px manrope ";
 ctx.fillText("LEVEL", 300,180);
 ctx.fillText(user.level, 470 , 180);
 
@@ -527,7 +522,7 @@ ctx.drawImage(avatar, 40,40,250,250)
 
   const attachment = new Discord.MessageAttachment(canvas.toBuffer() , "rank.png")
   message.channel.send(attachment)
-};
+}
    
 
     if(message.content.toLowerCase().includes( x + "leaderboard" .toLowerCase())){
@@ -541,7 +536,7 @@ ctx.drawImage(avatar, 40,40,250,250)
      
           try {
             const result = await LevelsSchema.findOne({guildID: message.guild.id})
-           if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
+           if(!result)return;
             cache[message.guild.id] = data = [result.levels]
             
           }catch(er){
@@ -562,7 +557,7 @@ ctx.drawImage(avatar, 40,40,250,250)
       .setTimestamp()
       .setColor(3447003)
       message.channel.send(LeaderBord)
-    };
+    }
    
     if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
       
@@ -1078,12 +1073,6 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     if(command === 'suggestion'){
         client.commands.get('suggestion').execute(message, args)
     };
-    if(command === 'autorole_remove'){
-      client.commands.get('autorole_remove').execute(message, args)
-  };
-  if(command === 'loggings'){
-    client.commands.get('loggings').execute(message, args)
-};
     if(command === 'mute'){
         client.commands.get('mute').execute(message, args)
     };
