@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const e = require('express')
 module.exports = {
     name: 'help',
     description: "HELP COMMAND ",
@@ -8,40 +9,51 @@ module.exports = {
        
         const Words = message.content.slice(5)
         if(!Words){
-            message.channel.send({
-                embed:{
-                    title: 'List of commands ',
-                    color: 3447003, 
-                    fields:[
-                        {
-                            name: '**😴 Moderation**',
-                            value: ' `>help Moderation || help m_list_2` - This section helps keep your server and community safe, secure and in control with these commands at your disposal.'
-                        },     
-                        {
-                            name: '**🤩 Fun **',
-                            value: '`>help fun` - This section can keep your server fun & enjoyable with these commands.'
-                        },
-                        {
-                            name: '🎵 Music ',
-                            value: '`>help music || help mu_list_2` - This section is made for playing musics, if bored & want to find out new tracks, members of this server can always play a track to keep the server comfortable.'
-                        },
-                        {
-                            name: '**👂 LISTENERS **',
-                            value: '`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.'
-                        },
-                        {
-                            name: '**🛠️ Utilities **',
-                            value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
-                        },
-                        {
-                            name: '**⚙️ Configuration**',
-                            value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
-                        }
-                    ],
+          
+            try{
+               if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+               
+                message.channel.send({
+                    embed:{
+                        title: 'List of commands ',
+                        color: 3447003, 
+                        fields:[
+                            {
+                                name: '**😴 Moderation**',
+                                value: ' `>help Moderation || help m_list_2` - This section helps keep your server and community safe, secure and in control with these commands at your disposal.'
+                            },     
+                            {
+                                name: '**🤩 Fun **',
+                                value: '`>help fun` - This section can keep your server fun & enjoyable with these commands.'
+                            },
+                            {
+                                name: '🎵 Music ',
+                                value: '`>help music || help mu_list_2` - This section is made for playing musics, if bored & want to find out new tracks, members of this server can always play a track to keep the server comfortable.'
+                            },
+                            {
+                                name: '**👂 LISTENERS **',
+                                value: '`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.'
+                            },
+                            {
+                                name: '**🛠️ Utilities **',
+                                value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
+                            },
+                            {
+                                name: '**⚙️ Configuration**',
+                                value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
+                            }
+                        ],
+                        
                     
-                
-                }
-                })
+                    }
+                   
+                    })
+                   
+                  
+            }catch(er){
+               
+                message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+            }
         }else if(Words.toLowerCase().includes("Moderation".toLowerCase())){
           const ModerationHelp = new Discord.MessageEmbed()
           .setAuthor(`MODERATION - CATEGORY`)

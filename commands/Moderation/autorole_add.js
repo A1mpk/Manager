@@ -7,7 +7,7 @@ module.exports =  {
     name: 'autorole_add',
     description: 'a',
     disabled: false,
-  async execute (message, args, client) {
+  async execute (message) {
     if(!message.member.hasPermission("MANAGE_ROLES"))return message.channel.send(`You cannot use this command.`)
       const ROLEID = message.content.slice(14)
       if(!ROLEID){

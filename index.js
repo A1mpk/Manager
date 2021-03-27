@@ -371,9 +371,6 @@ try{
 client.on('message', async message => {
     if(message.author.bot)return;
     if(message.channel.type === 'dm') return;
-    if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-    if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-    if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
     const serverQueue = queue.get(message.guild.id);
 
    
@@ -411,9 +408,12 @@ client.on('message', async message => {
   
 
 if(message.content.startsWith(x + 'spotify')){
+  try{
+    if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+    let user;
+  
 
 
-let user;
 if (message.mentions.users.first()) {
   user = message.mentions.users.first();
 } else {
@@ -449,159 +449,276 @@ if (status !== null && status.type === "LISTENING" && status.name === "Spotify" 
   .addField("Artist:", artist)
   .addField("Duration:", time)
   .addField("Listen on Spotify", `[\`${artist} - ${name}\`](${url})`, false)
-  message.channel.send(embed)
+
+message.channel.send(embed)
 }
+}catch(er){
+    
+     message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+ }
+  
+
 }
   
  
 if(message.content.startsWith(x + 'rank')){
-  const LevelsSchema = require("./commands/model/levels")
-  const cache = {} 
-  let data = cache[message.guild.id]
-
-  if (!data) {
+  try{
+    if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+    const LevelsSchema = require("./commands/model/levels")
+    const cache = {} 
+    let data = cache[message.guild.id]
+  
+    if (!data) {
+      
+  
+   
+        try {
+          const result = await LevelsSchema.findOne({guildID: message.guild.id})
+         if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
+          cache[message.guild.id] = data = [result.levels]
+          
+        }catch(er){
+          console.log(er)
+        }
+    }
+    if(data[0] === "disable")return message.channel.send(`Levelling system is currently disabled in this guild.`)
+    const mesag = message.content.slice(5)
+  
+    const target = message.author 
+    const user = await Levels.fetch(target.id,message.guild.id)
+    if(!user) return message.channel.send(`You dont have any xp yet, be more active in this guild to gain more xp!`)
+    const neededXP2 = Levels.xpFor(parseInt(user.level) + 1);
+  
+  
+    const canvas = Canvas.createCanvas(1000, 333)
+    const ctx = canvas.getContext('2d')
+  
+    const background = await Canvas.loadImage(
+     '801095.jpg'
+    )
+  
+  
+  ctx.drawImage(background,0,0, canvas.width, canvas.height)
+  
+  ctx.beginPath();
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = 'WHITE';
+  ctx.globalAlpha = 0.2;
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(180, 216, 770, 65);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.strokeRect(180,216,770,65);
+  ctx.stroke();
+  
+  ctx.fillStyle = "#ffffff";
+  ctx.globalAlpha = 0.6;
+  ctx.fillRect(180, 216, 65 )
+  ctx.fill();
+  ctx.globalAlpha = 1;
+  
+  ctx.font = "bold 36px Arial";
+  ctx.textAlign = "center";
+  ctx.fillStyle = " WHITE";
+  ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
+  
+  ctx.textAlign = "left";
+  ctx.fillText(`${target.tag}`, 300, 120);
+  
+  ctx.font = "bold 50px Arial";
+  ctx.fillText("LEVEL", 300,180);
+  ctx.fillText(user.level, 470 , 180);
+  
+  ctx.arc(170, 160 , 120 , 0, Math.PI * 2, true);
+  ctx.lineWidth = 6;
+  
+  
+  ctx.strokeStyle = "WHITE" ;
+  ctx.stroke();
+  ctx.closePath();
+  ctx.clip();
+  const avatar = await Canvas.loadImage(target.displayAvatarURL({format: 'png'}, ));
+  ctx.drawImage(avatar, 40,40,250,250)
+  
+  
+  
+  
+  
+    const attachment = new Discord.MessageAttachment(canvas.toBuffer() , "rank.png")
+    message.channel.send(attachment)
+}catch(er){
     
-
+     message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+ }
  
-      try {
-        const result = await LevelsSchema.findOne({guildID: message.guild.id})
-       if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
-        cache[message.guild.id] = data = [result.levels]
-        
-      }catch(er){
-        console.log(er)
-      }
-  }
-  if(data[0] === "disable")return message.channel.send(`Levelling system is currently disabled in this guild.`)
-  const mesag = message.content.slice(5)
-
-  const target = message.author 
-  const user = await Levels.fetch(target.id,message.guild.id)
-  if(!user) return message.channel.send(`You dont have any xp yet, be more active in this guild to gain more xp!`)
-  const neededXP2 = Levels.xpFor(parseInt(user.level) + 1);
-
-
-  const canvas = Canvas.createCanvas(1000, 333)
-  const ctx = canvas.getContext('2d')
-
-  const background = await Canvas.loadImage(
-   '801095.jpg'
-  )
-
-
-ctx.drawImage(background,0,0, canvas.width, canvas.height)
-
-ctx.beginPath();
-ctx.lineWidth = 4;
-ctx.strokeStyle = 'WHITE';
-ctx.globalAlpha = 0.2;
-ctx.fillStyle = "#000000";
-ctx.fillRect(180, 216, 770, 65);
-ctx.fill();
-ctx.globalAlpha = 1;
-ctx.strokeRect(180,216,770,65);
-ctx.stroke();
-
-ctx.fillStyle = "#ffffff";
-ctx.globalAlpha = 0.6;
-ctx.fillRect(180, 216, 65 )
-ctx.fill();
-ctx.globalAlpha = 1;
-
-ctx.font = "bold 36px Arial";
-ctx.textAlign = "center";
-ctx.fillStyle = " WHITE";
-ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
-
-ctx.textAlign = "left";
-ctx.fillText(`${target.tag}`, 300, 120);
-
-ctx.font = "bold 50px Arial";
-ctx.fillText("LEVEL", 300,180);
-ctx.fillText(user.level, 470 , 180);
-
-ctx.arc(170, 160 , 120 , 0, Math.PI * 2, true);
-ctx.lineWidth = 6;
-
-
-ctx.strokeStyle = "WHITE" ;
-ctx.stroke();
-ctx.closePath();
-ctx.clip();
-const avatar = await Canvas.loadImage(target.displayAvatarURL({format: 'png'}, ));
-ctx.drawImage(avatar, 40,40,250,250)
-
-
-
-
-
-  const attachment = new Discord.MessageAttachment(canvas.toBuffer() , "rank.png")
-  message.channel.send(attachment)
 };
    
 
     if(message.content.toLowerCase().includes( x + "leaderboard" .toLowerCase())){
-      const LevelsSchema = require("./commands/model/levels")
-      const cache = {} 
-      let data = cache[message.guild.id]
-    
-      if (!data) {
-        
-    
-     
-          try {
-            const result = await LevelsSchema.findOne({guildID: message.guild.id})
-           if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
-            cache[message.guild.id] = data = [result.levels]
-            
-          }catch(er){
-            console.log(er)
-          }
-      }
-      if(data[0] === "disable")return message.channel.send(`Levelling system is currently disabled in this guild.`)
-      const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id,5 );
-     
-      if( rawLeaderboard.length < 1)return message.channel.send(`Yet no one is ranked.`)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        const LevelsSchema = require("./commands/model/levels")
+        const cache = {} 
+        let data = cache[message.guild.id]
       
-      const leaderboard = Levels.computeLeaderboard(client, rawLeaderboard)
+        if (!data) {
+          
+      
+       
+            try {
+              const result = await LevelsSchema.findOne({guildID: message.guild.id})
+             if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
+              cache[message.guild.id] = data = [result.levels]
+              
+            }catch(er){
+              console.log(er)
+            }
+        }
+        if(data[0] === "disable")return message.channel.send(`Levelling system is currently disabled in this guild.`)
+        const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id,5 );
+       
+        if( rawLeaderboard.length < 1)return message.channel.send(`Yet no one is ranked.`)
+        
+        const leaderboard = Levels.computeLeaderboard(client, rawLeaderboard)
+  
+        const lb = (await leaderboard).map( e => `**User :** ${e.username}#${e.discriminator}\n **Rank** : ${e.position} \n**Level**: ${e.level}\n**XP** : ${e.xp.toLocaleString()}`);
+        const LeaderBord = new MessageEmbed()
+        .setTitle(`Leaderboard in ${message.guild.name}`)
+        .setDescription(lb.join("\n\n\n"))
+        .setTimestamp()
+        .setColor(3447003)
+        message.channel.send(LeaderBord)
+       
+        return;
 
-      const lb = (await leaderboard).map( e => `**User :** ${e.username}#${e.discriminator}\n **Rank** : ${e.position} \n**Level**: ${e.level}\n**XP** : ${e.xp.toLocaleString()}`);
-      const LeaderBord = new MessageEmbed()
-      .setTitle(`Leaderboard in ${message.guild.name}`)
-      .setDescription(lb.join("\n\n\n"))
-      .setTimestamp()
-      .setColor(3447003)
-      message.channel.send(LeaderBord)
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+     }
+     
     };
    
     if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
-      
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
         execute(message, serverQueue);
         return;
+
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+     }
+       
       } else if (message.content.toLowerCase().includes(x +"skip".toLowerCase())) {
-        skip(message, serverQueue);
-        return;
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          skip(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       } else if (message.content.toLowerCase().includes(x +"stop".toLowerCase())) {
-        stop(message, serverQueue);
-        return;
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+         stop(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if(message.content.toLowerCase().includes(x +"volume".toLowerCase())){
-        volume(message, serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          volume(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if(message.content.toLowerCase().includes(x +"np".toLowerCase())){
-        np(message,serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          np(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if(message.content.toLowerCase().includes(x +"queue".toLowerCase())){
-        Queue(message, serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+         Queue(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if(message.content.toLowerCase().includes(x +"pause".toLowerCase())){
-        pause(message, serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          pause(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if (message.content.toLowerCase().includes(x +"resume".toLowerCase())){
-        resume(message, serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          resume(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if(message.content.toLowerCase().includes(x +"loop".toLowerCase())){
-         loop(message, serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          loop(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if(message.content.toLowerCase().includes(x + "shuffle")){
-        shuffle(message, serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+         shuffle(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if(message.content.toLowerCase().includes(x + "leave")){
-        leave(message, serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          leave(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
+       }
       }else if(message.content.toLowerCase().includes(x + 'join'.toLowerCase())){
-        join(message,serverQueue)
+        try{
+          if(!message.guild.me.hasPermission("CONNECT"))return;
+          join(message, serverQueue);
+          return;
+  
+  }catch(er){
+          
+           message.member.send('I need `CONNECT` permissions to perform that command.')
+       }
       }
       async function execute(message, serverQueue) {
         const args = message.content.slice(5)
@@ -650,7 +767,6 @@ ctx.drawImage(avatar, 40,40,250,250)
               hours: video.duration.hours,
             
          };
-      
         if (!serverQueue) {
           const queueContruct = {
             textChannel: message.channel,
@@ -959,8 +1075,9 @@ ctx.drawImage(avatar, 40,40,250,250)
 };
   
     if(message.content.toLowerCase().includes(x +"uptime".toLowerCase())){
-    
 
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
         totalSeconds %= 86400;
@@ -979,18 +1096,17 @@ ctx.drawImage(avatar, 40,40,250,250)
         .setFooter(`Uptime`)
         .setColor(3447003)
         message.channel.send(UptimeEMbed)
-}
-if(message.content === `<@!${client.user.id}>`){
-   const MyPRefixIs = new Discord.MessageEmbed()
-        .setColor(3447003)
-        .setAuthor('Prefix')
-        .setDescription('`>`')
-        .setTimestamp()
-        message.channel.send(MyPRefixIs)
         
-}       
-if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
+    }catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
+      
+}
   
+if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
+  try{
+    if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
     const Info = new Discord.MessageEmbed()
     .setColor(3447003)
     .setTitle('Mint')
@@ -1008,123 +1124,353 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     .setThumbnail(message.client.user.displayAvatarURL())
 
     message.channel.send(Info)
+    
+}catch(er){
+    
+     message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+ }
+   
 }
 
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
     const command =args.shift().toLowerCase();
     if(command === 'kick'){
+      try{
+        if(!message.guild.me.hasPermission("KICK_MEMBERS"))return;
         client.commands.get('kick').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `KICK_MEMBERS` permissions on my role to perform that command.')
+     }
+       
     };
     if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
     };
     if(command === 'announce'){
-    client.commands.get('announce').execute(message,args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('announce').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
+   
     };
     if(command === 'avatar'){
-    client.commands.get('avatar').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('avatar').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'say'){
-    client.commands.get('say').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('say').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'invite'){
-    client.commands.get('invite').execute(message, args)
-    };
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('invite').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
+    }
     if(command === 'guild'){
-    client.commands.get('guild').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('guild').execute(message, args)
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
+   
     };
   
     if(command === 'help'){
-    client.commands.get('help').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('help').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'ban'){
-        client.commands.get('ban').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("BAN_MEMBERS"))return;
+        client.commands.get('ban').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `BAN_MEMBERS` permissions on my role to perform that command.')
+     }
         };
     if(command === 'report'){
-    client.commands.get('report').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('report').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
 
     if(command === 'eval'){
     client.commands.get('eval').execute(message, args)
     };
-    if(command === 'setAutorole'){
-    client.commands.get('setAutorole').execute(message, args)
-    };
     if(command === 'credit'){
-    client.commands.get('credit').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('credit').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'membercount'){
-    client.commands.get('membercount').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('membercount').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'rule_add'){
-    client.commands.get('rule_add').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('rule_add').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'nick'){
-    client.commands.get('nick').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_NICKNAMES"))return;
+        client.commands.get('nick').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_NICKNAMES` permissions on my role to perform that command.')
+     }
     };
     if(command === 'gaymeter'){
-      client.commands.get('gaymeter').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('gaymeter').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
       };
       if(command === 'simpmeter'){
-        client.commands.get('simpmeter').execute(message, args)
+        try{
+          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          client.commands.get('simpmeter').execute(message,args)
+          
+  }catch(er){
+          
+           message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+       }
         };
         if(command === 'dogwater'){
-          client.commands.get('dogwater').execute(message, args)
+          try{
+            if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+            client.commands.get('dogwater').execute(message,args)
+            
+    }catch(er){
+            
+             message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+         }
           };
     if(command === 'bot_nick'){
     client.commands.get('bot_nick').execute(message, args)
     };
     if(command === 'getid'){
-    client.commands.get('getid').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('getid').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     
    
     if(command === 'getuserid'){
-        client.commands.get('getuserid').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('getuserid').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'clear'){
-        client.commands.get('clear').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_MESSAGES"))return;
+        client.commands.get('clear').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_MESSAGES` permissions on my role to perform that command.')
+     }
     };
     if(command === 'verify'){
-        client.commands.get('verify').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_MEMBERS"))return;
+        client.commands.get('verify').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_MEMBERS` permissions on my role to perform that command.')
+     }
     };
     if(command === '8ball'){
-        client.commands.get('8ball').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('8ball').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'slowmode'){
-        client.commands.get('slowmode').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_CHANNELS"))return;
+        client.commands.get('slowmode').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_CHANNELS` permissions on my role to perform that command.')
+     }
     };
     if(command === 'suggestion'){
-        client.commands.get('suggestion').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_CHANNELS"))return;
+        client.commands.get('suggestion').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_CHANNELS` permissions on my role to perform that command.')
+     }
     };
     if(command === 'autorole_remove'){
-      client.commands.get('autorole_remove').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('autorole_remove').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
   };
   if(command === 'loggings'){
-    client.commands.get('loggings').execute(message, args)
+    try{
+      if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      client.commands.get('loggings').execute(message,args)
+      
+}catch(er){
+      
+       message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+   }
 };
     if(command === 'mute'){
-        client.commands.get('mute').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_MEMBERS"))return;
+        client.commands.get('mute').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_MEMBERS` permissions on my role to perform that command.')
+     }
     };
     if(command === 'unmute'){
-            client.commands.get('unmute').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_MEMBERS"))return;
+        client.commands.get('unmute').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_MEMBERS` permissions on my role to perform that command.')
+     }
     };
     if(command === 'update'){
-        client.commands.get('update').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('update').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'giverole'){
-        client.commands.get('giverole').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_ROLES"))return;
+        client.commands.get('giverole').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_ROLES` permissions on my role to perform that command.')
+     }
     };
     if(command === 'karen'){
-        client.commands.get('karen').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        client.commands.get('karen').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+     }
     };
     if(command === 'autorole_add'){
-      client.commands.get('autorole_add').execute(message, args)
+      try{
+        if(!message.guild.me.hasPermission("MANAGE_MEMBERS"))return;
+        client.commands.get('autorole_add').execute(message,args)
+        
+}catch(er){
+        
+         message.member.send('I need `MANAGE_MEMBERS` permissions on my role to perform that command.')
+     }
   };
   if(command === 'levels'){
-    client.commands.get('levels').execute(message, args)
+    try{
+      if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      client.commands.get('levels').execute(message,args)
+      
+}catch(er){
+      
+       message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+   }
 };
+
 });
 
 

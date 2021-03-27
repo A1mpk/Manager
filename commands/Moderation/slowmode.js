@@ -16,9 +16,7 @@ module.exports = {
             .setColor(3447003)
             .setTimestamp()
             if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to manage channels.. [`MANAGE_CHANNELS`]');
-            if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-            if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-            if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
+            
             if(message.member.hasPermission(['MANAGE_CHANNELS'])){
                 if (!amount) return message.channel.send(h69) 
                 if (isNaN(amount)) return message.channel.send(`That's not a number.`); 

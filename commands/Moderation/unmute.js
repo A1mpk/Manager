@@ -6,9 +6,7 @@ module.exports = {
     execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         if(!message.guild.me.hasPermission(['MANAGE_ROLES']))return message.channel.send('I don\'t have enough permissions to ban a user. [`MANAGE_ROLES`]');
-        if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-        if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-        if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
+      
         const MuteROle = message.guild.roles.cache.find(Role => Role.name === "Muted")
         const UserToMute = message.mentions.users.first();
         const Reason = message.content.slice(30);

@@ -1,16 +1,18 @@
 const Discord = require('discord.js');
-const LevelsSchema = require("../model/levels")
+const LoggingSchema = require('../model/LoggingSchema');
+
 module.exports = {
-    name: 'levels',
-    description: "Levels",
-    disabled: false,
+    name: 'loggings',
+    description: "Logggings",
+    disabled: true,
     async execute(message, args){
-       const ANswer = message.content.slice(7)
+        if(this.disabled)return message.channel.send(`This is a new command, its still being worked on.`)
+       const ANswer = message.content.slice(9)
        if(!message.member.hasPermission("ADMINISTRATOR"))return message.channel.send(`You do not have ADMINISTRATOR mode to use this command.`)
        if(!ANswer){
         const LEvelsNoNo = new Discord.MessageEmbed()
-        .setAuthor('LEVELS - LEVELLING')
-            .setDescription('`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, levelling will be enabled in this guild.')
+        .setAuthor('LOGGINGS - CONFIG')
+            .setDescription('`>loggings <enable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel.')
             .setTimestamp()
         
             .setColor(3447003)
@@ -20,12 +22,13 @@ module.exports = {
         try {
   
             try {
-              await LevelsSchema.findOneAndUpdate(
+              await LoggingSchema.findOneAndUpdate(
                 {
                   guildID: message.guild.id,
                 },
                 {
-                    levels: 'enable',
+                    loggingChannel: "enable",
+                    channel: message.channel.id,
                     guildID: message.guild.id,
                     guildName: message.guild.name
                   
@@ -34,7 +37,7 @@ module.exports = {
                   upsert: true,
                 }
               )
-              message.channel.send(`Levelling for this guild is enabled.`)
+              message.channel.send(`Logging for this guild is enabled. Bot will now start logging actions in this channel.`)
             }catch(er){
              return message.channel.send(er)
             }
@@ -48,12 +51,13 @@ module.exports = {
         try {
   
             try {
-              await LevelsSchema.findOneAndUpdate(
+              await LoggingSchema.findOneAndUpdate(
                 {
                   guildID: message.guild.id,
                 },
                 {
-                    levels: 'disable',
+                    loggingChannel: "disable",
+                    channel: message.channel.id,
                     guildID: message.guild.id,
                     guildName: message.guild.name
                   
@@ -62,7 +66,7 @@ module.exports = {
                   upsert: true,
                 }
               )
-              message.channel.send(`Levelling for this guild is disabled.`)
+              message.channel.send(`Logging for this guild is disabled.`)
             }catch(er){
              return message.channel.send(er)
             }

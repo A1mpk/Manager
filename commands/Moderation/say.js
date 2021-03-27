@@ -8,9 +8,7 @@ module.exports = {
         let args2 = message.content.slice("4")
 const msg = Util.removeMentions(args2);
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
-        if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-        if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-        if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
+        
         
         const everyone = "@everyone"
         const say = new Discord.MessageEmbed()

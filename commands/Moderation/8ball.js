@@ -5,9 +5,8 @@ module.exports = {
   description: 'Help command.',
   disabled: false,
  execute(message, args){
-  if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-    if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-    if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
+
+
   if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
     let res = [
       "Yes.",

@@ -6,9 +6,7 @@ module.exports = {
     disabled: false,
     execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
-        if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-        if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-        if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
+       
         const Ban = new Discord.MessageEmbed()
         .setTitle('BAN - MODERATION')
         .setDescription("`>ban <user> <reason>` - This will just ban the mentionned if provided with a reason.")

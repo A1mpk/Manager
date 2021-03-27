@@ -5,9 +5,7 @@ module.exports = {
     disabled: false,
     execute(message, args){
       if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
-      if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
-      if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
-      if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
+
       const ARGSN2EEDED = new Discord.MessageEmbed()
       .setTitle('CREDIT - MODERATION')
       .setDescription('`>credit <mention>` - This is a credit command, it simply credits a user. All you have to do is mention a member & the reason why you are crediting them. [Click here to see credit embed.](https://gyazo.com/8cda39aa907a69088f494c2d322f6c1f)')
