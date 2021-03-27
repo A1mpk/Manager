@@ -4,7 +4,7 @@ const LoggingSchema = require('../model/LoggingSchema');
 module.exports = {
     name: 'loggings',
     description: "Logggings",
-    disabled: true,
+    disabled: false,
     async execute(message, args){
         if(this.disabled)return message.channel.send(`This is a new command, its still being worked on.`)
        const ANswer = message.content.slice(9)
@@ -12,7 +12,7 @@ module.exports = {
        if(!ANswer){
         const LEvelsNoNo = new Discord.MessageEmbed()
         .setAuthor('LOGGINGS - CONFIG')
-            .setDescription('`>loggings <enable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel.')
+            .setDescription('`>loggings <enable/disable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel.')
             .setTimestamp()
         
             .setColor(3447003)
@@ -27,7 +27,7 @@ module.exports = {
                   guildID: message.guild.id,
                 },
                 {
-                    loggingChannel: "enable",
+                   
                     channel: message.channel.id,
                     guildID: message.guild.id,
                     guildName: message.guild.name
@@ -51,19 +51,9 @@ module.exports = {
         try {
   
             try {
-              await LoggingSchema.findOneAndUpdate(
+              await LoggingSchema.findOneAndDelete(
                 {
                   guildID: message.guild.id,
-                },
-                {
-                    loggingChannel: "disable",
-                    channel: message.channel.id,
-                    guildID: message.guild.id,
-                    guildName: message.guild.name
-                  
-                },
-                {
-                  upsert: true,
                 }
               )
               message.channel.send(`Logging for this guild is disabled.`)

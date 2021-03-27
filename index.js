@@ -110,10 +110,6 @@ try{
                 value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
             },
             {
-                name: '**Levelling**',
-                value: '`>help levels` - This section is about Levelling, This is a really short category. [3commands]'
-            },
-            {
                 name: '**⚙️ Configuration**',
                 value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
             }
@@ -141,13 +137,31 @@ client.on('error', error => {
 })
 
 client.on('guildMemberRemove',async member => {
+  const LoggingSchema = require("./commands/model/LoggingSchema")
+        const cache = {} 
+        let data = cache[member.guild.id]
+      
+        if (!data) {
+          
+      
+       
+            try {
+              const result = await LoggingSchema.findOne({guildID: member.guild.id})
+             if(!result)return;
+              cache[member.guild.id] = data = [ result.channel]
+              
+            }catch(er){
+              console.log(er)
+            }
+        }
+
+        const Channel = member.guild.channels.cache.find( channel => data[0] === channel.id)
+        if(!Channel)return;
+ 
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
-  const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
-  if(!Channel)return;
-  const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
-  if(!Joins) return;
+
   const canvas = Canvas.createCanvas(506, 218)
   const ctx = canvas.getContext('2d')
   
@@ -184,12 +198,32 @@ client.on('guildMemberRemove',async member => {
 
 try{
   Channel.send(`Bye ${member}, we will miss you!`,attachment)
-  Joins.send(`Bye ${member}, we will miss you!`,attachment)
+  
 }catch(er){
   console.warn(`An error occured : ${er}`);
 }
 })
-client.on('messageDelete', message => {
+client.on('messageDelete',async message => {
+  const LoggingSchema = require("./commands/model/LoggingSchema")
+        const cache = {} 
+        let data = cache[message.guild.id]
+      
+        if (!data) {
+          
+      
+       
+            try {
+              const result = await LoggingSchema.findOne({guildID: message.guild.id})
+             if(!result)return;
+              cache[message.guild.id] = data = [ result.channel]
+              
+            }catch(er){
+              console.log(er)
+            }
+        }
+
+        const Channel = message.guild.channels.cache.find( channel => data[0] === channel.id)
+        if(!Channel)return;
   if(!message.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!message.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!message.guild.me.hasPermission("VIEW_CHANNEL"))return;
@@ -205,9 +239,8 @@ try{
     
     .setColor("RED")
    
-       const channel = message.guild.channels.cache.find(a => a.name === "logs")
-       if(!channel)return;
-       channel.send(MessageEmbed)
+      
+    Channel.send(MessageEmbed)
     }catch(er){
       return;
     }
@@ -218,56 +251,129 @@ try{
 
            
 })
-client.on('inviteCreate', invite => {
+client.on('inviteCreate', async invite => {
   if(!invite.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!invite.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!invite.guild.me.hasPermission("VIEW_CHANNEL"))return;
-  
+  const LoggingSchema = require("./commands/model/LoggingSchema")
+  const cache = {} 
+  let data = cache[invite.guild.id]
+
+  if (!data) {
+    
+
+ 
+      try {
+        const result = await LoggingSchema.findOne({guildID: invite.guild.id})
+       if(!result)return;
+        cache[invite.guild.id] = data = [ result.channel]
+        
+      }catch(er){
+        console.log(er)
+      }
+  }
+
+  const Channel = invite.guild.channels.cache.find( channel => data[0] === channel.id)
+  if(!Channel)return;
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`${invite.inviter.tag}`,invite.inviter.displayAvatarURL())
     .setTimestamp()
     .setDescription(`**An invite has been created by ${invite.inviter} for ${invite.channel}.**`)
     .setFooter(`Inviter:  ${invite.inviter.id} | Link: ${invite.url}`)
     .setColor("BLUE")
-    const channel = invite.guild.channels.cache.find(a => a.name === "logs")
-    if(!channel)return;
-    channel.send(MessageEmbed2)
+ 
+    Channel.send(MessageEmbed2)
 } )
-client.on('inviteDelete', invite => {
+client.on('inviteDelete',async invite => {
   if(!invite.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!invite.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!invite.guild.me.hasPermission("VIEW_CHANNEL"))return;
-   
+  const LoggingSchema = require("./commands/model/LoggingSchema")
+  const cache = {} 
+  let data = cache[invite.guild.id]
+
+  if (!data) {
+    
+
+ 
+      try {
+        const result = await LoggingSchema.findOne({guildID: invite.guild.id})
+       if(!result)return;
+        cache[invite.guild.id] = data = [ result.channel]
+        
+      }catch(er){
+        console.log(er)
+      }
+  }
+
+  const Channel = invite.guild.channels.cache.find( channel => data[0] === channel.id)
+  if(!Channel)return;
   const MessageEmbed2 = new Discord.MessageEmbed()
   .setAuthor(`${invite.inviter.tag}`,invite.inviter.displayAvatarURL())
   .setTimestamp()
   .setDescription(`**Invite made  by ${invite.inviter} has been deleted.**`)
   .setFooter(`Inviter:  ${invite.inviter.id}  `)
   .setColor("BLUE")
-    const channel = invite.guild.channels.cache.find(a => a.name === "logs")
-    if(!channel)return;
-    channel.send(MessageEmbed2)
+   
+    Channel.send(MessageEmbed2)
 })
-client.on('emojiCreate', emoji => {
+client.on('emojiCreate', async emoji => {
   if(!emoji.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!emoji.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!emoji.guild.me.hasPermission("VIEW_CHANNEL"))return;
+  const LoggingSchema = require("./commands/model/LoggingSchema")
+  const cache = {} 
+  let data = cache[emoji.guild.id]
+
+  if (!data) {
+    
+
+ 
+      try {
+        const result = await LoggingSchema.findOne({guildID: emoji.guild.id})
+       if(!result)return;
+        cache[emoji.guild.id] = data = [ result.channel]
+        
+      }catch(er){
+        console.log(er)
+      }
+  }
+
+  const Channel = emoji.guild.channels.cache.find( channel => data[0] === channel.id)
+  if(!Channel)return;
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(emoji.name)
     .setTimestamp()
     .setDescription(`*Emoji "${emoji.name}" has been created! ${emoji}*`)
     
     .setColor("PURPLE")
-    const channel = emoji.guild.channels.cache.find(a => a.name === "logs")
-    if(!channel)return;
-    channel.send(MessageEmbed2)
+    
+    Channel.send(MessageEmbed2)
 })
-client.on('emojiDelete', emoji => {
+client.on('emojiDelete',async emoji => {
   if(!emoji.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!emoji.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!emoji.guild.me.hasPermission("VIEW_CHANNEL"))return;
-    const guildChannel23 = emoji.guild.channels.cache.find(c=> c.name === "logs")
-    if(!guildChannel23) return;
+  const LoggingSchema = require("./commands/model/LoggingSchema")
+  const cache = {} 
+  let data = cache[emoji.guild.id]
+
+  if (!data) {
+    
+
+ 
+      try {
+        const result = await LoggingSchema.findOne({guildID: emoji.guild.id})
+       if(!result)return;
+        cache[emoji.guild.id] = data = [ result.channel]
+        
+      }catch(er){
+        console.log(er)
+      }
+  }
+
+  const Channel = emoji.guild.channels.cache.find( channel => data[0] === channel.id)
+  if(!Channel)return;
     const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`${emoji.name}`)
     .setTimestamp()
@@ -275,21 +381,40 @@ client.on('emojiDelete', emoji => {
     .setDescription(`*Emoji "${emoji.name}" has been deleted!*`)
     .setThumbnail(emoji.guild.iconURL({dynamic: false}))
     .setColor("PURPLE")
-    guildChannel23.send(MessageEmbed2)
+    Channel.send(MessageEmbed2)
 })
-client.on('roleDelete', Role=> {
+client.on('roleDelete',async Role=> {
   if(!Role.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!Role.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!Role.guild.me.hasPermission("VIEW_CHANNEL"))return;
-    const role = Role.guild.channels.cache.find(c=> c.name === "logs")
-    if(!role) return;
+  const LoggingSchema = require("./commands/model/LoggingSchema")
+  const cache = {} 
+  let data = cache[Role.guild.id]
+
+  if (!data) {
+    
+
+ 
+      try {
+        const result = await LoggingSchema.findOne({guildID: Role.guild.id})
+       if(!result)return;
+        cache[Role.guild.id] = data = [ result.channel]
+        
+      }catch(er){
+        console.log(er)
+      }
+  }
+
+  const Channel = Role.guild.channels.cache.find( channel => data[0] === channel.id)
+  if(!Channel)return;
+  
     const ROleInfo = new Discord.MessageEmbed()
     .setAuthor(Role.name)
    .setDescription(`Role ${Role.name} has been deleted.`)
     .setTimestamp()
     .setThumbnail(Role.guild.iconURL())
     .setColor("PURPLE")
-    role.send(ROleInfo)
+    Channel.send(ROleInfo)
 })
 // Rich presence 
 
@@ -297,14 +422,30 @@ client.on('roleDelete', Role=> {
 
 
 client.on('guildMemberAdd', async member => {
-  
+  const LoggingSchema = require("./commands/model/LoggingSchema")
+  const cache = {} 
+  let data = cache[member.guild.id]
+
+  if (!data) {
+    
+
+ 
+      try {
+        const result = await LoggingSchema.findOne({guildID: member.guild.id})
+       if(!result)return;
+        cache[member.guild.id] = data = [ result.channel]
+        
+      }catch(er){
+        console.log(er)
+      }
+  }
+
+  const Channel = member.guild.channels.cache.find( channel => data[0] === channel.id)
+  if(!Channel)return;
   if(!member.guild.me.hasPermission('SEND_MESSAGES'))return;
   if(!member.guild.me.hasPermission('MANAGE_CHANNELS'))return;
   if(!member.guild.me.hasPermission("VIEW_CHANNEL"))return;
-  const Channel = member.guild.channels.cache.find(ch => ch.name === "logs")
-  if(!Channel)return;
-  const Joins = member.guild.channels.cache.find(ch => ch.name === "👋joins")
-  if(!Joins) return;
+  
 
   const canvas = Canvas.createCanvas(506, 218)
   const ctx = canvas.getContext('2d')
@@ -340,28 +481,28 @@ client.on('guildMemberAdd', async member => {
   ctx.fillText(text,x,80 + pfp.height)
   const attachment = new Discord.MessageAttachment(canvas.toBuffer())
 try{
-  const AutoRoleSchema = require("./commands/model/AutoRole")
-  const cache = {} 
-  let data = cache[member.guild.id]
+  const AutoRoleSchema2 = require("./commands/model/AutoRole")
+  const cache2 = {} 
+  let data2 = cache2[member.guild.id]
 
-  if (!data) {
+  if (!data2) {
     
 
  
       try {
-        const result = await AutoRoleSchema.findOne({ _id: member.guild.id})
-       if(!result)return;
-        cache[member.guild.id] = data = [result.autorole]
+        const result2 = await AutoRoleSchema2.findOne({ _id: member.guild.id})
+       if(!result2)return;
+        cache2[member.guild.id] = data2 = [result2.autorole]
       }catch(er){
         console.log(er)
       }
   } 
-  const actualrole = member.guild.roles.cache.find(role => data[0] === role.id)
+  const actualrole = member.guild.roles.cache.find(role => data2[0] === role.id)
     if(!actualrole)return;
     member.roles.add(actualrole)
  
   Channel.send(`Hey ${member}, welcome to **${member.guild.name}**`,attachment)
-  Joins.send(`Hey ${member}, welcome to **${member.guild.name}**`,attachment)
+  
 }catch(er){
   console.warn(`Error : ${er}`);
 }

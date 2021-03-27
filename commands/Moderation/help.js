@@ -152,6 +152,7 @@ module.exports = {
           .addField('levels', '`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, it levelling will be enabled in this guild.')
           .addField(`autorole_add`, '`>autorole_add` - This is a autorole_add command, it gives the mentionned role to every new members joining this guild.')
           .addField(`autorole_remove`, '`>autorole_remove` - This is a autorole_remove command, it resets the autorole system in this guild, making it fresh.')
+          .addField(`loggings`, '`>loggings <enable/disable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel.')
             message.channel.send(Levelling)
         }else return message.channel.send(`The category **${Words}** does not exist.`)
        
