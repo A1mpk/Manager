@@ -154,6 +154,10 @@ module.exports = {
           .addField(`autorole_remove`, '`>autorole_remove` - This is a autorole_remove command, it resets the autorole system in this guild, making it fresh.')
           .addField(`loggings`, '`>loggings <enable/disable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel.')
             message.channel.send(Levelling)
+        }else if(Words.toLowerCase().includes("nsfw".toLowerCase())){
+            const attachment  = new Discord.MessageAttachment(`caught.gif` )
+            message.channel.send(`📸📸Caught on 4K`, attachment)
+            
         }else return message.channel.send(`The category **${Words}** does not exist.`)
        
             
