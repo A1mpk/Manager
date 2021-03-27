@@ -1208,7 +1208,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
         
 }catch(er){
         
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command. Also make sure I have at least most perms so I can do most of the commands.')
      }
     };
     if(command === 'ban'){
