@@ -42,22 +42,26 @@ for(const file of commandFiles){
 
 // PREMIUM START???
 const RPC = require('discord-rpc');
+const { mapReduce } = require('./commands/model/LoggingSchema');
+const e = require('express');
 const rpc = new RPC.Client({ transport: 'ipc' })
 rpc.on('ready', () => {
   rpc.request('SET_ACTIVITY', {
   
   pid: process.pid,
   activity : {
-  details : "VSC(Mint)",
+  details : "Watching I love my step bro...",
   assets : {
-  large_image : "e39",
-  large_text : "BBC",
+  large_image : "noa",
+  large_text : Date.now,
   small_image : "e39",
-  small_text: "BEST NEWS"
+  small_text: "Bratty Sis"
   },
-  
+
+
   buttons : [{label : "Invite" , url : "https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot"}, {label: "Website", url : "https://sites.google.com/view/newsforgamers/home"}]
   }
+
   
 
 
@@ -416,7 +420,7 @@ client.on('roleDelete',async Role=> {
     .setColor("PURPLE")
     Channel.send(ROleInfo)
 })
-// Rich presence 
+
 
 
 
@@ -545,12 +549,11 @@ client.on('message', async message => {
    
     
  
- 
+
   
 
 if(message.content.startsWith(x + 'spotify')){
-  try{
-    if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     let user;
   
 
@@ -592,18 +595,18 @@ if (status !== null && status.type === "LISTENING" && status.name === "Spotify" 
   .addField("Listen on Spotify", `[\`${artist} - ${name}\`](${url})`, false)
 
 message.channel.send(embed)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+   
+  
 }
-}catch(er){
-    
-     message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
- }
+
   
 
 }
   
  
 if(message.content.startsWith(x + 'rank')){
-  try{
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
     const LevelsSchema = require("./commands/model/levels")
     const cache = {} 
@@ -687,17 +690,16 @@ if(message.content.startsWith(x + 'rank')){
   
     const attachment = new Discord.MessageAttachment(canvas.toBuffer() , "rank.png")
     message.channel.send(attachment)
-}catch(er){
-    
-     message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
- }
+
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+   
  
 };
    
 
     if(message.content.toLowerCase().includes( x + "leaderboard" .toLowerCase())){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+    
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         const LevelsSchema = require("./commands/model/levels")
         const cache = {} 
         let data = cache[message.guild.id]
@@ -732,134 +734,121 @@ if(message.content.startsWith(x + 'rank')){
        
         return;
 
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      
+
      
     };
    
     if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
-        execute(message, serverQueue);
-        return;
-
-}catch(er){
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+        try{
+          play(message, serverQueue);
+        }catch{
+          message.channel.send(`Something went wrong, try making sure I have all the permissions & that I could join your voice channel.`)
+        }
         
-         message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
        
-      } else if (message.content.toLowerCase().includes(x +"skip".toLowerCase())) {
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      }
+      
+
+
+       else if (message.content.toLowerCase().includes(x +"skip".toLowerCase())) {
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
           skip(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      } else if (message.content.toLowerCase().includes(x +"stop".toLowerCase())) {
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
-         stop(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if(message.content.toLowerCase().includes(x +"volume".toLowerCase())){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      } 
+      
+      
+      
+      else if (message.content.toLowerCase().includes(x +"stop".toLowerCase())) {
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+          stop(message, serverQueue);
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      else if(message.content.toLowerCase().includes(x +"volume".toLowerCase())){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
           volume(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if(message.content.toLowerCase().includes(x +"np".toLowerCase())){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
-          np(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if(message.content.toLowerCase().includes(x +"queue".toLowerCase())){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      
+      
+      else if(message.content.toLowerCase().includes(x +"np".toLowerCase())){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+         np(message, serverQueue);
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      
+      else if(message.content.toLowerCase().includes(x +"queue".toLowerCase())){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
          Queue(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if(message.content.toLowerCase().includes(x +"pause".toLowerCase())){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
-          pause(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if (message.content.toLowerCase().includes(x +"resume".toLowerCase())){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      
+      else if(message.content.toLowerCase().includes(x +"pause".toLowerCase())){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+         pause(message, serverQueue);
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      
+      else if (message.content.toLowerCase().includes(x +"resume".toLowerCase())){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
           resume(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if(message.content.toLowerCase().includes(x +"loop".toLowerCase())){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      
+      
+      else if(message.content.toLowerCase().includes(x +"loop".toLowerCase())){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
           loop(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if(message.content.toLowerCase().includes(x + "shuffle")){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
-         shuffle(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if(message.content.toLowerCase().includes(x + "leave")){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      
+      else if(message.content.toLowerCase().includes(x + "shuffle")){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+          shuffle(message, serverQueue);
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      
+      
+      else if(message.content.toLowerCase().includes(x + "leave")){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
           leave(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-       }
-      }else if(message.content.toLowerCase().includes(x + 'join'.toLowerCase())){
-        try{
-          if(!message.guild.me.hasPermission("CONNECT"))return;
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+      }
+      
+      
+      
+      
+      else if(message.content.toLowerCase().includes(x + 'join'.toLowerCase())){
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
           join(message, serverQueue);
-          return;
-  
-  }catch(er){
-          
-           message.member.send('I need `CONNECT` permissions to perform that command.')
-       }
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
       }
       async function execute(message, serverQueue) {
         const args = message.content.slice(5)
@@ -1086,7 +1075,7 @@ if(message.content.startsWith(x + 'rank')){
           message.channel.send(Playing)
           return undefined
       }
-      
+   
       // NOW PLAYING
       function np(message, serverQueue){
         const disabled = false
@@ -1181,44 +1170,13 @@ if(message.content.startsWith(x + 'rank')){
         
       }
    
-  if(message.content.startsWith("meme")){
-    const randomPuppy = require("random-puppy")
-    let reddit = [
-      "meme",
-      "animemes",
-      "MemesOfAnime",
-      "animememes",
-      "AnimeFunny",
-      "dankmemes",
-      "dankmeme",
-      "wholesomememes",
-      "MemeEconomy",
-      "techsupportanimals",
-      "meirl",
-      "me_irl",
-      "2meirl4meirl",
-      "AdviceAnimals"
-  ]
 
-  let subreddit = reddit[Math.floor(Math.random() * reddit.length)];
-
-
-
-  randomPuppy(subreddit).then(async url => {
-          await message.channel.send({
-              files: [{
-                  attachment: url,
-                  name: 'meme.png'
-              }]
-          }).then(() => message.channel.stopTyping());
-  }).catch(console.log("Error"));
-
-};
   
     if(message.content.toLowerCase().includes(x +"uptime".toLowerCase())){
 
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+          
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
         totalSeconds %= 86400;
@@ -1237,17 +1195,13 @@ if(message.content.startsWith(x + 'rank')){
         .setFooter(`Uptime`)
         .setColor(3447003)
         message.channel.send(UptimeEMbed)
-        
-    }catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+        }else message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
       
 }
   
 if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
-  try{
-    if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+ 
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     const Info = new Discord.MessageEmbed()
     .setColor(3447003)
     .setTitle('Mint')
@@ -1265,352 +1219,279 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     .setThumbnail(message.client.user.displayAvatarURL())
 
     message.channel.send(Info)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     
-}catch(er){
     
-     message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
- }
+
    
 }
 
     const args = message.content.slice(x.length).split(/ +/);
    if(!message.content.startsWith(x) || message.author.bot) return;
     const command =args.shift().toLowerCase();
+
+    //KICK COMMAND
     if(command === 'kick'){
-      try{
-        if(!message.guild.me.hasPermission("KICK_MEMBERS"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('kick').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `KICK_MEMBERS` permissions on my role to perform that command.')
-     }
-       
-    };
-    if(command === 'lock'){
+      }else message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
+    }
+
+  // LOCK COMMAND
+  if(command === 'lock'){
     client.commands.get('lock').execute(message, args)
     };
+    // ANNUNCE COMMAND
+
     if(command === 'announce'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('announce').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
-   
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+    // AVATAR COMMAND
+
     if(command === 'avatar'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('avatar').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+    // SAY COMMAND
+
     if(command === 'say'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('say').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+    // INVITE COMMAND
+
     if(command === 'invite'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('invite').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     }
+    // GUILD COMMAND
+
     if(command === 'guild'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
-        client.commands.get('guild').execute(message, args)
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+        client.commands.get('guild').execute(message,args)
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
    
     };
-  
+   // HELP COMMAND
+
     if(command === 'help'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('help').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command. Also make sure I have at least most perms so I can do most of the commands.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+    // BAN COMMAND
+
     if(command === 'ban'){
-      try{
-        if(!message.guild.me.hasPermission("BAN_MEMBERS"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('ban').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `BAN_MEMBERS` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
         };
+    // REPORT COMMAND
+
     if(command === 'report'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('report').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+    // EVAL COMMAND
 
     if(command === 'eval'){
     client.commands.get('eval').execute(message, args)
     };
+    // CREDIT COMMAND
+
     if(command === 'credit'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('credit').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+    // MEMBERCOUNT COMMNAD
     if(command === 'membercount'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('membercount').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+     // RULE_ADD COMMAND
+
     if(command === 'rule_add'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('rule_add').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
+
+
     if(command === 'nick'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_NICKNAMES"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('nick').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_NICKNAMES` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
+
+
+
     if(command === 'gaymeter'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('gaymeter').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
       };
+
+
+
+
+
       if(command === 'simpmeter'){
-        try{
-          if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
           client.commands.get('simpmeter').execute(message,args)
-          
-  }catch(er){
-          
-           message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-       }
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
         };
+
+
+
+
         if(command === 'dogwater'){
-          try{
-            if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+          if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
             client.commands.get('dogwater').execute(message,args)
-            
-    }catch(er){
-            
-             message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-         }
+          }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
           };
+
+
+
+
     if(command === 'bot_nick'){
-    client.commands.get('bot_nick').execute(message, args)
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+        client.commands.get('bot_nick').execute(message,args)
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
+
+
+
     if(command === 'getid'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('getid').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
     
+
+
+
    
     if(command === 'getuserid'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('getuserid').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
+
+
     if(command === 'clear'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_MESSAGES"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('clear').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_MESSAGES` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
+
+
     if(command === 'verify'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_MEMBERS"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('verify').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_MEMBERS` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
+
+
     if(command === '8ball'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('8ball').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
+
+
     if(command === 'slowmode'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_CHANNELS"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('slowmode').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_CHANNELS` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
-    if(command === 'suggestion'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_CHANNELS"))return;
-        client.commands.get('suggestion').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_CHANNELS` permissions on my role to perform that command.')
-     }
-    };
+
+
+
+
+   
+
+
     if(command === 'autorole_remove'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('autorole_remove').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
   };
+
+
+
   if(command === 'loggings'){
-    try{
-      if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+    if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
       client.commands.get('loggings').execute(message,args)
-      
-}catch(er){
-      
-       message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-   }
+    }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
 };
+
+
     if(command === 'mute'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_MEMBERS"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('mute').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_MEMBERS` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
     if(command === 'unmute'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_MEMBERS"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('unmute').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_MEMBERS` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
-    if(command === 'update'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
-        client.commands.get('update').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
-    };
+
+
+   
+
     if(command === 'giverole'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_ROLES"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('giverole').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_ROLES` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
     if(command === 'karen'){
-      try{
-        if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('karen').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
     };
+
+
     if(command === 'autorole_add'){
-      try{
-        if(!message.guild.me.hasPermission("MANAGE_MEMBERS"))return;
+      if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         client.commands.get('autorole_add').execute(message,args)
-        
-}catch(er){
-        
-         message.member.send('I need `MANAGE_MEMBERS` permissions on my role to perform that command.')
-     }
+      }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
   };
+
+
   if(command === 'levels'){
-    try{
-      if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+    if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
       client.commands.get('levels').execute(message,args)
-      
-}catch(er){
-      
-       message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
-   }
+    }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
 };
+
 
 });
 

@@ -10,8 +10,8 @@ module.exports = {
         const Words = message.content.slice(5)
         if(!Words){
           
-            try{
-               if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+            
+               
                
                 message.channel.send({
                     embed:{
@@ -50,10 +50,7 @@ module.exports = {
                     })
                    
                   
-            }catch(er){
-               
-                message.member.send('I need `SEND_MESSAGE` permissions to perform that command.')
-            }
+            
         }else if(Words.toLowerCase().includes("Moderation".toLowerCase())){
           const ModerationHelp = new Discord.MessageEmbed()
           .setAuthor(`MODERATION - CATEGORY`)
@@ -127,7 +124,6 @@ module.exports = {
             .setAuthor(`UTILITIES - CATEGORY`)
             .setColor(3447003)
             .addField('invite', '`>invite` - This is just an invite command, it sends you an invite link so you can invite Mint.')
-            .addField(`update`, '`>update` - This is just an update command, it shows you the newest updates of Mint.')
             .addField('membercount','`>membercount` - This is just a membercount command, it shows the amount of members in the server.')
             .addField('verify', '`>verify` - This is just a verify command, it verifies you as a verified member of the server.')
             .addField('info','`>info` - This is just an info command, it shows you information about Mint.')
@@ -141,7 +137,7 @@ module.exports = {
             .addField('getID','`>getID <channel>` - This is just a getID command, it shows you the ID of the channel name you wrote.')
             .addField('getuserID', '`>getuserID <user>` - This is just a getuserID command, it shows you the ID of the user you mentionned.')
             .addField('report','`>report <issue>` - This is just a report command, it sends a report to the owner of the guild.')
-            .addField('suggestion', '`>suggestion <suggestions>` - This is just a suggestion command, after you enter your suggestions it sends it in a suggestions channel where the Owner/Administrator can view it.')
+            
             .addField('credit', '`>credit <user> <reason>` - This is just a credit command, it credits the user you mentionned with the reason.')
             .addField('spotify', '`>spotify <user>` - This command is just a spotify command, it shows basic information about the track a mentionned user is listening to.')
             message.channel.send(u_list_2)
