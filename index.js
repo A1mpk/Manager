@@ -607,7 +607,7 @@ message.channel.send(embed)
  
 if(message.content.startsWith(x + 'rank')){
   if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
-    if(!message.guild.me.hasPermission("SEND_MESSAGE"))return;
+    
     const LevelsSchema = require("./commands/model/levels")
     const cache = {} 
     let data = cache[message.guild.id]
