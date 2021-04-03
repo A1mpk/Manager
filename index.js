@@ -44,6 +44,7 @@ for(const file of commandFiles){
 const RPC = require('discord-rpc');
 const { mapReduce } = require('./commands/model/LoggingSchema');
 const e = require('express');
+const { exec } = require('child_process');
 const rpc = new RPC.Client({ transport: 'ipc' })
 rpc.on('ready', () => {
   rpc.request('SET_ACTIVITY', {
@@ -743,7 +744,7 @@ if(message.content.startsWith(x + 'rank')){
     if (message.content.toLowerCase().includes( x + "play".toLowerCase())) {
       if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
         try{
-          play(message, serverQueue);
+          execute(message, serverQueue);
         }catch{
           message.channel.send(`Something went wrong, try making sure I have all the permissions & that I could join your voice channel.`)
         }
@@ -864,14 +865,15 @@ if(message.content.startsWith(x + 'rank')){
         }
         const  url = args ? args.replace(/<(.+)>/g, '$1') : ''
         const voiceChannel = message.member.voice.channel;
+        
         if (!voiceChannel)
           return message.channel.send(
             "You need to be in a voice channel to play music!"
           );
         const permissions = voiceChannel.permissionsFor(message.client.user);
-        if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+        if (!permissions.has("CONNECT") || !permissions.has("SPEAK") || !permissions.has("VIEW_CHANNEL")) {
           return message.channel.send(
-            "I need the permissions to join and speak in your voice channel!"
+            "I need the following permissionsin your voice channel. [`CONNECT`, `SPEAK`, `VIEW_CHANNEL`]"
           );
         }
         try{ 
@@ -1492,6 +1494,11 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
 };
 
+if(command === 'role_description_add'){
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+    client.commands.get('role_description_add').execute(message,args)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+};
 
 });
 
