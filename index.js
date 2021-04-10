@@ -71,7 +71,7 @@ rpc.on('ready', () => {
 
 })
 rpc.login({
-  clientId: "816732886870523935",
+  clientId: "816732886870523935a",
   clientSecret: "t5tp_u5YfKJC4BQVTXwj82wRc3kORXxh"
 })
 /// PREFIX
@@ -444,6 +444,35 @@ client.on('guildMemberAdd', async member => {
         console.log(er)
       }
   }
+
+  const WelcomeMessageSchema = require("./commands/model/welcome-message")
+  const cacheing = {} 
+  let datas = cacheing[member.guild.id]
+
+  if (!datas) {
+    
+
+ 
+      try {
+        const resulted = await WelcomeMessageSchema.findOne({guildID: member.guild.id})
+       if(!resulted)return;
+        cacheing[member.guild.id] = datas = [ resulted.message]
+        
+      }catch(er){
+        console.log(er)
+      }
+  }
+
+
+  
+   try{
+
+    member.send(datas)
+   }catch{
+     console.log(`I cant DM THE USER!>.`)
+   }
+   
+ 
 
   const Channel = member.guild.channels.cache.find( channel => data[0] === channel.id)
   if(!Channel)return;
@@ -1494,9 +1523,14 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
 };
 
-if(command === 'role_description_add'){
+if(command === 'welcome-message-set'){
   if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
-    client.commands.get('role_description_add').execute(message,args)
+    client.commands.get('welcome-message-set').execute(message,args)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+};
+if(command === 'welcome-message-remove'){
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+    client.commands.get('welcome-message-remove').execute(message,args)
   }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
 };
 
