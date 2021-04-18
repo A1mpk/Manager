@@ -5,7 +5,8 @@ const WelcomeMessageSchema = mongoose.Schema({
     guildID: String,
     guildOwner: String,
     message: String,
-    dm: String
+    dm: String,
+    embed: String
 });
 
 module.exports = mongoose.model('welcome-message', WelcomeMessageSchema)

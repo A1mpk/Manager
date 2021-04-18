@@ -45,6 +45,8 @@ const RPC = require('discord-rpc');
 const { mapReduce } = require('./commands/model/LoggingSchema');
 const e = require('express');
 const { exec } = require('child_process');
+const { type } = require('os');
+const { Video } = require('simple-youtube-api');
 const rpc = new RPC.Client({ transport: 'ipc' })
 rpc.on('ready', () => {
   rpc.request('SET_ACTIVITY', {
@@ -117,8 +119,13 @@ try{
             {
                 name: '**⚙️ Configuration**',
                 value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
+            },
+            {
+                name: '**🏷️ Description**',
+                value: '`>help description` - Role description category, you can now put description for a role. '
             }
          
+
         ],
         
     }
@@ -466,8 +473,13 @@ client.on('guildMemberAdd', async member => {
 
   
    try{
+const WelcomeEmbed = new Discord.MessageEmbed()
+.setAuthor(`${member.guild.name}`, member.guild.iconURL())
+.setDescription(datas)
+.setTimestamp()
+.setColor("BLUE")
 
-    member.send(datas)
+    member.send(WelcomeEmbed)
    }catch{
      console.log(`I cant DM THE USER!>.`)
    }
@@ -578,7 +590,7 @@ client.on('message', async message => {
      
    
     
- 
+
 
   
 
@@ -722,9 +734,9 @@ if(message.content.startsWith(x + 'rank')){
     message.channel.send(attachment)
 
   }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
-   
  
 };
+
    
 
     if(message.content.toLowerCase().includes( x + "leaderboard" .toLowerCase())){
@@ -926,6 +938,7 @@ if(message.content.startsWith(x + 'rank')){
               minutes: video.duration.minutes,
               seconds: video.duration.seconds,
               hours: video.duration.hours,
+              thumbnail: video.thumbnails,
             
          };
         if (!serverQueue) {
@@ -968,6 +981,7 @@ if(message.content.startsWith(x + 'rank')){
             const QueueAdded = new MessageEmbed()
             .setAuthor(`Added to queue`, `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`)
             .setDescription(`[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})`)
+            .setThumbnail(serverQueue.songs[0].thumbnail)
             .setColor(3447003)
             .setTimestamp()
           
@@ -1164,6 +1178,7 @@ if(message.content.startsWith(x + 'rank')){
         const Playing = new MessageEmbed()
         .setAuthor(`Now Playing`, `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`)
         .setDescription(`[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!`)
+        .setThumbnail(serverQueue.songs[0].thumbnail.url)
         .setColor(3447003)
         .setFooter(message.author.tag, message.author.displayAvatarURL())
     
@@ -1239,7 +1254,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint`)
     .addFields(
-        { name: 'Version', value: '2.0.2', inline: true },
+        { name: 'Version', value: '2.0.6', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
@@ -1531,6 +1546,21 @@ if(command === 'welcome-message-set'){
 if(command === 'welcome-message-remove'){
   if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     client.commands.get('welcome-message-remove').execute(message,args)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+};
+if(command === 'role_description_add'){
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+    client.commands.get('role_description_add').execute(message,args)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+};
+if(command === 'role_description'){
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+    client.commands.get('role_description').execute(message,args)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+};
+if(command === 'role_description_remove'){
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+    client.commands.get('role_description_remove').execute(message,args)
   }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
 };
 

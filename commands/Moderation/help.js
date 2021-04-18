@@ -41,6 +41,10 @@ module.exports = {
                             {
                                 name: '**⚙️ Configuration**',
                                 value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
+                            },
+                            {
+                                name: '**🏷️ Description**',
+                                value: '`>help description` - Role description category, you can now put description for a role. '
                             }
                         ],
                         
@@ -156,7 +160,19 @@ module.exports = {
             const attachment  = new Discord.MessageAttachment(`caught.gif` )
             message.channel.send(`📸📸Caught on 4K`, attachment)
             
-        }else return message.channel.send(`The category **${Words}** does not exist.`)
+        }else if(Words.toLowerCase().includes("description".toLowerCase())){
+          
+            const Config = new Discord.MessageEmbed()
+            .setAuthor(`DESCRIPTION - CATEGORY`)
+            .setColor(3447003)
+          .addField('role_description_add', '>roles_description_add <@Role> <description> - This command lets you put a description for the mentionned role.')
+          .addField(`role_description_remove`, '`>roles_description_remove <@Role>` -  This command deletes the roles the description. ')
+          .addField(`role_description`, '`>role_description <@ROle>` -  it sends the description of the mentionned role if a Administrator/Moderator has set a description for that role. ')
+         
+          
+            message.channel.send(Config)
+        }
+        else return message.channel.send(`The category **${Words}** does not exist.`)
        
             
             
