@@ -981,7 +981,6 @@ if(message.content.startsWith(x + 'rank')){
             const QueueAdded = new MessageEmbed()
             .setAuthor(`Added to queue`, `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`)
             .setDescription(`[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})`)
-            .setThumbnail(serverQueue.songs[0].thumbnail)
             .setColor(3447003)
             .setTimestamp()
           
