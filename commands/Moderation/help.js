@@ -15,7 +15,7 @@ module.exports = {
                
                 message.channel.send({
                     embed:{
-                        title: 'List of commands ',
+                        title: 'List of commands - PREMIUM EXISTS',
                         color: 3447003, 
                         fields:[
                             {
@@ -43,7 +43,7 @@ module.exports = {
                                 value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
                             },
                             {
-                                name: '**🏷️ Description**',
+                                name: '**🏷️ Description[PREMIUM]**',
                                 value: '`>help description` - Role description category, you can now put description for a role. '
                             }
                         ],
@@ -114,7 +114,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("listeners".toLowerCase())){
             const Listeners = new Discord.MessageEmbed()
             .setAuthor(`LISTENERS - CATEGORY`)
-            .setDescription(`_To enable logging for this guild, do not forget to create a text channel named "logs"!_`)
+       
             .setColor(3447003)
             .addField('MessageDelete', 'This is from the logging category, it log\'s every deleted messages into the logging channel.')
             .addField(`InviteCreate/Delete`, 'This is a logging function, it logs it in the logging channel whenever an invite is created/deleted.')
@@ -149,9 +149,10 @@ module.exports = {
             const Config = new Discord.MessageEmbed()
             .setAuthor(`CONFIGS - CATEGORY`)
             .setColor(3447003)
+            .addField(`premium`, '`>premium` - This is a premium command, the bot will think of a number in it\'s and if you guess it, you get premium for your guild for free.')
           .addField('levels', '`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, it levelling will be enabled in this guild.')
-          .addField(`autorole_add`, '`>autorole_add` - This is a autorole_add command, it gives the mentionned role to every new members joining this guild.')
-          .addField(`autorole_remove`, '`>autorole_remove` - This is a autorole_remove command, it resets the autorole system in this guild, making it fresh.')
+          .addField(`autorole_add[PREMIUM]`, '`>autorole_add` - This is a autorole_add command, it gives the mentionned role to every new members joining this guild.')
+          .addField(`autorole_remove[PREMIUM]`, '`>autorole_remove` - This is a autorole_remove command, it resets the autorole system in this guild, making it fresh.')
           .addField(`loggings`, '`>loggings <enable/disable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel.')
           .addField(`welcome-message-set`, '`>welcome-message-set <message>` - This is the welcome message command, it will send a welcome message everytime a user joins the server. (In private messages)')
           .addField(`welcome-message-remove`, '`>welcome-message-remove` - This is the remove welcome message command, it will remove the message that was set for welcome message command.')
@@ -163,11 +164,11 @@ module.exports = {
         }else if(Words.toLowerCase().includes("description".toLowerCase())){
           
             const Config = new Discord.MessageEmbed()
-            .setAuthor(`DESCRIPTION - CATEGORY`)
+            .setAuthor(`DESCRIPTION[PREMIUM]- CATEGORY`)
             .setColor(3447003)
-          .addField('role_description_add', '>roles_description_add <@Role> <description> - This command lets you put a description for the mentionned role.')
+          .addField('role_description_add', '`>roles_description_add <@Role> <description>` - This command lets you put a description for the mentionned role.')
           .addField(`role_description_remove`, '`>roles_description_remove <@Role>` -  This command deletes the roles the description. ')
-          .addField(`role_description`, '`>role_description <@ROle>` -  it sends the description of the mentionned role if a Administrator/Moderator has set a description for that role. ')
+          .addField(`role_description`, '`>role_description <@Role>` -  it sends the description of the mentionned role if a Administrator/Moderator has set a description for that role. ')
          
           
             message.channel.send(Config)

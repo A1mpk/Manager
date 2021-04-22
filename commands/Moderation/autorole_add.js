@@ -8,6 +8,29 @@ module.exports =  {
     description: 'a',
     disabled: false,
   async execute (message) {
+    const PremiumNeeded = new Discord.MessageEmbed()
+    .setTimestamp()
+    .setTitle(`Premium😭`)
+    .setDescription(`❌ This server does not have Premium. You need Premium to use this command.`)
+    .setColor(`BLUE`)
+    
+     const Premium = require("../model/MintPremium")
+     const cache2 = {} 
+     let data2 = cache2[message.guild.id]
+   
+     if (!data2) {
+       
+   
+    
+         try {
+           const result2 = await Premium.findOne({ guildID: message.guild.id})
+          if(!result2)return message.channel.send(PremiumNeeded);
+
+         }catch(er){
+           console.log(er)
+         }
+     };
+    
     if(!message.member.hasPermission("MANAGE_ROLES"))return message.channel.send(`You cannot use this command.`)
       const ROLEID = message.content.slice(14)
       if(!ROLEID){
@@ -15,7 +38,7 @@ module.exports =  {
         .setColor(3447003)
         .setAuthor('AUTOROLE_ADD - LOGGING')
         .setDescription('`>autorole_add <roleID>` - This is just the autorole command, everytime a user joins it gives them that role.')
-        .addField("Sub Commands", '`autorole_remove` - This is a upcoming command.[Edited at 3/14/21]')
+        .addField("Sub Commands", '`autorole_remove` - Clears the role of autorole.')
         
         .setTimestamp()
         message.channel.send(LOL)

@@ -1261,7 +1261,8 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
             value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Website](https://sites.google.com/view/mint2020-com/home) ",inline:true
           }
     )
-    .setThumbnail(message.client.user.displayAvatarURL())
+    .addField(`Premium Commands/Categories`,`Youtube Notification, Autoroles, Roles Description. **>premium**`)
+    .setThumbnail(message.guild.me.user.displayAvatarURL({dynamic: false, format: 'png'}))
 
     message.channel.send(Info)
   }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
@@ -1560,6 +1561,11 @@ if(command === 'role_description'){
 if(command === 'role_description_remove'){
   if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     client.commands.get('role_description_remove').execute(message,args)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+};
+if(command === 'premium'){
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+    client.commands.get('premium').execute(message,args)
   }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
 };
 
