@@ -7,7 +7,7 @@ module.exports = {
    async execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         const YellowData = require('../model/MintPremium')
-        if(YellowData.find({guildID: message.guild.id}))return message.channel.send(`You already have premium -_-`)
+       
         if(!message.member.hasPermission("ADMINISTRATOR"))return message.channel.send(`You need to be the Owner or have Administrator permissions in this guild.`)
         const NumberToGuess =  Math.floor(Math.random() * 100)
         const questions = [ 
