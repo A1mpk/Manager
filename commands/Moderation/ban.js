@@ -27,10 +27,10 @@ module.exports = {
         if(Buser.hasPermission("BAN_MEMBERS")) return message.channel.send(BanMod);
         try{
            message.guild.member(Buser).ban({reason: bReason})
-           Buser.send(`You were banned banned ${Buser} with the reason of : ${bReason}`)
+           Buser.send(`You were banned ${Buser} with the reason of : ${bReason}`)
              return;
         }catch(er){
-            message.channel.send(`Sometime went wrong!`)
+            message.channel.send(`We ran into an error. Ask for help in the support server.`)
         }
 
     }

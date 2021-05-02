@@ -15,6 +15,7 @@ const Levels = require('discord-xp');
 Levels.setURL("mongodb+srv://admin:LmVUsNQeLiYCsJfr@manager.hd8gy.mongodb.net/<DataBase505>?retryWrites=true&w=majority")
 const Canvas = require('canvas');
 const queue = new Map();
+
 // COMMAND HANDLER
 config({
     path: `${__dirname}/.env`
@@ -47,6 +48,7 @@ const e = require('express');
 const { exec } = require('child_process');
 const { type } = require('os');
 const { Video } = require('simple-youtube-api');
+const { ServerResponse } = require('http');
 const rpc = new RPC.Client({ transport: 'ipc' })
 rpc.on('ready', () => {
   rpc.request('SET_ACTIVITY', {
@@ -78,7 +80,7 @@ rpc.login({
 })
 /// PREFIX
 const x = '>';
-/// ALL THE LISTENERS :
+/// ALL THE LISTENERS :  
 
 client.on('guildCreate', guild => {
 
@@ -136,11 +138,7 @@ try{
 
 })
 
-client.on('ready', () => {
-  
- 
-    client.user.setActivity(`>help || >info`, {type: "WATCHING"})
-})
+
 
 client.on('error', error => {
    console.log(`An error occured : ${error.message}`)
@@ -793,8 +791,19 @@ if(message.content.startsWith(x + 'rank')){
       }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
        
       }
+      if (message.content.toLowerCase().includes( x + "lyrics".toLowerCase())) {
+        if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+          try{
+            lyrics(message, serverQueue);
+          }catch(err){
+           console.log(err)
+          }
+          
+        }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+         
+        }
       
-
+     
 
        else if (message.content.toLowerCase().includes(x +"skip".toLowerCase())) {
         if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
@@ -1009,7 +1018,73 @@ if(message.content.startsWith(x + 'rank')){
        message.channel.send(QueueEmbed)
        return undefined
         }
+        
+        // LYRICS FINDER (DISMISSED PROJECT.)
+     async   function lyrics(message, serverQueue) {
+       if(!message.member.voice.channel)return message.channel.send(`You are not connected to a voice channel.`)
+       if(!message.guild.me.voice.channel)return message.channel.send(`I am not to a voice channel.`)
+       if(message.guild.me.voice.channel !== message.member.voice.channel)return message.channel.send(`You are not connected to the same Voice CHannel as me. `)
+       if(!serverQueue)return message.channel.send(`The queue is empty.`)
+
+      let artist = serverQueue.songs[0].author
+      let songName = serverQueue.songs[0].title
+      let pages = [];
+      let currentPage = 0;
+  
+   
+      const reactionFilter = (reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && (message.author.id === user.id)
+  
+
+          
+          await finder (artist, songName, message, pages)
+    
+  
+      const lyricEmbed = await message.channel.send(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage])
+      await lyricEmbed.react('⬅️');
+      await lyricEmbed.react('➡️');
+  
+      const collector = lyricEmbed.createReactionCollector(reactionFilter);
+  
+      collector.on('collect', (reaction, user) => {
+          if(reaction.emoji.name === '➡️'){
+              if(currentPage < pages.length-1){
+                  currentPage+=1;
+                  lyricEmbed.edit(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage]);
+                  message.reactions.resolve(reaction).users.remove(user)
+              }
+          }else if(reaction.emoji.name === '⬅️'){
+              if (currentPage !== 0){
+                  currentPage -= 1;
+                  lyricEmbed.edit(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage])
+                  message.reactions.resolve(reaction).users.remove(user)
+              }
+          }
+      })
+  }
+  
+  async function finder(artist, songName, message, pages){
+    const  lyrics = require("music-lyrics");
+      let fullLyrics = await lyrics.search(songName + artist) || 'Not found';
+      
+      for (let i = 0; i < fullLyrics.length; i += 2048){
+          const lyric = fullLyrics.substring(i, Math.min(fullLyrics.length, i + 2048));
+          const msg = new Discord.MessageEmbed()
+              .setDescription(lyric)
+              .setColor("BLUE")
+          pages.push(msg);
+      }
+  }
+      
+   
+
+
+  
+
+
+        
+      
       // SKIP
+      
       function skip(message, serverQueue) {
         if (!message.member.voice.channel)
           return message.channel.send(

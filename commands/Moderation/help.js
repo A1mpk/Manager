@@ -15,7 +15,7 @@ module.exports = {
                
                 message.channel.send({
                     embed:{
-                        title: 'List of commands - PREMIUM EXISTS',
+                        title: 'List of commands',
                         color: 3447003, 
                         fields:[
                             {
@@ -43,7 +43,7 @@ module.exports = {
                                 value: '`>help configs` - Config category, you can change the settings here to make your guild suit you! '
                             },
                             {
-                                name: '**🏷️ Description[PREMIUM]**',
+                                name: '**🏷️ Description**',
                                 value: '`>help description` - Role description category, you can now put description for a role. '
                             }
                         ],
@@ -97,6 +97,7 @@ module.exports = {
           .addField(`stop`, '`>stop` - This is a stop command, it will stop the current track.')
           .addField(`pause`, '`>pause` - This is a pause command, it pauses the track.')
           .addField(`resume`, '`>resume` - This is a resume command, it will resume the track.')
+          .addField(`lyrics`, '`>lyrics` - This is a lyrics command, it shows the lyrics of the track if found.')
           
           
           message.channel.send(Music)
@@ -149,10 +150,10 @@ module.exports = {
             const Config = new Discord.MessageEmbed()
             .setAuthor(`CONFIGS - CATEGORY`)
             .setColor(3447003)
-            .addField(`premium`, '`>premium` - This is a premium command, the bot will think of a number in it\'s and if you guess it, you get premium for your guild for free.')
+            .addField(`premium`, '**THIS COMMAND WILL ONLY WORK ON UPDATE 3.0!**`>premium` - This is a premium command, the bot will think of a number in it\'s and if you guess it, you get premium for your guild for free.')
           .addField('levels', '`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, it levelling will be enabled in this guild.')
-          .addField(`autorole_add[PREMIUM]`, '`>autorole_add` - This is a autorole_add command, it gives the mentionned role to every new members joining this guild.')
-          .addField(`autorole_remove[PREMIUM]`, '`>autorole_remove` - This is a autorole_remove command, it resets the autorole system in this guild, making it fresh.')
+          .addField(`autorole_add]`, '`>autorole_add` - This is a autorole_add command, it gives the mentionned role to every new members joining this guild.')
+          .addField(`autorole_remove`, '`>autorole_remove` - This is a autorole_remove command, it resets the autorole system in this guild, making it fresh.')
           .addField(`loggings`, '`>loggings <enable/disable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel.')
           .addField(`welcome-message-set`, '`>welcome-message-set <message>` - This is the welcome message command, it will send a welcome message everytime a user joins the server. (In private messages)')
           .addField(`welcome-message-remove`, '`>welcome-message-remove` - This is the remove welcome message command, it will remove the message that was set for welcome message command.')
@@ -164,7 +165,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("description".toLowerCase())){
           
             const Config = new Discord.MessageEmbed()
-            .setAuthor(`DESCRIPTION[PREMIUM]- CATEGORY`)
+            .setAuthor(`DESCRIPTION- CATEGORY`)
             .setColor(3447003)
           .addField('role_description_add', '`>roles_description_add <@Role> <description>` - This command lets you put a description for the mentionned role.')
           .addField(`role_description_remove`, '`>roles_description_remove <@Role>` -  This command deletes the roles the description. ')

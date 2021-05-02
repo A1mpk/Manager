@@ -20,7 +20,7 @@ module.exports = {
                 if (isNaN(amount)) return message.channel.send(`That's not a number.`); 
                 
                 if (amount > 100) return message.channel.send(`Please enter an number below **100**.`); 
-                if (amount < 2) return message.channel.send(`You really want me to clear 1 and less messages?????`)
+                if (amount < 2) return message.channel.send(`Really..?`)
                 else
                 
                 message.channel.messages.fetch({ limit: amount }).then(messages => { 

@@ -20,7 +20,7 @@ module.exports = {
        if(idchannel){
            const GETIDCHAN = message.guild.channels.cache.find(channel => idchannel === channel.name)
            if(!GETIDCHAN) return message.channel.send(`Cannot find the channel '${idchannel}'.`)
-           message.channel.send(` Channel ID : ${GETIDCHAN.id}`)
+           message.channel.send(`The ID of the selected channel is **${GETIDCHAN.id}**`)
        } 
     }
 }

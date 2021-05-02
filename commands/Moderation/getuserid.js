@@ -20,7 +20,7 @@ module.exports = {
        if(idchannel){
            const GETIDCHAN =  message.mentions.users.first()
            if(!GETIDCHAN) return message.channel.send(`Cannot find the user '${idchannel}'`)
-           message.channel.send(`User ID :${GETIDCHAN.id}`)
+           message.channel.send(`ID of the following user ${GETIDCHAN.id}`)
        } 
     }
 }

@@ -8,7 +8,7 @@ module.exports = {
         const randomXp = Math.floor(Math.random() * 100) + 1 
         const user = message.mentions.users.first() || message.author;
         if(!user)return message.channel.send(`Oops... You forgot to mention a user!`)
-        message.channel.send(`${user} is ${randomXp}% literal dogwater!`)
+        message.channel.send(`${user} is ${randomXp}% dogwater!`)
     }
 
 };

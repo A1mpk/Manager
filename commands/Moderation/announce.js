@@ -25,7 +25,7 @@ module.exports = {
             if(args2){
               message.channel.send(custom_message)
             }
-         } else message.channel.send('You do not have permissions to use this command.')
+         } else message.channel.send('You do not have the required permission to use this command.')
     }
 
 };
