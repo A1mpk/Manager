@@ -45,6 +45,10 @@ module.exports = {
                             {
                                 name: '**🏷️ Description**',
                                 value: '`>help description` - Role description category, you can now put description for a role. '
+                            },
+                            {
+                                name: '**📜 Report**',
+                                value: '``>help report` - Report category, you can now report things if you don\'t like something about this guild or report an user.'
                             }
                         ],
                         
@@ -170,6 +174,17 @@ module.exports = {
           .addField('role_description_add', '`>roles_description_add <@Role> <description>` - This command lets you put a description for the mentionned role.')
           .addField(`role_description_remove`, '`>roles_description_remove <@Role>` -  This command deletes the roles the description. ')
           .addField(`role_description`, '`>role_description <@Role>` -  it sends the description of the mentionned role if a Administrator/Moderator has set a description for that role. ')
+         
+          
+            message.channel.send(Config)
+        }else if(Words.toLowerCase().includes("report".toLowerCase())){
+          
+            const Config = new Discord.MessageEmbed()
+            .setAuthor(`REPORT - CATEGORY`)
+            .setColor(3447003)
+          .addField('report_channel_add', '`>report_channel_add` - With this command you can create a report channel, this is a really important command because without this you cannot run the report command. It basically makes it that it sends the new reports to that channel.')
+          .addField(`report_channel_remove`, '`>report_channel_remove` -  This command deletes the channel from the database. ')
+          .addField(`report`, '`>report` -  This command sends a copy of your report to the Report channel where Admins can reach you out afterwards. ')
          
           
             message.channel.send(Config)

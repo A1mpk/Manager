@@ -4,30 +4,92 @@ module.exports = {
     name: "report",
     description: "j",
     disabled: false,
-    execute(message, args){
+   async execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
+  // FINDING THE REPORT CHANNEL AND IF WE DIDNT WE SAY NO.
+  const ReportData = require('../model/ReportData')
+  const cache = {} 
+  let data = cache[message.guild.id]
 
-        try{
-            report = message.content.slice("7")
-            const Report = new Discord.MessageEmbed()
-            .setAuthor(`Report by ${message.member.user.tag}`)
-            .setDescription(`${report}`)
-            .setColor(3447003)
-            .setFooter(`Command raised by ${message.member.user.tag}`)
-             if (!report) {
-                 const repportt = new Discord.MessageEmbed()
-                .setDescription("`>report <issue>` - This is a report command, it will simply send a DM to the owner of the guild your report. From there, they will have to contact you shortly.")
-              
-                .setColor(3447003)
-                .setTitle('REPORT - UTILITIES')
-                message.channel.send(repportt)
+  if (!data) {
+    
+
+ 
+    
+        const result = await ReportData.findOne({guildID: message.guild.id})
+       if(!result)return message.channel.send(`The report channel was either deleted or I don't have access to it.`)
+        cache[message.guild.id] = data = [result.reportChannel]
+        
+     
+  }
+           //CHECKING IF THE USER SENT AN ACTUAL REPORT OR NO
+           const questions = [ 
+            'Who are you reporting? `user` or `server`?',
+            'What is your report?'
+        ]
+        let counter = 0
+        
+     
+        const filter = m => m.author.id === message.author.id
+     
+        const collector = new Discord.MessageCollector(message.channel, filter, {
+            max: questions.length,
+            time: 60000 //15s
+        })
+        const ReportEmbed = new Discord.MessageEmbed()
+        .setTitle(`Report`)
+        .setDescription(questions[counter++])
+        .setTimestamp()
+        .setColor("BLUE")
+
+    
+       
+        message.channel.send(ReportEmbed)
+        collector.on('collect', m=> {
+            if(counter < questions.length) {
+                m.channel.send(questions[counter++])
+            }
+            
+        })
+         
+           
+    
+     
+
+        //PART WHERE IT SENDS IT TO THE REPORT CHNANEL
+
+        collector.on('end',async collected => {
+            message.channel.send(`Your report has been sent to the Admins. Expect a reply soon but do not forget to keep your dms on so Admins can talk to you privatly.`)
+            let counter = 0
+            const ReportChannel = message.guild.channels.cache.find(chan => data[0] === chan.id)
+            const ReportChannelEmbed = new Discord.MessageEmbed()
+            .setAuthor(`Report by ${message.member.user.tag}`, message.member.user.displayAvatarURL())
+            .addField(questions[counter++], collected.first().content)
+            .addField(questions[counter++], collected.last().content)
+            .setDescription(`To take care of this case, you must DM the user or talk to them on a private channel. To trash a report, you could react with ❌.`)
+             
+             .setTimestamp()
+             .setColor("BLUE")
+            const ReportChannelEmbed2 = await ReportChannel.send(`A new report :`, ReportChannelEmbed )
+          
+        
+         ReportChannel.send(ReportChannelEmbed2)
+        
+         await   ReportChannelEmbed2.react('❌')
+         // LISTENING FOR REAFTIONS
+         const reactionFilter = (reaction, user) => [ '❌'].includes(reaction.emoji.name) 
+         const collector2 = ReportChannelEmbed2.createReactionCollector(reactionFilter);
+     
+         collector2.on('collect', (reaction, user) => {
+         if(reaction.emoji.name === '❌'){
+               
+               ReportChannelEmbed2.delete({timeout: 5000})
              }
-             if (report) {
-                message.channel.send('Thank you for reporting your issue.')
-                message.guild.owner.send(Report)
-             }
-    }catch(er){
-      message.channel.send(`The owner of this guild has turned their DM's off which makes it that I cannot text them.`)    
-    }
+         })
+         
+      
+          
+        })
+    
     }
 }

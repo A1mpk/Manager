@@ -125,6 +125,10 @@ try{
             {
                 name: '**🏷️ Description**',
                 value: '`>help description` - Role description category, you can now put description for a role. '
+            },
+            {
+                name: '**📜 Report**',
+                value: '``>help report` - Report category, you can now report things if you don\'t like something about this guild or report an user.'
             }
          
 
@@ -746,7 +750,8 @@ if(message.content.startsWith(x + 'rank')){
       
         if (!data) {
           
-      
+  
+    
        
             try {
               const result = await LevelsSchema.findOne({guildID: message.guild.id})
@@ -1020,61 +1025,68 @@ if(message.content.startsWith(x + 'rank')){
         }
         
         // LYRICS FINDER (DISMISSED PROJECT.)
-     async   function lyrics(message, serverQueue) {
-       if(!message.member.voice.channel)return message.channel.send(`You are not connected to a voice channel.`)
-       if(!message.guild.me.voice.channel)return message.channel.send(`I am not to a voice channel.`)
-       if(message.guild.me.voice.channel !== message.member.voice.channel)return message.channel.send(`You are not connected to the same Voice CHannel as me. `)
-       if(!serverQueue)return message.channel.send(`The queue is empty.`)
-
-      let artist = serverQueue.songs[0].author
-      let songName = serverQueue.songs[0].title
-      let pages = [];
-      let currentPage = 0;
-  
+        async   function lyrics(message, serverQueue) {
+          if(!message.member.voice.channel)return message.channel.send(`You are not connected to a voice channel.`)
+          if(!message.guild.me.voice.channel)return message.channel.send(`I am not to a voice channel.`)
+          if(message.guild.me.voice.channel !== message.member.voice.channel)return message.channel.send(`You are not connected to the same Voice CHannel as me. `)
+          if(!serverQueue)return message.channel.send(`The queue is empty.`)
    
-      const reactionFilter = (reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && (message.author.id === user.id)
-  
-
+         let artist = serverQueue.songs[0].author
+         let songName = serverQueue.songs[0].title
+         let pages = [];
+         let currentPage = 0;
+     
+      
+         const reactionFilter = (reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && (message.author.id === user.id)
+     
+   
+             
+             await finder (artist, songName, message, pages)
+       
+     
+         const lyricEmbed = await message.channel.send(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage])
+         await lyricEmbed.react('⬅️');
+         await lyricEmbed.react('➡️');
+     
+         const collector = lyricEmbed.createReactionCollector(reactionFilter);
+     
+         collector.on('collect', (reaction, user) => {
+             if(reaction.emoji.name === '➡️'){
+                 if(currentPage < pages.length-1){
+                     currentPage+=1;
+                     lyricEmbed.edit(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage]);
+                     message.reactions.resolve(reaction).users.remove(user)
+                 }
+             }else if(reaction.emoji.name === '⬅️'){
+                 if (currentPage !== 0){
+                     currentPage -= 1;
+                     lyricEmbed.edit(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage])
+                     message.reactions.resolve(reaction).users.remove(user)
+                 }
+             }
+         })
+     }
+     
+     async function finder(artist, songName, message, pages){
+       const  lyrics = require("music-lyrics");
+         let fullLyrics = await lyrics.search(songName + artist) || 'Not found';
+         
+         for (let i = 0; i < fullLyrics.length; i += 2048){
+             const lyric = fullLyrics.substring(i, Math.min(fullLyrics.length, i + 2048));
+             const msg = new Discord.MessageEmbed()
+                 .setDescription(lyric)
+                 .setColor("BLUE")
+             pages.push(msg);
+         }
+     }
+         
+      
+   
+   
+     
           
-          await finder (artist, songName, message, pages)
-    
+   
   
-      const lyricEmbed = await message.channel.send(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage])
-      await lyricEmbed.react('⬅️');
-      await lyricEmbed.react('➡️');
-  
-      const collector = lyricEmbed.createReactionCollector(reactionFilter);
-  
-      collector.on('collect', (reaction, user) => {
-          if(reaction.emoji.name === '➡️'){
-              if(currentPage < pages.length-1){
-                  currentPage+=1;
-                  lyricEmbed.edit(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage]);
-                  message.reactions.resolve(reaction).users.remove(user)
-              }
-          }else if(reaction.emoji.name === '⬅️'){
-              if (currentPage !== 0){
-                  currentPage -= 1;
-                  lyricEmbed.edit(`Lyrics page: ${currentPage+1}/${pages.length}`, pages[currentPage])
-                  message.reactions.resolve(reaction).users.remove(user)
-              }
-          }
-      })
-  }
-  
-  async function finder(artist, songName, message, pages){
-    const  lyrics = require("music-lyrics");
-      let fullLyrics = await lyrics.search(songName + artist) || 'Not found';
-      
-      for (let i = 0; i < fullLyrics.length; i += 2048){
-          const lyric = fullLyrics.substring(i, Math.min(fullLyrics.length, i + 2048));
-          const msg = new Discord.MessageEmbed()
-              .setDescription(lyric)
-              .setColor("BLUE")
-          pages.push(msg);
-      }
-  }
-      
    
 
 
@@ -1641,6 +1653,16 @@ if(command === 'role_description_remove'){
 if(command === 'premium'){
   if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     client.commands.get('premium').execute(message,args)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+};
+if(command === 'report_channel_add'){
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+    client.commands.get('report_channel_add').execute(message,args)
+  }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+};
+if(command === 'report_channel_remove'){
+  if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
+    client.commands.get('report_channel_remove').execute(message,args)
   }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
 };
 
