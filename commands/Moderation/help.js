@@ -146,7 +146,7 @@ module.exports = {
             .addField('getID','`>getID <channel>` - This is just a getID command, it shows you the ID of the channel name you wrote.')
             .addField('getuserID', '`>getuserID <user>` - This is just a getuserID command, it shows you the ID of the user you mentionned.')
             .addField('report','`>report <issue>` - This is just a report command, it sends a report to the owner of the guild.')
-            
+            .addField('credits','`>credits` - This is just the credits command, it shows the credits of the bot.')
             .addField('credit', '`>credit <user> <reason>` - This is just a credit command, it credits the user you mentionned with the reason.')
             .addField('spotify', '`>spotify <user>` - This command is just a spotify command, it shows basic information about the track a mentionned user is listening to.')
             message.channel.send(u_list_2)

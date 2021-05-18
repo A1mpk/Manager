@@ -24,7 +24,7 @@ module.exports = {
   }
            //CHECKING IF THE USER SENT AN ACTUAL REPORT OR NO
            const questions = [ 
-            'Who are you reporting? `user` or `server`?',
+            'Who are you reporting? Ex: `user` or `server`?',
             'What is your report?'
         ]
         let counter = 0
@@ -49,6 +49,9 @@ module.exports = {
             if(counter < questions.length) {
                 m.channel.send(questions[counter++])
             }
+          
+
+          
             
         })
          
@@ -59,6 +62,8 @@ module.exports = {
         //PART WHERE IT SENDS IT TO THE REPORT CHNANEL
 
         collector.on('end',async collected => {
+             
+           
             message.channel.send(`Your report has been sent to the Admins. Expect a reply soon but do not forget to keep your dms on so Admins can talk to you privatly.`)
             let counter = 0
             const ReportChannel = message.guild.channels.cache.find(chan => data[0] === chan.id)

@@ -115,7 +115,7 @@ try{
                 value: '`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.'
             },
             {
-                name: '**🛠️ Utilities [14]**',
+                name: '**🛠️ Utilities **',
                 value: '`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.'
             },
             {
@@ -1330,17 +1330,33 @@ if(message.content.startsWith(x + 'rank')){
         }else message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
       
 }
+if(message.content.toLowerCase().includes(x +"credits".toLowerCase())){
+  const Owner = client.users.cache.find(user => user.id === "368148684468387840")
+  const CoOwner = client.users.cache.find(user => user.id === "503186950295912458")
   
+    const CreditsEmbed = new Discord.MessageEmbed()
+    .setAuthor(`Credits for Mint`,"https://cdn.discordapp.com/avatars/725787532008095744/711d45014d76b4785d2af50313b36aa0.webp" )
+    
+    .addField(`Coders[2]`, `${Owner.tag} + ${CoOwner.tag} `)
+    .addField(`Mint Avatar[1]`, Owner.tag)
+    .addField(`Inspiration Bot`, `[RoBot](https://discord.com/oauth2/authorize?client_id=832239654304481312&scope=bot&permissions=8) || [RoBot Server](https://discord.gg/bCHbPVwbMk) || [Website](https://discordrobot.tech/) `)
+    .setColor("BLUE")
+    .setTimestamp()
+    .setThumbnail(message.guild.me.user.displayAvatarURL())
+  
+
+    message.channel.send(CreditsEmbed)
+  }
 if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
  
   if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     const Info = new Discord.MessageEmbed()
     .setColor(3447003)
-    .setTitle('Mint')
+    .setAuthor('Mint', "https://cdn.discordapp.com/avatars/725787532008095744/711d45014d76b4785d2af50313b36aa0.webp")
     .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
    .setFooter(`Thank you for using Mint`)
     .addFields(
-        { name: 'Version', value: '2.0.6', inline: true },
+        { name: 'Version', value: '2.0.7', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
@@ -1348,7 +1364,7 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
             value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Website](https://sites.google.com/view/mint2020-com/home) ",inline:true
           }
     )
-    .addField(`Premium Commands/Categories`,`Youtube Notification, Autoroles, Roles Description. **>premium**`)
+   
     .setThumbnail(message.guild.me.user.displayAvatarURL({dynamic: false, format: 'png'}))
 
     message.channel.send(Info)
