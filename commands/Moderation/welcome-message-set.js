@@ -13,7 +13,7 @@ module.exports = {
             .setDescription('`>welcome-message-set <message>` - This is the welcome message command, it will send a welcome message everytime a user joins the server. (In private messages)')
             .setTimestamp()
         
-            .setColor(3447003)
+            .setColor("#35979a")
             message.channel.send(LEvelsNoNo)
        }else
       

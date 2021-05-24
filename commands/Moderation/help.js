@@ -16,7 +16,7 @@ module.exports = {
                 message.channel.send({
                     embed:{
                         title: 'List of commands',
-                        color: 3447003, 
+                        color:"#35979a", 
                         fields:[
                             {
                                 name: '**😴 Moderation**',
@@ -68,12 +68,12 @@ module.exports = {
           .addField(`unmute`, '`>unmute <user> <reason>` - This is an unmute command, it mutes the mentionned user if provided with a reason!')
           .addField(`bot_nick`, '`>bot_nick <nickname>` - This is a bot_nick command, it changes the bot\'s nickname.')
         
-         .setColor(3447003)
+         .setColor("#35979a")
          .setTimestamp()
           message.channel.send(ModerationHelp)
         }else if(Words.toLowerCase().includes("M_list_2".toLowerCase())){
             const ModerationHelp2 = new Discord.MessageEmbed()
-            .setColor(3447003)
+            .setColor("#35979a")
             .setAuthor(`MODERATION 2 - CATEGORY`)
             .setFooter(`>help Moderation for first list of commands.`)
             .addField(`slowmode`,'`slowmode <seconds>` - This is a slowmode command, it increases the slowmode of the channel to the chosen one.')
@@ -82,7 +82,7 @@ module.exports = {
           message.channel.send(ModerationHelp2)
         }else if(Words.toLowerCase().includes("fun".toLowerCase())){
             const Fun = new Discord.MessageEmbed()
-            .setColor(3447003)
+            .setColor("#35979a")
             .setAuthor(`FUN - CATEGORY`)
           .addField(`karen`, '`>karen` - This is a karen command, it returns with questions & messages which you will you have to reply to. Once finished you will know who won.')
           .addField(`8ball`, '`>8ball <prediction>` - This is just the 8ball command, it will return a yes, no or maybe to your question.')
@@ -94,7 +94,7 @@ module.exports = {
           message.channel.send(Fun)
         }else if(Words.toLowerCase().includes("Music".toLowerCase())){
             const Music = new Discord.MessageEmbed()
-            .setColor(3447003)
+            .setColor("#35979a")
             .setAuthor(`MUSIC- CATEGORY`)
           .addField(`play`, '`>play <query>` - This is a play command, it plays track in a voice channel. The query can either be a link or a YouTube keyword.')
           .addField(`skip`, '`>skip` - This is just the skip command, it will skip the current track if being played.')
@@ -107,7 +107,7 @@ module.exports = {
           message.channel.send(Music)
         }else if(Words.toLowerCase().includes("Mu_list_2".toLowerCase())){
             const Music2 = new Discord.MessageEmbed()
-            .setColor(3447003)
+            .setColor("#35979a")
             .setAuthor(`MUSIC 2 - CATEGORY`)
             .addField('np', '`>np` - This is a now-playing command, it shows the currently playing track.') 
           .addField(`queue`, '`>queue` - This is just a queue command, it will show the current queue of the tracks in this server.')
@@ -120,7 +120,7 @@ module.exports = {
             const Listeners = new Discord.MessageEmbed()
             .setAuthor(`LISTENERS - CATEGORY`)
        
-            .setColor(3447003)
+            .setColor("#35979a")
             .addField('MessageDelete', 'This is from the logging category, it log\'s every deleted messages into the logging channel.')
             .addField(`InviteCreate/Delete`, 'This is a logging function, it logs it in the logging channel whenever an invite is created/deleted.')
             .addField('RoleDelete','This is a logging function, it log\'s it in the logging channel whenever a role is deleted.')
@@ -131,7 +131,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("Utilities".toLowerCase())){
             const Utilities = new Discord.MessageEmbed()
             .setAuthor(`UTILITIES - CATEGORY`)
-            .setColor(3447003)
+            .setColor("#35979a")
             .addField('invite', '`>invite` - This is just an invite command, it sends you an invite link so you can invite Mint.')
             .addField('membercount','`>membercount` - This is just a membercount command, it shows the amount of members in the server.')
             .addField('verify', '`>verify` - This is just a verify command, it verifies you as a verified member of the server.')
@@ -140,7 +140,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("u_list_2".toLowerCase())){
             const u_list_2 = new Discord.MessageEmbed()
             .setAuthor(`UTILITIES 2 - CATEGORY`)
-            .setColor(3447003)
+            .setColor("#35979a")
             .addField('avatar', '`>avatar <mentionuser>` - This is just an avatar command, it shows you the avatar of the mentionned user.')
             .addField(`guild`, '`>guild` - This is just a guild command, it shows you information about the server.')
             .addField('getID','`>getID <channel>` - This is just a getID command, it shows you the ID of the channel name you wrote.')
@@ -153,7 +153,7 @@ module.exports = {
         }else if(Words.toLowerCase().includes("configs".toLowerCase())){
             const Config = new Discord.MessageEmbed()
             .setAuthor(`CONFIGS - CATEGORY`)
-            .setColor(3447003)
+            .setColor("#35979a")
             .addField(`premium`, '**THIS COMMAND WILL ONLY WORK ON UPDATE 3.0!**`>premium` - This is a premium command, the bot will think of a number in it\'s and if you guess it, you get premium for your guild for free.')
           .addField('levels', '`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, it levelling will be enabled in this guild.')
           .addField(`autorole_add]`, '`>autorole_add` - This is a autorole_add command, it gives the mentionned role to every new members joining this guild.')
@@ -170,7 +170,7 @@ module.exports = {
           
             const Config = new Discord.MessageEmbed()
             .setAuthor(`DESCRIPTION- CATEGORY`)
-            .setColor(3447003)
+            .setColor("#35979a")
           .addField('role_description_add', '`>roles_description_add <@Role> <description>` - This command lets you put a description for the mentionned role.')
           .addField(`role_description_remove`, '`>roles_description_remove <@Role>` -  This command deletes the roles the description. ')
           .addField(`role_description`, '`>role_description <@Role>` -  it sends the description of the mentionned role if a Administrator/Moderator has set a description for that role. ')
@@ -181,7 +181,7 @@ module.exports = {
           
             const Config = new Discord.MessageEmbed()
             .setAuthor(`REPORT - CATEGORY`)
-            .setColor(3447003)
+            .setColor("#35979a")
           .addField('report_channel_add', '`>report_channel_add` - With this command you can create a report channel, this is a really important command because without this you cannot run the report command. It basically makes it that it sends the new reports to that channel.')
           .addField(`report_channel_remove`, '`>report_channel_remove` -  This command deletes the channel from the database. ')
           .addField(`report`, '`>report` -  This command sends a copy of your report to the Report channel where Admins can reach you out afterwards. ')

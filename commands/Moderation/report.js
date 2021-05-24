@@ -40,7 +40,7 @@ module.exports = {
         .setTitle(`Report`)
         .setDescription(questions[counter++])
         .setTimestamp()
-        .setColor("BLUE")
+        .setColor("#35979a")
 
     
        
@@ -74,7 +74,7 @@ module.exports = {
             .setDescription(`To take care of this case, you must DM the user or talk to them on a private channel. To trash a report, you could react with ❌.`)
              
              .setTimestamp()
-             .setColor("BLUE")
+             .setColor("#35979a")
             const ReportChannelEmbed2 = await ReportChannel.send(`A new report :`, ReportChannelEmbed )
           
         

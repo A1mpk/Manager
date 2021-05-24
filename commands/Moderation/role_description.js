@@ -30,7 +30,7 @@
          const TestedEmbed = new Discord.MessageEmbed()
          .setTitle(`${ConvertingRoleIntoName.name} || DESCRIPTION`)
          .setDescription(Data[1])
-         .setColor("BLUE")
+         .setColor("#35979a")
          .setTimestamp()
          
          message.channel.send(TestedEmbed)

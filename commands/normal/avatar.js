@@ -9,7 +9,7 @@ module.exports = {
         const user = message.mentions.users.first() || message.author;
      
                     const avatarEmbed = new DIscord.MessageEmbed()
-                        .setColor(3447003)
+                        .setColor("#35979a")
                         .setAuthor(user.username)
                         .setDescription(`**AVATAR LINK : ${user.displayAvatarURL()}**`)
                         .setImage(user.displayAvatarURL())

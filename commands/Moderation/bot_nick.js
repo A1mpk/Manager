@@ -8,7 +8,7 @@ module.exports = {
       
         const lol = message.content.slice(9)
         const LOL = new Discord.MessageEmbed()
-        .setColor(3447003)
+        .setColor("#35979a")
         .setAuthor('BOT_NICK - MODERATION')
         .setDescription('`>bot_nick <nickname>` - This is just a bot_nick command, it will change the nickname of the [bot](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot).')
         .setTimestamp()

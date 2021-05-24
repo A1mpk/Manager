@@ -12,7 +12,7 @@ module.exports = {
         .setDescription("`>ban <user> <reason>` - This will just ban the mentionned if provided with a reason.")
         
         .setTimestamp()
-        .setColor(3447003)
+        .setColor("#35979a")
         if(!message.guild.me.hasPermission(['BAN_MEMBERS']))return message.channel.send('I don\'t have enough permissions to ban a user. [`BAN_MEMBERS`]');
         if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send('You need to be an Admin to use this command.');
         const Buser = message.guild.member(message.mentions.users.first())
@@ -20,7 +20,7 @@ module.exports = {
         let bReason = args
        
         const BanMod = new Discord.MessageEmbed()
-        .setColor(3447003)
+        .setColor("#35979a")
         .setAuthor('BAN ERROR')
         .setDescription('I cannot ban that user.')
         .addField('Reason : ', "Person has a higher role than me or has the same permissions as me")
