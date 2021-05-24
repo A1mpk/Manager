@@ -132,10 +132,10 @@ module.exports = {
             const Utilities = new Discord.MessageEmbed()
             .setAuthor(`UTILITIES - CATEGORY`)
             .setColor("#35979a")
-            .addField('invite', '`>invite` - This is just an invite command, it sends you an invite link so you can invite Mint.')
+            .addField('invite', '`>invite` - This is just an invite command, it sends you an invite link so you can invite Minty.')
             .addField('membercount','`>membercount` - This is just a membercount command, it shows the amount of members in the server.')
             .addField('verify', '`>verify` - This is just a verify command, it verifies you as a verified member of the server.')
-            .addField('info','`>info` - This is just an info command, it shows you information about Mint.')
+            .addField('info','`>info` - This is just an info command, it shows you information about Minty.')
             message.channel.send(Utilities)
         }else if(Words.toLowerCase().includes("u_list_2".toLowerCase())){
             const u_list_2 = new Discord.MessageEmbed()
