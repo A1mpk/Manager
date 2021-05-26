@@ -49,7 +49,7 @@
      const TestedEmbed = new Discord.MessageEmbed()
      .setTitle(`${Role.name} || DESCRIPTION`)
      .setDescription(Arguments)
-     .setColor("#35979a")
+     .setColor("#9f3b39")
      .setTimestamp()
      
      message.channel.send(TestedEmbed)

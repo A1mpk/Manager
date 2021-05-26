@@ -13,7 +13,7 @@ module.exports = {
             .setDescription('`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, levelling will be enabled in this guild.')
             .setTimestamp()
         
-            .setColor("#35979a")
+            .setColor("#9f3b39")
             message.channel.send(LEvelsNoNo)
        }else
        if(ANswer.toLowerCase().includes("enable".toLowerCase())){

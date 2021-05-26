@@ -13,7 +13,7 @@ module.exports = {
         .setTitle('SLOWMODE - MODERATION')
             .setDescription('`>slowmode <amount>` - This is a slowmode command which sets the message cooldown for this channel.')
           
-            .setColor("#35979a")
+            .setColor("#9f3b39")
             .setTimestamp()
             if(!message.guild.me.hasPermission(['MANAGE_CHANNELS']))return message.channel.send('I don\'t have enough permissions to manage channels.. [`MANAGE_CHANNELS`]');
             
