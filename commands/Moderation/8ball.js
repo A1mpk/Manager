@@ -15,7 +15,7 @@ module.exports = {
     ]
       const b = message.content.slice(6)
         const LOL = new Discord.MessageEmbed()
-        .setColor("#9f3b39")
+        .setColor("#c45c4e")
         .setAuthor('8BALL - FUN')
         .setDescription('`>8ball <prediction>` - This is just the 8ball command, it will return a yes, no or maybe to your question. Praise the godly 8ball.')
         

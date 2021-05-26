@@ -15,7 +15,7 @@ module.exports = {
         .addField('Roles', message.guild.roles.cache.size)
         .setThumbnail(message.guild.iconURL())
         .setFooter(`Command raised by ${message.member.user.tag}`)
-        .setColor("#9f3b39")
+        .setColor("#c45c4e")
         message.channel.send(GuildInfo)
         
     }

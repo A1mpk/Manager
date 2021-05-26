@@ -15,7 +15,7 @@ module.exports = {
         .setFooter(`${message.guild.name} || Verify`)
         .setThumbnail(message.member.user.displayAvatarURL())
         .setTimestamp()
-        .setColor("#9f3b39")
+        .setColor("#c45c4e")
         if(!Role){
           message.guild.roles.create({
                 data: {
@@ -39,7 +39,7 @@ module.exports = {
        .setFooter(`${message.guild.name} || Verify`)
        .setThumbnail(message.member.user.displayAvatarURL())
        .setTimestamp()
-       .setColor("#9f3b39")
+       .setColor("#c45c4e")
        guildchannel.send(VerifySetup)
             message.react('✔️')
             message.member.roles.add(Role)

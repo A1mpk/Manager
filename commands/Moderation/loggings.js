@@ -15,7 +15,7 @@ module.exports = {
             .setDescription('`>loggings <enable/disable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel.')
             .setTimestamp()
         
-            .setColor("#9f3b39")
+            .setColor("#c45c4e")
             message.channel.send(LEvelsNoNo)
        }else
        if(ANswer.toLowerCase().includes("enable".toLowerCase())){

@@ -16,7 +16,7 @@ const msg = Util.removeMentions(args2);
         .setDescription('`>say <message>` - This is a say command, it repeats your message.')
         .setTimestamp()
     
-        .setColor("#9f3b39")
+        .setColor("#c45c4e")
       if(!args2){
           message.channel.send(say)
       }else
