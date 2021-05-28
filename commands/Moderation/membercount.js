@@ -11,7 +11,7 @@ module.exports = {
         .setTitle(`Members in ${message.guild.name}`)
         .setDescription(`${message.guild.memberCount}`)
         .setTimestamp()
-        .setColor("#c45c4e")
+        .setColor("BLUE")
         message.channel.send(MemberCount)
     }
 }

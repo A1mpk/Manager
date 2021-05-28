@@ -11,7 +11,7 @@ module.exports = {
         const AK = new Discord.MessageEmbed()
         .setAuthor('ERROR')
         .setDescription('You do not own the bot.')
-        .setColor("#c45c4e")
+        .setColor("BLUE")
   if(message.author.id == COOWNERID){
     try {
       const code = args.join(" ");

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const ProverPremium = mongoose.Schema({
-    ProverPremium: String,
+const MintPremium = mongoose.Schema({
+    MintPremium: String,
     guildID: String,
     guild: String,
     Owner: String,
@@ -10,4 +10,4 @@ const ProverPremium = mongoose.Schema({
     by:String,
 });
 
-module.exports = mongoose.model('ProverPremium', ProverPremium)
+module.exports = mongoose.model('MintPremium', MintPremium)

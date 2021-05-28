@@ -9,7 +9,7 @@ module.exports = {
         const idchannel = message.content.slice(10)
        if(!idchannel){
         const LOL = new Discord.MessageEmbed()
-        .setColor("#c45c4e")
+        .setColor("BLUE")
         .setAuthor('getUSERID - MODERATION')
         .setDescription('`>getuserid <mention user>` - This command gets the ID of the mentionned user.')
         

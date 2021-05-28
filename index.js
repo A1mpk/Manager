@@ -96,7 +96,7 @@ try{
   defaultChannel.send({
     embed:{
         title: 'List of commands ',
-        color:"#c45c4e", 
+        color:"BLUE", 
         fields:[
             {
                 name: '**😴 Moderation**',
@@ -294,7 +294,7 @@ client.on('inviteCreate', async invite => {
     .setTimestamp()
     .setDescription(`**An invite has been created by ${invite.inviter} for ${invite.channel}.**`)
     .setFooter(`Inviter:  ${invite.inviter.id} | Link: ${invite.url}`)
-    .setColor("#c45c4e")
+    .setColor("BLUE")
  
     Channel.send(MessageEmbed2)
 } )
@@ -327,7 +327,7 @@ client.on('inviteDelete',async invite => {
   .setTimestamp()
   .setDescription(`**Invite made  by ${invite.inviter} has been deleted.**`)
   .setFooter(`Inviter:  ${invite.inviter.id}  `)
-  .setColor("#c45c4e")
+  .setColor("BLUE")
    
     Channel.send(MessageEmbed2)
 })
@@ -479,7 +479,7 @@ const WelcomeEmbed = new Discord.MessageEmbed()
 .setAuthor(`${member.guild.name}`, member.guild.iconURL())
 .setDescription(datas)
 .setTimestamp()
-.setColor("#c45c4e")
+.setColor("BLUE")
 
     member.send(WelcomeEmbed)
    }catch{
@@ -630,7 +630,7 @@ if (status !== null && status.type === "LISTENING" && status.name === "Spotify" 
   let time = `${minutes}:${seconds}`;
   const embed = new Discord.MessageEmbed()
   .setAuthor("Spotify", "https://th.bing.com/th/id/R51a2b615791a987a46af18beed1ac882?rik=ihrJdQVay12aqA&riu=http%3a%2f%2fmedia.idownloadblog.com%2fwp-content%2fuploads%2f2016%2f02%2fSpotify-App-Icon-Large.png&ehk=69W%2bQrgPsZ2wP0g5JEZQs47EbsdD%2fNOV6VgsVsRHgIQ%3d&risl=&pid=ImgRaw")
-  .setColor("#c45c4e")
+  .setColor("BLUE")
   .setThumbnail(image)
   .addField("Name:", name)
   .addField("Album:", album)
@@ -774,7 +774,7 @@ if(message.content.startsWith(x + 'rank')){
         .setTitle(`Leaderboard in ${message.guild.name}`)
         .setDescription(lb.join("\n\n\n"))
         .setTimestamp()
-        .setColor("#c45c4e")
+        .setColor("BLUE")
         message.channel.send(LeaderBord)
        
         return;
@@ -914,7 +914,7 @@ if(message.content.startsWith(x + 'rank')){
          .setTitle('PLAY - MUSIC')
          .setDescription('`>play <query>` - This is a play command, it plays music in a voice channel. The query can either be a link or a YouTube keyword.')
        
-         .setColor("#c45c4e")
+         .setColor("BLUE")
          .setTimestamp()
          return message.channel.send(Kick)
         }
@@ -995,7 +995,7 @@ if(message.content.startsWith(x + 'rank')){
             const QueueAdded = new MessageEmbed()
             .setAuthor(`Added to queue`, `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`)
             .setDescription(`[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})`)
-            .setColor("#c45c4e")
+            .setColor("BLUE")
             .setTimestamp()
           
           serverQueue.songs.push(song);
@@ -1016,7 +1016,7 @@ if(message.content.startsWith(x + 'rank')){
         const QueueEmbed = new MessageEmbed()
         .setDescription(`
         ${serverQueue.songs.map(song => `  **[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})**`).join(`\n`)}`)
-        .setColor("#c45c4e")
+        .setColor("BLUE")
         .setTimestamp()
         .setAuthor(`Queue`)
       
@@ -1075,7 +1075,7 @@ if(message.content.startsWith(x + 'rank')){
              const lyric = fullLyrics.substring(i, Math.min(fullLyrics.length, i + 2048));
              const msg = new Discord.MessageEmbed()
                  .setDescription(lyric)
-                 .setColor("#c45c4e")
+                 .setColor("BLUE")
              pages.push(msg);
          }
      }
@@ -1191,7 +1191,7 @@ if(message.content.startsWith(x + 'rank')){
         const Playing = new MessageEmbed()
         .setAuthor(`Volume`)
         .setDescription(`🎵✅Successfully changed the volume to **${volumeArgs}**!`)
-        .setColor("#c45c4e")
+        .setColor("BLUE")
         .setTimestamp()
         
        
@@ -1216,7 +1216,7 @@ if(message.content.startsWith(x + 'rank')){
         const NowPlayingHours = new MessageEmbed()
         .setAuthor(`Currently Playing`)
         .setDescription(`**Currently playing** **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`)
-        .setColor("#c45c4e")
+        .setColor("BLUE")
         .addFields(
           { name: `Duration`, value: `Disabled`, inline: true }, 
           { name: `Coming Next`, value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`, inline: true }, 
@@ -1265,7 +1265,7 @@ if(message.content.startsWith(x + 'rank')){
         .setAuthor(`Now Playing`, `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`)
         .setDescription(`[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!`)
         .setThumbnail(serverQueue.songs[0].thumbnail.url)
-        .setColor("#c45c4e")
+        .setColor("BLUE")
         .setFooter(message.author.tag, message.author.displayAvatarURL())
     
         const dispatcher = serverQueue.connection
@@ -1325,7 +1325,7 @@ if(message.content.startsWith(x + 'rank')){
         )
         .setTimestamp()
         .setFooter(`Uptime`)
-        .setColor("#c45c4e")
+        .setColor("BLUE")
         message.channel.send(UptimeEMbed)
         }else message.member.send('I need `SEND_MESSAGE` permissions on my role to perform that command.')
       
@@ -1336,12 +1336,11 @@ if(message.content.toLowerCase().includes(x +"credits".toLowerCase())){
   const CoOwner = client.users.cache.find(user => user.id === "503186950295912458")
   
     const CreditsEmbed = new Discord.MessageEmbed()
-    .setAuthor(`Credits for Prover`,message.guild.me.user.displayAvatarURL() )
+    .setAuthor(`Credits for Mint`,message.guild.me.user.displayAvatarURL() )
     
     .addField(`Coders[2]`, `${Owner.tag} + ${CoOwner.tag} `)
-    .addField(`Prover Avatar[1]`, "Nameless")
-    .addField(`Inspiration Bot`, `[RoBot](https://discord.com/oauth2/authorize?client_id=832239654304481312&scope=bot&permissions=8) || [RoBot Server](https://discord.gg/bCHbPVwbMk) || [Website](https://discordrobot.tech/) `)
-    .setColor("#c45c4e")
+    .addField(`Mint Avatar[1]`, "Nameless")
+    .setColor("BLUE")
     .setTimestamp()
     .setThumbnail(message.guild.me.user.displayAvatarURL())
   
@@ -1352,17 +1351,17 @@ if(message.content.toLowerCase().includes(x +"info".toLowerCase())){
  
   if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     const Info = new Discord.MessageEmbed()
-    .setColor("#c45c4e")
-    .setAuthor('Prover ', message.guild.me.user.displayAvatarURL())
-    .setDescription(`Prover is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
-   .setFooter(`Thank you for using Prover`)
+    .setColor("BLUE")
+    .setAuthor('Mint ', message.guild.me.user.displayAvatarURL())
+    .setDescription(`Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`)
+   .setFooter(`Thank you for using Mint`)
     .addFields(
         { name: 'Version', value: '2.0.7', inline: true },
         { name: `Guilds`, value: message.client.guilds.cache.size, inline: true },
         { name: 'Users', value: message.client.users.cache.size, inline: true },
         {
             name: "Links",
-            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Website](https://sites.google.com/view/Prover2020-com/home) ",inline:true
+            value: "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Website](https://sites.google.com/view/Mint2020-com/home) ",inline:true
           }
     )
    
