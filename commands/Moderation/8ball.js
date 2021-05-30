@@ -13,6 +13,8 @@ module.exports = {
       "No.",
       "Maybe."
     ]
+
+    
       const b = message.content.slice(6)
         const LOL = new Discord.MessageEmbed()
         .setColor("BLUE")
