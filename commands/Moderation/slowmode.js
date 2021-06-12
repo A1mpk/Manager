@@ -21,7 +21,7 @@ module.exports = {
         "`>slowmode <amount>` - This is a slowmode command which sets the message cooldown for this channel."
       )
 
-      .setColor("BLUE")
+      .setColor("#339295")
       .setTimestamp();
     if (!message.guild.me.hasPermission(["MANAGE_CHANNELS"]))
       return message.channel.send(

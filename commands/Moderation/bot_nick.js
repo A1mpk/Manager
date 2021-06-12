@@ -11,10 +11,10 @@ module.exports = {
 
     const lol = message.content.slice(9);
     const LOL = new Discord.MessageEmbed()
-      .setColor("BLUE")
+      .setColor("#339295")
       .setAuthor("BOT_NICK - MODERATION")
       .setDescription(
-        "`>bot_nick <nickname>` - This is just a bot_nick command, it will change the nickname of the [bot](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot)."
+        "`>bot_nick <nickname>` - Changes nickname of [Mint](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot)."
       )
       .setTimestamp();
     if (!message.guild.me.hasPermission(["MANAGE_NICKNAMES"]))

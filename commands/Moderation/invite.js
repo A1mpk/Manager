@@ -15,7 +15,7 @@ module.exports = {
       .setDescription(
         "https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot"
       )
-      .setColor("BLUE")
+      .setColor("#339295")
       .setFooter(`Command raised by ${message.member.user.tag}`);
     message.channel.send(InviteEmbed);
   },

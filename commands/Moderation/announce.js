@@ -12,18 +12,18 @@ module.exports = {
     if (message.member.hasPermission("MANAGE_CHANNELS")) {
       let args2 = message.content.slice("9");
       const custom_message = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
 
         .setDescription(args2);
       if (!args2) {
         const ARGSNEEDED = new Discord.MessageEmbed()
           .setTitle("ANNOUNCE - MODERATION")
           .setDescription(
-            "`>announce <announcement>` - This will just post your announcement as an [embed](https://gyazo.com/b91ebad4add6fd5233dfbec22d2170eb)."
+            "`>announce <announcement>` - Post your announcement as an [embed](https://gyazo.com/b91ebad4add6fd5233dfbec22d2170eb)!"
           )
 
           .setTimestamp()
-          .setColor("BLUE");
+          .setColor("#339295");
         message.channel.send(ARGSNEEDED);
       } else if (args2) {
         message.channel.send(custom_message);

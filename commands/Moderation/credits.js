@@ -16,7 +16,7 @@ module.exports = {
 
       .addField(`Coders[2]`, `${Owner.tag} + ${CoOwner.tag} `)
       .addField(`Mint Avatar[1]`, "Nameless")
-      .setColor("BLUE")
+      .setColor("#339295")
       .setTimestamp()
       .setThumbnail(message.guild.me.user.displayAvatarURL());
 

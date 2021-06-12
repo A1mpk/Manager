@@ -12,13 +12,12 @@ module.exports = {
     const idchannel = message.content.slice(10);
     if (!idchannel) {
       const LOL = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
         .setAuthor("getUSERID - MODERATION")
         .setDescription(
-          "`>getuserid <mention user>` - This command gets the ID of the mentionned user."
+          "`>getuserid <mention user>` - Get the ID of an user."
         )
 
-        .addField(`USER ID`, message.member.user.id)
         .setTimestamp();
       message.channel.send(LOL);
     } else if (idchannel) {

@@ -22,12 +22,12 @@ module.exports = {
           )
 
           .setTimestamp()
-          .setColor("BLUE");
+          .setColor("#339295");
         message.channel.send(ARGSNEEDED2);
       }
 
       const custom4_message = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
         .setAuthor("Rules")
         .setDescription(`Welcome to **${message.guild.name}**, and here are the rules you should follow : 
               ${args3}`);

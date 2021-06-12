@@ -13,29 +13,37 @@ module.exports = {
     const Kick = new Discord.MessageEmbed()
       .setTitle("KICK - MODERATION")
       .setDescription(
-        "`>kick <user> <reason>` - This is a kick command, it kicks the mentionned user if provided with a reason!"
+        "`>kick <user> <reason>` - Kicks a member. Add a reason."
       )
 
-      .setColor("BLUE")
+      .setColor("#339295")
       .setTimestamp();
-    if (!message.guild.me.hasPermission(["KICK_MEMBERS"]))
-      return message.channel.send(
-        "I don't have enough permissions to ban a user. [`KICK_MEMBERS`]"
-      );
-    if (!message.member.hasPermission("KICK_MEMBERS"))
-      return message.channel.send("You need KICK_MEMBERS to use this command.");
+    if (!message.guild.me.hasPermission(["KICK_MEMBERS"])){
+      const PermissionNeeded = new Discord.MessageEmbed()
+      .setTitle(`P E R M I S S I O N S`)
+      .setDescription('*M i nt\'s Needed Permission:* [`KICK_MEMBERS`](https://support.discord.com/hc/en-us/articles/214836687-Role-Management-101) ')
+      .setColor("#339295")
+      .setTimestamp()
+      message.channel.send(PermissionNeeded)
+      return;
+    }
+    if (!message.member.hasPermission("KICK_MEMBERS")){
+      const PermissionNeeded = new Discord.MessageEmbed()
+      .setTitle(`P E R M I S S I O N S`)
+      .setDescription('*Needed Permission:* [`KICK_MEMBERS`](https://support.discord.com/hc/en-us/articles/214836687-Role-Management-101) ')
+      .setColor("#339295")
+      .setTimestamp()
+      message.channel.send(PermissionNeeded)
+      return;
+    }
     const Kuser = message.guild.member(message.mentions.users.first());
     if (!Kuser) return message.channel.send(Kick);
     let kReason = args.join(" ").slice(22);
     const KickMod = new Discord.MessageEmbed()
-      .setColor("BLUE")
-      .setTitle("ERROR")
-      .setDescription("I cant kick that person.")
-      .addField(
-        "Reason : ",
-        "Person has a higher role than me or has the same permissions as me"
-      )
-      .setFooter(`Command raised by ${message.member.user.tag}`);
+    .setTitle(`E R R O R S`)
+    .setDescription(`${Kuser}'s permissions are the same as yours.`)
+    .setColor("#339295")
+    .setTimestamp()
     if (Kuser.hasPermission("KICK_MEMBERS"))
       return message.channel.send(KickMod);
 

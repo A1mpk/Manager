@@ -12,10 +12,10 @@ module.exports = {
     const ClearHElped = new Discord.MessageEmbed()
       .setTitle("CLEAR - MODERATION")
       .setDescription(
-        "`>clear <amount>` - This is just a clear command, it clears the amount of messages asked for."
+        "`>clear <amount>` - Clears X amount of messages."
       )
 
-      .setColor("BLUE")
+      .setColor("#339295")
       .setTimestamp();
     const aaa = message.content.split(" ").slice(1);
     const amount = aaa.join(" ");

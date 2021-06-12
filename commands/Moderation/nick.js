@@ -15,10 +15,10 @@ module.exports = {
       );
     const lol = message.content.slice(5);
     const LOL = new Discord.MessageEmbed()
-      .setColor("BLUE")
+      .setColor("#339295")
       .setAuthor("NICK - MODERATION")
       .setDescription(
-        "`>nick <nickname>` - This is a nickname command which can only change your nickname on the server."
+        "`>nick <nickname>` - Nickname yourself! Be creative."
       )
 
       .setTimestamp();

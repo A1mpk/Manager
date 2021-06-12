@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
   name: "giverole",
   description: "Give role comand.",
-  disabled: false,
+  disabled: true,
   execute(message, args) {
     if (this.disabled === true)
       return message.channel.send(

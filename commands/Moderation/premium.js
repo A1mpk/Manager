@@ -84,7 +84,7 @@ module.exports = {
           .addField(`MessageCreatedAt`, message.createdAt)
           .addField(`ChannelID`, message.channel.id)
           .addField(`By`, message.member.id)
-          .setColor("BLUE")
+          .setColor("#339295")
           .setTimestamp()
           .setThumbnail(
             "https://cdn.discordapp.com/avatars/834197320983379988/2eca88d8d70febe732db6ca84745bdd9.webp"

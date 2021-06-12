@@ -15,7 +15,7 @@ module.exports = {
       message.channel.send({
         embed: {
           title: "List of commands",
-          color: "BLUE",
+          color: "#339295",
           fields: [
             {
               name: "**😴 Moderation**",
@@ -31,11 +31,6 @@ module.exports = {
               name: "🎵 Music ",
               value:
                 "`>help music || help mu_list_2` - This section is made for playing musics, if bored & want to find out new tracks, members of this server can always play a track to keep the server comfortable.",
-            },
-            {
-              name: "**👂 LISTENERS **",
-              value:
-                "`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.",
             },
             {
               name: "**🛠️ Utilities **",
@@ -56,6 +51,10 @@ module.exports = {
               name: "**📜 Report**",
               value:
                 "``>help report` - Report category, you can now report things if you don't like something about this guild or report an user.",
+            },  {
+              name: "**👂 LISTENERS **",
+              value:
+                "`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.",
             },
           ],
         },
@@ -84,12 +83,12 @@ module.exports = {
           "`>bot_nick <nickname>` - This is a bot_nick command, it changes the bot's nickname."
         )
 
-        .setColor("BLUE")
+        .setColor("#339295")
         .setTimestamp();
       message.channel.send(ModerationHelp);
     } else if (Words.toLowerCase().includes("M_list_2".toLowerCase())) {
       const ModerationHelp2 = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
         .setAuthor(`MODERATION 2 - CATEGORY`)
         .setFooter(`>help Moderation for first list of commands.`)
         .addField(
@@ -107,7 +106,7 @@ module.exports = {
       message.channel.send(ModerationHelp2);
     } else if (Words.toLowerCase().includes("fun".toLowerCase())) {
       const Fun = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
         .setAuthor(`FUN - CATEGORY`)
         .addField(
           `karen`,
@@ -137,7 +136,7 @@ module.exports = {
       message.channel.send(Fun);
     } else if (Words.toLowerCase().includes("Music".toLowerCase())) {
       const Music = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
         .setAuthor(`MUSIC- CATEGORY`)
         .addField(
           `play`,
@@ -167,7 +166,7 @@ module.exports = {
       message.channel.send(Music);
     } else if (Words.toLowerCase().includes("Mu_list_2".toLowerCase())) {
       const Music2 = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
         .setAuthor(`MUSIC 2 - CATEGORY`)
         .addField(
           "np",
@@ -198,7 +197,7 @@ module.exports = {
       const Listeners = new Discord.MessageEmbed()
         .setAuthor(`LISTENERS - CATEGORY`)
 
-        .setColor("BLUE")
+        .setColor("#339295")
         .addField(
           "MessageDelete",
           "This is from the logging category, it log's every deleted messages into the logging channel."
@@ -227,7 +226,7 @@ module.exports = {
     } else if (Words.toLowerCase().includes("Utilities".toLowerCase())) {
       const Utilities = new Discord.MessageEmbed()
         .setAuthor(`UTILITIES - CATEGORY`)
-        .setColor("BLUE")
+        .setColor("#339295")
         .addField(
           "invite",
           "`>invite` - This is just an invite command, it sends you an invite link so you can invite Mint."
@@ -248,7 +247,7 @@ module.exports = {
     } else if (Words.toLowerCase().includes("u_list_2".toLowerCase())) {
       const u_list_2 = new Discord.MessageEmbed()
         .setAuthor(`UTILITIES 2 - CATEGORY`)
-        .setColor("BLUE")
+        .setColor("#339295")
         .addField(
           "avatar",
           "`>avatar <mentionuser>` - This is just an avatar command, it shows you the avatar of the mentionned user."
@@ -285,7 +284,7 @@ module.exports = {
     } else if (Words.toLowerCase().includes("configs".toLowerCase())) {
       const Config = new Discord.MessageEmbed()
         .setAuthor(`CONFIGS - CATEGORY`)
-        .setColor("BLUE")
+        .setColor("#339295")
         .addField(
           `premium`,
           "**THIS COMMAND WILL ONLY WORK ON UPDATE 3.0!**`>premium` - This is a premium command, the bot will think of a number in it's and if you guess it, you get premium for your guild for free."
@@ -321,7 +320,7 @@ module.exports = {
     } else if (Words.toLowerCase().includes("description".toLowerCase())) {
       const Config = new Discord.MessageEmbed()
         .setAuthor(`DESCRIPTION- CATEGORY`)
-        .setColor("BLUE")
+        .setColor("#339295")
         .addField(
           "role_description_add",
           "`>roles_description_add <@Role> <description>` - This command lets you put a description for the mentionned role."
@@ -339,7 +338,7 @@ module.exports = {
     } else if (Words.toLowerCase().includes("report".toLowerCase())) {
       const Config = new Discord.MessageEmbed()
         .setAuthor(`REPORT - CATEGORY`)
-        .setColor("BLUE")
+        .setColor("#339295")
         .addField(
           "report_channel_add",
           "`>report_channel_add` - With this command you can create a report channel, this is a really important command because without this you cannot run the report command. It basically makes it that it sends the new reports to that channel."

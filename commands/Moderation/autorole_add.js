@@ -12,10 +12,10 @@ module.exports = {
     const ROLEID = message.content.slice(14);
     if (!ROLEID) {
       const LOL = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
         .setAuthor("AUTOROLE_ADD - LOGGING")
         .setDescription(
-          "`>autorole_add <roleID>` - This is just the autorole command, everytime a user joins it gives them that role."
+          "`>autorole_add <roleID>` - Gives automatically a role when user joins."
         )
         .addField(
           "Sub Commands",

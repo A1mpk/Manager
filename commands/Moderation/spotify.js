@@ -59,7 +59,7 @@ module.exports = {
             "Spotify",
             "https://th.bing.com/th/id/R51a2b615791a987a46af18beed1ac882?rik=ihrJdQVay12aqA&riu=http%3a%2f%2fmedia.idownloadblog.com%2fwp-content%2fuploads%2f2016%2f02%2fSpotify-App-Icon-Large.png&ehk=69W%2bQrgPsZ2wP0g5JEZQs47EbsdD%2fNOV6VgsVsRHgIQ%3d&risl=&pid=ImgRaw"
           )
-          .setColor("BLUE")
+          .setColor("#339295")
           .setThumbnail(image)
           .addField("Name:", name)
           .addField("Album:", album)

@@ -18,7 +18,7 @@ module.exports = {
         )
         .setTimestamp()
 
-        .setColor("BLUE");
+        .setColor("#339295");
       message.channel.send(LEvelsNoNo);
     } else
       try {

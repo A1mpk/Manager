@@ -5,7 +5,7 @@ module.exports = {
   disabled: false,
   execute(message, args) {
     const Util = require("./../../node_modules/discord.js/src/util/Util");
-    let args2 = message.content.slice("4");
+    let args2 = message.content.slice(4);
     const msg = Util.removeMentions(args2);
     if (this.disabled === true)
       return message.channel.send(
@@ -20,7 +20,7 @@ module.exports = {
       )
       .setTimestamp()
 
-      .setColor("BLUE");
+      .setColor("#339295");
     if (!args2) {
       message.channel.send(say);
     } else message.channel.send(msg);

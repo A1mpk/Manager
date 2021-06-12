@@ -14,11 +14,11 @@ module.exports = {
       const LEvelsNoNo = new Discord.MessageEmbed()
         .setAuthor("LEVELS - LEVELLING")
         .setDescription(
-          "`>levels (enable/disable)` - This is the levels command, if the input is set to enabled, levelling will be enabled in this guild."
+          "`>levels (enable/disable)` - Enable/Disable Levels category for this guild.."
         )
         .setTimestamp()
 
-        .setColor("BLUE");
+        .setColor("#339295");
       message.channel.send(LEvelsNoNo);
     } else if (ANswer.toLowerCase().includes("enable".toLowerCase())) {
       try {

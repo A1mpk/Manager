@@ -19,11 +19,11 @@ module.exports = {
       const LEvelsNoNo = new Discord.MessageEmbed()
         .setAuthor("LOGGINGS - CONFIG")
         .setDescription(
-          "`>loggings <enable/disable>` - This is the loggings command, to enable logging you can simply use this command and it will set the logging to your current channel."
+          "`>loggings <enable/disable>` - Enable/Disable Logging for this guild."
         )
         .setTimestamp()
 
-        .setColor("BLUE");
+        .setColor("#339295");
       message.channel.send(LEvelsNoNo);
     } else if (ANswer.toLowerCase().includes("enable".toLowerCase())) {
       try {

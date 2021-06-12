@@ -12,13 +12,13 @@ module.exports = {
     const idchannel = message.content.slice(7);
     if (!idchannel) {
       const LOL = new Discord.MessageEmbed()
-        .setColor("BLUE")
+        .setColor("#339295")
         .setAuthor("getID - MODERATION")
         .setDescription(
-          "`>getid <channelName>` - This is a getid command, it returns with the ID of the channel."
+          "`>getid <channelName>` - Find the ID of channel easily."
         )
 
-        .addField("CHANNEL ID ", message.channel.id)
+        
         .setTimestamp();
       message.channel.send(LOL);
     } else if (idchannel) {

@@ -57,7 +57,7 @@ module.exports = {
         const TestedEmbed = new Discord.MessageEmbed()
           .setTitle(`${Role.name} || DESCRIPTION`)
           .setDescription(Arguments)
-          .setColor("BLUE")
+          .setColor("#339295")
           .setTimestamp();
 
         message.channel.send(TestedEmbed);

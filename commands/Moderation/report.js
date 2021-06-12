@@ -39,7 +39,7 @@ module.exports = {
       .setTitle(`Report`)
       .setDescription(questions[counter++])
       .setTimestamp()
-      .setColor("BLUE");
+      .setColor("#339295");
 
     message.channel.send(ReportEmbed);
     collector.on("collect", (m) => {
@@ -70,7 +70,7 @@ module.exports = {
         )
 
         .setTimestamp()
-        .setColor("BLUE");
+        .setColor("#339295");
       const ReportChannelEmbed2 = await ReportChannel.send(
         `A new report :`,
         ReportChannelEmbed

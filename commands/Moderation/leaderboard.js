@@ -38,7 +38,7 @@ module.exports = {
             .setTitle(`Leaderboard in ${message.guild.name}`)
             .setDescription(lb.join("\n\n\n"))
             .setTimestamp()
-            .setColor("BLUE")
+            .setColor("#339295")
             message.channel.send(LeaderBord)
            
             return;
