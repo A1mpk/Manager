@@ -75,42 +75,39 @@ client.on("guildCreate", (guild) => {
           {
             name: "**😴 Moderation**",
             value:
-              " `>help Moderation || help m_list_2` - This section helps keep your server and community safe, secure and in control with these commands at your disposal.",
+              " `>help Moderation || help m_list_2` - Help's moderating the server better with powerful commands.",
           },
           {
             name: "**🤩 Fun **",
-            value:
-              "`>help fun` - This section can keep your server fun & enjoyable with these commands.",
+            value: "`>help fun` - A server also needs to have some fun ;)",
           },
           {
             name: "🎵 Music ",
             value:
-              "`>help music || help mu_list_2` - This section is made for playing musics, if bored & want to find out new tracks, members of this server can always play a track to keep the server comfortable.",
+              "`>help music || help mu_list_2` - Everyone needs some type of music to listen to. ",
           },
           {
             name: "**👂 LISTENERS **",
             value:
-              "`>help listeners` - This section is made for logging, to keep track of what is happening on your server & helps in moderation commands.",
+              "`>help listeners` - A brief description of what are listeners. Enable Logging for it to work.",
           },
           {
             name: "**🛠️ Utilities **",
             value:
-              "`>help Utilities || u_list_2` - This section is about Utilities, commands that gives you information. such as membercount,verification,getID,getUserID.",
+              "`>help Utilities || u_list_2` - Call it 'uncategorized' commands.",
           },
           {
             name: "**⚙️ Configuration**",
-            value:
-              "`>help configs` - Config category, you can change the settings here to make your guild suit you! ",
+            value: "`>help configs` - Update Mint's configuration.",
           },
           {
             name: "**🏷️ Description**",
             value:
-              "`>help description` - Role description category, you can now put description for a role. ",
+              "`>help description` - Imagine not having a description for roles...",
           },
           {
             name: "**📜 Report**",
-            value:
-              "``>help report` - Report category, you can now report things if you don't like something about this guild or report an user.",
+            value: "``>help report` - Try reporting a user with this lmao!",
           },
         ],
       },
@@ -119,183 +116,185 @@ client.on("guildCreate", (guild) => {
     return console.log(`I didnt have permission.`);
   }
 });
+client.on('ready', () => {
+  client.user.setActivity({name: '>help', type: 'STREAMING', url: "https://www.twitch.tv/discord"} )
+})
 client.on("guildMemberAdd", async (member) => {
- 
-   const cache = {};
-   let data = cache[member.guild.id];
-const LoggingSchema = require('../Manager/commands/model/LoggingSchema')
-   if (!data) {
-     try {
-       const result = await LoggingSchema.findOne({
-         guildID: member.guild.id,
-       });
-       if (!result) return;
-       cache[member.guild.id] = data = [result.channel];
-     } catch (er) {
-       console.log(er);
-     }
-   }
-
-   const WelcomeMessageSchema = require("./commands/model/welcome-message");
-   const cacheing = {};
-   let datas = cacheing[member.guild.id];
-
-   if (!datas) {
-     try {
-       const resulted = await WelcomeMessageSchema.findOne({
-         guildID: member.guild.id,
-       });
-       if (!resulted) return;
-       cacheing[member.guild.id] = datas = [resulted.message];
-     } catch (er) {
-       console.log(er);
-     }
-   }
-
-   try {
-     const WelcomeEmbed = new Discord.MessageEmbed()
-       .setAuthor(`${member.guild.name}`, member.guild.iconURL())
-       .setDescription(datas)
-       .setTimestamp()
-       .setColor("#339295");
-
-     member.send(WelcomeEmbed);
-   } catch {
-     console.log(`I cant DM THE USER!>.`);
-   }
-
-   const Channel = member.guild.channels.cache.find(
-     (channel) => data[0] === channel.id
-   );
-   if (!Channel) return;
-   if (!member.guild.me.hasPermission("SEND_MESSAGES")) return;
-   if (!member.guild.me.hasPermission("MANAGE_CHANNELS")) return;
-   if (!member.guild.me.hasPermission("VIEW_CHANNEL")) return;
-
-   const canvas = Canvas.createCanvas(506, 218);
-   const ctx = canvas.getContext("2d");
-
-   const background = await Canvas.loadImage("BLACK-KARD-NOT-RACIST.png");
-
-   let x = 0;
-   let y = 0;
-   ctx.drawImage(background, x, y);
-
-   const pfp = await Canvas.loadImage(
-     member.user.displayAvatarURL({
-       format: "png",
-     })
-   );
-   x = canvas.width / 2 - pfp.width / 2;
-   y = 10;
-   ctx.strokeStyle = "WHITE";
-   ctx.drawImage(pfp, x, y);
-
-   ctx.fillStyle = "#ffffff";
-   ctx.font = `25px sans-serif`;
-   let text = `Welcome ${member.user.tag}`;
-   x = canvas.width / 2 - ctx.measureText(text).width / 2;
-   ctx.fillText(text, x, 45 + pfp.height);
-   ctx.fillStyle = "#ffffff";
-   ctx.font = "20px sans-serif";
-   text = `${member.guild.memberCount}th member!`;
-   x = canvas.width / 2 - ctx.measureText(text).width / 2;
-   ctx.fillText(text, x, 80 + pfp.height);
-   const attachment = new Discord.MessageAttachment(canvas.toBuffer());
-   try {
-     const AutoRoleSchema2 = require("../commands/model/AutoRole");
-     const cache2 = {};
-     let data2 = cache2[member.guild.id];
-
-     if (!data2) {
-       try {
-         const result2 = await AutoRoleSchema2.findOne({
-           _id: member.guild.id,
-         });
-         if (!result2) return;
-         cache2[member.guild.id] = data2 = [result2.autorole];
-       } catch (er) {
-         console.log(er);
-       }
-     }
-     const actualrole = member.guild.roles.cache.find(
-       (role) => data2[0] === role.id
-     );
-     if (!actualrole) return;
-     member.roles.add(actualrole);
-
-     Channel.send(
-       `Hey ${member}, welcome to **${member.guild.name}**`,
-       attachment
-     );
-   } catch (er) {
-     console.warn(`Error : ${er}`);
-   }
- });
- client.on("guildMemberRemove", async (member) => {
+  const cache = {};
+  let data = cache[member.guild.id];
   const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
-   const cache = {};
-   let data = cache[member.guild.id];
+  if (!data) {
+    try {
+      const result = await LoggingSchema.findOne({
+        guildID: member.guild.id,
+      });
+      if (!result) return;
+      cache[member.guild.id] = data = [result.channel];
+    } catch (er) {
+      console.log(er);
+    }
+  }
 
-   if (!data) {
-     try {
-       const result = await LoggingSchema.findOne({
-         guildID: member.guild.id,
-       });
-       if (!result) return;
-       cache[member.guild.id] = data = [result.channel];
-     } catch (er) {
-       console.log(er);
-     }
-   }
+  const WelcomeMessageSchema = require("./commands/model/welcome-message");
+  const cacheing = {};
+  let datas = cacheing[member.guild.id];
 
-   const Channel = member.guild.channels.cache.find(
-     (channel) => data[0] === channel.id
-   );
-   if (!Channel) return;
+  if (!datas) {
+    try {
+      const resulted = await WelcomeMessageSchema.findOne({
+        guildID: member.guild.id,
+      });
+      if (!resulted) return;
+      cacheing[member.guild.id] = datas = [resulted.message];
+    } catch (er) {
+      console.log(er);
+    }
+  }
 
-   if (!member.guild.me.hasPermission("SEND_MESSAGES")) return;
-   if (!member.guild.me.hasPermission("MANAGE_CHANNELS")) return;
-   if (!member.guild.me.hasPermission("VIEW_CHANNEL")) return;
+  try {
+    const WelcomeEmbed = new Discord.MessageEmbed()
+      .setAuthor(`${member.guild.name}`, member.guild.iconURL())
+      .setDescription(datas)
+      .setTimestamp()
+      .setColor("#339295");
 
-   const canvas = Canvas.createCanvas(506, 218);
-   const ctx = canvas.getContext("2d");
+    member.send(WelcomeEmbed);
+  } catch {
+    console.log(`I cant DM THE USER!>.`);
+  }
 
-   const background = await Canvas.loadImage("BLACK-KARD-NOT-RACIST.png");
+  const Channel = member.guild.channels.cache.find(
+    (channel) => data[0] === channel.id
+  );
+  if (!Channel) return;
+  if (!member.guild.me.hasPermission("SEND_MESSAGES")) return;
+  if (!member.guild.me.hasPermission("MANAGE_CHANNELS")) return;
+  if (!member.guild.me.hasPermission("VIEW_CHANNEL")) return;
 
-   let x = 0;
-   let y = 0;
-   ctx.drawImage(background, x, y);
+  const canvas = Canvas.createCanvas(506, 218);
+  const ctx = canvas.getContext("2d");
 
-   const pfp = await Canvas.loadImage(
-     member.user.displayAvatarURL({
-       format: "png",
-     })
-   );
-   x = canvas.width / 2 - pfp.width / 2;
-   y = 10;
-   ctx.strokeStyle = "WHITE";
-   ctx.drawImage(pfp, x, y);
+  const background = await Canvas.loadImage("BLACK-KARD-NOT-RACIST.png");
 
-   ctx.fillStyle = "#ffffff";
-   ctx.font = `25px sans-serif`;
-   let text = `${member.user.tag} just left the group.`;
-   x = canvas.width / 2 - ctx.measureText(text).width / 2;
-   ctx.fillText(text, x, 45 + pfp.height);
+  let x = 0;
+  let y = 0;
+  ctx.drawImage(background, x, y);
 
-   ctx.font = "20px sans-serif";
-   text = `${member.guild.memberCount} members!`;
-   x = canvas.width / 2 - ctx.measureText(text).width / 2;
-   ctx.fillText(text, x, 80 + pfp.height);
-   const attachment = new Discord.MessageAttachment(canvas.toBuffer());
+  const pfp = await Canvas.loadImage(
+    member.user.displayAvatarURL({
+      format: "png",
+    })
+  );
+  x = canvas.width / 2 - pfp.width / 2;
+  y = 10;
+  ctx.strokeStyle = "WHITE";
+  ctx.drawImage(pfp, x, y);
 
-   try {
-     Channel.send(`Bye ${member}, we will miss you!`, attachment);
-   } catch (er) {
-     console.warn(`An error occured : ${er}`);
-   }
- });
- client.on("inviteCreate", async (invite) => {
+  ctx.fillStyle = "#ffffff";
+  ctx.font = `25px sans-serif`;
+  let text = `Welcome ${member.user.tag}`;
+  x = canvas.width / 2 - ctx.measureText(text).width / 2;
+  ctx.fillText(text, x, 45 + pfp.height);
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "20px sans-serif";
+  text = `${member.guild.memberCount}th member!`;
+  x = canvas.width / 2 - ctx.measureText(text).width / 2;
+  ctx.fillText(text, x, 80 + pfp.height);
+  const attachment = new Discord.MessageAttachment(canvas.toBuffer());
+  try {
+    const AutoRoleSchema2 = require("../commands/model/AutoRole");
+    const cache2 = {};
+    let data2 = cache2[member.guild.id];
+
+    if (!data2) {
+      try {
+        const result2 = await AutoRoleSchema2.findOne({
+          _id: member.guild.id,
+        });
+        if (!result2) return;
+        cache2[member.guild.id] = data2 = [result2.autorole];
+      } catch (er) {
+        console.log(er);
+      }
+    }
+    const actualrole = member.guild.roles.cache.find(
+      (role) => data2[0] === role.id
+    );
+    if (!actualrole) return;
+    member.roles.add(actualrole);
+
+    Channel.send(
+      `Hey ${member}, welcome to **${member.guild.name}**`,
+      attachment
+    );
+  } catch (er) {
+    console.warn(`Error : ${er}`);
+  }
+});
+client.on("guildMemberRemove", async (member) => {
+  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const cache = {};
+  let data = cache[member.guild.id];
+
+  if (!data) {
+    try {
+      const result = await LoggingSchema.findOne({
+        guildID: member.guild.id,
+      });
+      if (!result) return;
+      cache[member.guild.id] = data = [result.channel];
+    } catch (er) {
+      console.log(er);
+    }
+  }
+
+  const Channel = member.guild.channels.cache.find(
+    (channel) => data[0] === channel.id
+  );
+  if (!Channel) return;
+
+  if (!member.guild.me.hasPermission("SEND_MESSAGES")) return;
+  if (!member.guild.me.hasPermission("MANAGE_CHANNELS")) return;
+  if (!member.guild.me.hasPermission("VIEW_CHANNEL")) return;
+
+  const canvas = Canvas.createCanvas(506, 218);
+  const ctx = canvas.getContext("2d");
+
+  const background = await Canvas.loadImage("BLACK-KARD-NOT-RACIST.png");
+
+  let x = 0;
+  let y = 0;
+  ctx.drawImage(background, x, y);
+
+  const pfp = await Canvas.loadImage(
+    member.user.displayAvatarURL({
+      format: "png",
+    })
+  );
+  x = canvas.width / 2 - pfp.width / 2;
+  y = 10;
+  ctx.strokeStyle = "WHITE";
+  ctx.drawImage(pfp, x, y);
+
+  ctx.fillStyle = "#ffffff";
+  ctx.font = `25px sans-serif`;
+  let text = `${member.user.tag} just left the group.`;
+  x = canvas.width / 2 - ctx.measureText(text).width / 2;
+  ctx.fillText(text, x, 45 + pfp.height);
+
+  ctx.font = "20px sans-serif";
+  text = `${member.guild.memberCount} members!`;
+  x = canvas.width / 2 - ctx.measureText(text).width / 2;
+  ctx.fillText(text, x, 80 + pfp.height);
+  const attachment = new Discord.MessageAttachment(canvas.toBuffer());
+
+  try {
+    Channel.send(`Bye ${member}, we will miss you!`, attachment);
+  } catch (er) {
+    console.warn(`An error occured : ${er}`);
+  }
+});
+client.on("inviteCreate", async (invite) => {
   if (!invite.guild.me.hasPermission("SEND_MESSAGES")) return;
   if (!invite.guild.me.hasPermission("MANAGE_CHANNELS")) return;
   if (!invite.guild.me.hasPermission("VIEW_CHANNEL")) return;
@@ -322,7 +321,9 @@ const LoggingSchema = require('../Manager/commands/model/LoggingSchema')
   const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Invite`, invite.guild.me.user.displayAvatarURL())
     .setTimestamp()
-    .setDescription(`[Created](${invite.url}) by *${invite.inviter}* in *${invite.channel}*.`)
+    .setDescription(
+      `[Created](${invite.url}) by *${invite.inviter}* in *${invite.channel}*.`
+    )
     .setFooter(`M I N T detected an invite link.`)
     .setColor("#339295");
 
@@ -353,13 +354,13 @@ client.on("inviteDelete", async (invite) => {
   );
   if (!Channel) return;
   const MessageEmbed2 = new Discord.MessageEmbed()
-  .setAuthor(`Invite`, invite.guild.me.user.displayAvatarURL())
-  .setTimestamp()
-  .setDescription(`An [invite](${invite.url}) has been deleted.`)
-  .setFooter(`M I N T detected a deleted invite.`)
-  .setColor("#339295");
+    .setAuthor(`Invite`, invite.guild.me.user.displayAvatarURL())
+    .setTimestamp()
+    .setDescription(`An [invite](${invite.url}) has been deleted.`)
+    .setFooter(`M I N T detected a deleted invite.`)
+    .setColor("#339295");
 
-Channel.send(MessageEmbed2);
+  Channel.send(MessageEmbed2);
 });
 client.on("messageDelete", async (message) => {
   const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
@@ -370,11 +371,8 @@ client.on("messageDelete", async (message) => {
     try {
       const result = await LoggingSchema.findOne({
         guildID: message.guild.id,
-
       });
-      if (!result){
-
-      }
+      if (!result)return;
       cache[message.guild.id] = data = [result.channel];
     } catch (er) {
       console.log(er);
@@ -393,14 +391,10 @@ client.on("messageDelete", async (message) => {
   try {
     const MessageEmbed = new Discord.MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL())
-      .setDescription(
-        `"${message.content}"`
-      )
+      .setDescription(`"${message.content}"`)
 
       .setTimestamp()
-      .setFooter(
-        `M I N T detected a deleted message.`
-      )
+      .setFooter(`M I N T detected a deleted message.`)
 
       .setColor("#339295");
 
@@ -409,7 +403,7 @@ client.on("messageDelete", async (message) => {
     return;
   }
 });
- 
+
 client.on("roleDelete", async (Role) => {
   if (!Role.guild.me.hasPermission("SEND_MESSAGES")) return;
   if (!Role.guild.me.hasPermission("MANAGE_CHANNELS")) return;
@@ -433,7 +427,6 @@ client.on("roleDelete", async (Role) => {
   );
   if (!Channel) return;
 
-
   const ROleInfo = new Discord.MessageEmbed()
     .setAuthor(`Role `, Role.guild.me.user.displayAvatarURL())
     .setDescription(`**${Role.name}** was deleted.`)
@@ -455,7 +448,7 @@ client.on("emojiCreate", async (emoji) => {
   if (!data) {
     try {
       const result = await LoggingSchema.findOne({
-        guildID:emoji.guild.id,
+        guildID: emoji.guild.id,
       });
       if (!result) return;
       cache[emoji.guild.id] = data = [result.channel];
@@ -468,7 +461,6 @@ client.on("emojiCreate", async (emoji) => {
     (channel) => data[0] === channel.id
   );
   if (!Channel) return;
-
 
   const MessageEmbed2 = new Discord.MessageEmbed()
     .setAuthor(`Emoji`, emoji.url)
@@ -485,7 +477,6 @@ client.on("emojiDelete", async (emoji) => {
   if (!emoji.guild.me.hasPermission("MANAGE_CHANNELS")) return;
   if (!emoji.guild.me.hasPermission("VIEW_CHANNEL")) return;
 
-  
   const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
   const cache = {};
   let data = cache[emoji.guild.id];
@@ -493,7 +484,7 @@ client.on("emojiDelete", async (emoji) => {
   if (!data) {
     try {
       const result = await LoggingSchema.findOne({
-        guildID:emoji.guild.id,
+        guildID: emoji.guild.id,
       });
       if (!result) return;
       cache[emoji.guild.id] = data = [result.channel];
