@@ -121,7 +121,7 @@ client.on("guildCreate", (guild) => {
   }
 });
 client.on('ready', () => {
-  client.user.setActivity({name: '>help', type: 'STREAMING', url: "https://www.twitch.tv/discord"} )
+  client.user.setActivity({name: '>help || profile update. Do >help', type: 'STREAMING', url: "https://www.twitch.tv/discord"} )
 })
 client.on("guildMemberAdd", async (member) => {
   const cache = {};
