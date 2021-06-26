@@ -126,7 +126,7 @@ client.on('ready', () => {
 client.on("guildMemberAdd", async (member) => {
   const cache = {};
   let data = cache[member.guild.id];
-  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const LoggingSchema = require("./commands/model/LoggingSchema");
   if (!data) {
     try {
       const result = await LoggingSchema.findOne({
@@ -236,7 +236,7 @@ client.on("guildMemberAdd", async (member) => {
   }
 });
 client.on("guildMemberRemove", async (member) => {
-  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const LoggingSchema = require("./commands/model/LoggingSchema");
   const cache = {};
   let data = cache[member.guild.id];
 
@@ -302,7 +302,7 @@ client.on("inviteCreate", async (invite) => {
   if (!invite.guild.me.hasPermission("SEND_MESSAGES")) return;
   if (!invite.guild.me.hasPermission("MANAGE_CHANNELS")) return;
   if (!invite.guild.me.hasPermission("VIEW_CHANNEL")) return;
-  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const LoggingSchema = require("./commands/model/LoggingSchema");
   const cache = {};
   let data = cache[invite.guild.id];
 
@@ -337,7 +337,7 @@ client.on("inviteDelete", async (invite) => {
   if (!invite.guild.me.hasPermission("SEND_MESSAGES")) return;
   if (!invite.guild.me.hasPermission("MANAGE_CHANNELS")) return;
   if (!invite.guild.me.hasPermission("VIEW_CHANNEL")) return;
-  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const LoggingSchema = require("./commands/model/LoggingSchema");
   const cache = {};
   let data = cache[invite.guild.id];
 
@@ -367,7 +367,7 @@ client.on("inviteDelete", async (invite) => {
   Channel.send(MessageEmbed2);
 });
 client.on("messageDelete", async (message) => {
-  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const LoggingSchema = require("./commands/model/LoggingSchema");
   const cache = {};
   let data = cache[message.guild.id];
 
@@ -412,7 +412,7 @@ client.on("roleDelete", async (Role) => {
   if (!Role.guild.me.hasPermission("SEND_MESSAGES")) return;
   if (!Role.guild.me.hasPermission("MANAGE_CHANNELS")) return;
   if (!Role.guild.me.hasPermission("VIEW_CHANNEL")) return;
-  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const LoggingSchema = require("./commands/model/LoggingSchema");
   const cache = {};
   let data = cache[Role.guild.id];
 
@@ -445,7 +445,7 @@ client.on("emojiCreate", async (emoji) => {
   if (!emoji.guild.me.hasPermission("MANAGE_CHANNELS")) return;
   if (!emoji.guild.me.hasPermission("VIEW_CHANNEL")) return;
 
-  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const LoggingSchema = require("./commands/model/LoggingSchema");
   const cache = {};
   let data = cache[emoji.guild.id];
 
@@ -481,7 +481,7 @@ client.on("emojiDelete", async (emoji) => {
   if (!emoji.guild.me.hasPermission("MANAGE_CHANNELS")) return;
   if (!emoji.guild.me.hasPermission("VIEW_CHANNEL")) return;
 
-  const LoggingSchema = require("../Manager/commands/model/LoggingSchema");
+  const LoggingSchema = require("./commands/model/LoggingSchema");
   const cache = {};
   let data = cache[emoji.guild.id];
 
