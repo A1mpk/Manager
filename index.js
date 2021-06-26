@@ -108,7 +108,11 @@ client.on("guildCreate", (guild) => {
           {
             name: "**📜 Report**",
             value: "``>help report` - Try reporting a user with this lmao!",
-          },
+          }, {
+            name: "**💌 Profile**",
+            value:
+              "``>help profile` - You can customize your rank card with these commands.",
+          }
         ],
       },
     });
@@ -793,7 +797,7 @@ client.on("message", async (message) => {
       return message.channel.send(`I am not to a voice channel.`);
     if (message.guild.me.voice.channel !== message.member.voice.channel)
       return message.channel.send(
-        `You are not connected to the same Voice CHannel as me. `
+        `You are not connected to the same Voice Channel as me. `
       );
     if (!serverQueue) return message.channel.send(`The queue is empty.`);
 
@@ -1497,6 +1501,14 @@ client.on("message", async (message) => {
   if (command === "listeners") {
     if (message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")) {
       client.commands.get("listeners").execute(message, args);
+    } else
+      message.member.send(
+        "I need `SEND_MESSAGE` permissions on the channel or in my role."
+      );
+  }
+  if (command === "profile") {
+    if (message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")) {
+      client.commands.get("profile").execute(message, args);
     } else
       message.member.send(
         "I need `SEND_MESSAGE` permissions on the channel or in my role."

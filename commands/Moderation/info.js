@@ -11,7 +11,7 @@ module.exports = {
         .setDescription(
           `Mint is an upcoming bot actively being developped. This bot will bring you moderation to music, logging to fun.`
         )
-        .setFooter(`Thank you for using Mint`)
+        .setFooter(`Thank you for using Mint.`)
         .addFields(
           { name: "Version", value: "2.0.8", inline: true },
           {

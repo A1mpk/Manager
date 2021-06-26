@@ -16,6 +16,7 @@ module.exports = {
         embed: {
           title: "List of commands",
           color: "#339295",
+          description: 'All of the explanations of the commands are followed by another. So make sure to read the first command definition til the last to understand what it does.',
           fields:[
             {
               name: "**😴 Moderation**",
@@ -56,6 +57,10 @@ module.exports = {
               name: "**📜 Report**",
               value:
                 "``>help report` - Try reporting a user with this lmao!",
+            }, {
+              name: "**💌 Profile**",
+              value:
+                "``>help profile` - You can customize your rank card with these commands.",
             },
           ],
         },
@@ -351,7 +356,18 @@ module.exports = {
         );
 
       message.channel.send(Config);
-    } else
+    } else if (Words.toLowerCase().includes("profile".toLowerCase())){
+      const ProfileHelp = new Discord.MessageEmbed()
+      .setTitle('Profiles')
+      .addField('default', '`>profile default` - Profile card will use the default template.')
+      .addField('text-color', '`>profile text-color <color> or <color code> - Automatically change the color of the text.`')
+      .addField('username', '`>profile username <name>` - You can put a custom username for your card.')
+      .addField('background', '`>profile background <url>` - You can change the background of your card by putting a link of it. Sometimes, the background would be the same if the URL was not supported for the bot.')
+     .addField('reset', '`>profile reset` - You can reset your custom settings for the card.')
+     .setColor("WHITE")
+     .setTimestamp()
+     message.channel.send(ProfileHelp)
+    }else
       return message.channel.send(`The category **${Words}** does not exist.`);
   },
 };

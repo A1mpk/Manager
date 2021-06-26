@@ -28,6 +28,21 @@ module.exports = {
                 }
             }
             if(data[0] === "disable")return message.channel.send(`Levelling system is currently disabled in this guild.`)
+            const ProfileData = require('../model/Profile')
+            const cache2 = {};
+            let data2 = cache2[message.member.id];
+          
+            if (!data2) {
+              try {
+                const result2 = await ProfileData.findOne({
+                  RealUser: message.member.id,
+                });
+                if (!result2) return message.channel.send(`Oh, seems like you didn't create yourself a rank card yet. You can do so by running >profile help.`)
+                cache2[message.member.id] = data2 = [result2.username, result2.background, result2.textColor];
+              } catch (er) {
+                console.log(er);
+              }
+            }
             const mesag = message.content.slice(5)
           
             const target = message.author 
@@ -40,7 +55,7 @@ module.exports = {
             const ctx = canvas.getContext('2d')
           
             const background = await Canvas.loadImage(
-             '801095.jpg'
+               data2[1] ||'801095.jpg'
             )
           
           
@@ -48,16 +63,16 @@ module.exports = {
           
           ctx.beginPath();
           ctx.lineWidth = 4;
-          ctx.strokeStyle = 'WHITE';
+          ctx.strokeStyle = data2[2] || 'WHITE';
           ctx.globalAlpha = 0.2;
-          ctx.fillStyle = "#000000";
+          ctx.fillStyle = data2[2] ||"WHITE";
           ctx.fillRect(180, 216, 770, 65);
           ctx.fill();
           ctx.globalAlpha = 1;
           ctx.strokeRect(180,216,770,65);
           ctx.stroke();
           
-          ctx.fillStyle = "#ffffff";
+          ctx.fillStyle = data2[2] ||"WHITE";
           ctx.globalAlpha = 0.6;
           ctx.fillRect(180, 216, 65 )
           ctx.fill();
@@ -65,11 +80,11 @@ module.exports = {
           
           ctx.font = "bold 36px Arial";
           ctx.textAlign = "center";
-          ctx.fillStyle = " WHITE";
+          ctx.fillStyle =data2[2] ||"WHITE";
           ctx.fillText(`${user.xp} / ${neededXP2} XP`, 650,260);
           
           ctx.textAlign = "left";
-          ctx.fillText(`${target.tag}`, 300, 120);
+          ctx.fillText(`${data2[0] || message.member.user.username}#${message.member.user.discriminator}`, 300, 120);
           
           ctx.font = "bold 50px Arial";
           ctx.fillText("LEVEL", 300,180);
@@ -79,7 +94,7 @@ module.exports = {
           ctx.lineWidth = 6;
           
           
-          ctx.strokeStyle = "WHITE" ;
+          ctx.strokeStyle = data2[2] || "WHITE" ;
           ctx.stroke();
           ctx.closePath();
           ctx.clip();
