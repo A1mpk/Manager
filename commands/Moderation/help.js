@@ -96,7 +96,7 @@ module.exports = {
       const ModerationHelp2 = new Discord.MessageEmbed()
         .setColor("#339295")
         .setAuthor(`MODERATION 2 - CATEGORY`)
-        .setFooter(`>help Moderation for first list of commands.`)
+        .setFooter(`To Note: The descriptions are examples.`)
         .addField(
           `slowmode`,
           "`slowmode <seconds>` - Chat spammin' a lot? Okay, set a timeout for chat."
@@ -114,6 +114,7 @@ module.exports = {
       const Fun = new Discord.MessageEmbed()
         .setColor("#339295")
         .setAuthor(`FUN - CATEGORY`)
+        .setFooter(`To Note: The descriptions are examples.`)
         .addField(
           `karen`,
           "`>karen` - Finally a time for you to fight Karen."
@@ -138,12 +139,13 @@ module.exports = {
           `gaymeter`,
           "`>gaymeter <user>` - Seems sus. I need to find out how sus they are!"
         );
-
+        
       message.channel.send(Fun);
     } else if (Words.toLowerCase().includes("Music".toLowerCase())) {
       const Music = new Discord.MessageEmbed()
         .setColor("#339295")
         .setAuthor(`MUSIC- CATEGORY`)
+        .setFooter(`To Note: Read the first command to understand the rest.`)
         .addField(
           `play`,
           "`>play <query>` - Im gonna play a song with this command by simply add the title of it or the URL."
@@ -168,12 +170,13 @@ module.exports = {
           `lyrics`,
           "`>lyrics` - Man, I wanna sing this song so bad... I wonder what are the lyrics of it!"
         );
-
+     
       message.channel.send(Music);
     } else if (Words.toLowerCase().includes("Mu_list_2".toLowerCase())) {
       const Music2 = new Discord.MessageEmbed()
         .setColor("#339295")
         .setAuthor(`MUSIC 2 - CATEGORY`)
+        .setFooter(`To Note: Read the first command to understand the rest.`)
         .addField(
           "np",
           "`>np` - I forgot what is the current song... Let me use this command."
@@ -202,7 +205,7 @@ module.exports = {
     } else if (Words.toLowerCase().includes("listeners".toLowerCase())) {
       const Listeners = new Discord.MessageEmbed()
         .setAuthor(`LISTENERS - CATEGORY`)
-
+        .setFooter(`To Note: The descriptions are examples.`)
         .setColor("#339295")
         .addField(
           "MessageDelete",
@@ -229,6 +232,7 @@ module.exports = {
     } else if (Words.toLowerCase().includes("Utilities".toLowerCase())) {
       const Utilities = new Discord.MessageEmbed()
         .setAuthor(`UTILITIES - CATEGORY`)
+        .setFooter(`To Note: The descriptions are examples.`)
         .setColor("#339295")
         .addField(
           "invite",
@@ -250,6 +254,7 @@ module.exports = {
     } else if (Words.toLowerCase().includes("u_list_2".toLowerCase())) {
       const u_list_2 = new Discord.MessageEmbed()
         .setAuthor(`UTILITIES 2 - CATEGORY`)
+        .setFooter(`To Note: The descriptions are examples.`)
         .setColor("#339295")
         .addField(
           "avatar",
@@ -288,6 +293,7 @@ module.exports = {
       const Config = new Discord.MessageEmbed()
         .setAuthor(`CONFIGS - CATEGORY`)
         .setColor("#339295")
+        .setFooter(`To Note: The descriptions are examples.`)
         .addField(
           `premium`,
           "**THIS COMMAND WILL ONLY WORK ON UPDATE 3.0!**`>premium` - This is a premium command, the bot will think of a number in it's and if you guess it, you get premium for your guild for free."
@@ -322,6 +328,7 @@ module.exports = {
       message.channel.send(`📸📸Caught on 4K`, attachment);
     } else if (Words.toLowerCase().includes("description".toLowerCase())) {
       const Config = new Discord.MessageEmbed()
+      .setFooter(`To Note: The descriptions are examples.`)
         .setAuthor(`DESCRIPTION- CATEGORY`)
         .setColor("#339295")
         .addField(
@@ -342,6 +349,7 @@ module.exports = {
       const Config = new Discord.MessageEmbed()
         .setAuthor(`REPORT - CATEGORY`)
         .setColor("#339295")
+        .setFooter(`To Note: The descriptions are examples.`)
         .addField(
           "report_channel_add",
           "`>report_channel_add` - Add a report channel. (Logs reports in it.)"
@@ -358,6 +366,7 @@ module.exports = {
       message.channel.send(Config);
     } else if (Words.toLowerCase().includes("profile".toLowerCase())){
       const ProfileHelp = new Discord.MessageEmbed()
+      .setFooter(`To Note: The descriptions are examples.`)
       .setTitle('Profiles')
       .addField('default', '`>profile default` - Profile card will use the default template.')
       .addField('text-color', '`>profile text-color <color> or <color code> - Automatically change the color of the text.`')

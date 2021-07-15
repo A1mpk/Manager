@@ -11,6 +11,8 @@ const {
 const Discord = require("discord.js");
 const fs = require("fs");
 const client = new Client();
+const DButton = require('discord-buttons')
+
 client.commands = new Collection();
 client.aliases = new Collection();
 client.mongoose = require("./utils/mongoose");
@@ -753,7 +755,7 @@ client.on("message", async (message) => {
               `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`
             )
             .setDescription(
-              `[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})`
+              `> [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})`
             )
             .setColor("#339295")
             .setTimestamp();
@@ -1061,7 +1063,7 @@ client.on("message", async (message) => {
         `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`
       )
       .setDescription(
-        `[${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!`
+        `> [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!`
       )
       .setThumbnail(serverQueue.songs[0].thumbnail.url)
       .setColor("#339295")
@@ -1515,6 +1517,6 @@ client.on("message", async (message) => {
       );
   }
 });
-
+DButton(client)
 client.mongoose.init();
 client.login(process.env.token);
