@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
   name: "credits",
   description: "credits",
-  disabled: false,
+  disabled: true,
   async execute(message, args, client) {
     const Owner = client.users.cache.find(
       (user) => user.id === "368148684468387840"
@@ -12,13 +12,13 @@ module.exports = {
     );
 
     const CreditsEmbed = new Discord.MessageEmbed()
-      .setAuthor(`Credits for Mint`, message.guild.me.user.displayAvatarURL())
+     
 
-      .addField(`Coders[2]`, `${Owner.tag} + ${CoOwner.tag} `)
-      .addField(`Mint Avatar[1]`, "Nameless")
+   
       .setColor("#339295")
-      .setTimestamp()
-      .setThumbnail(message.guild.me.user.displayAvatarURL());
+     
+      .setDescription(`**Owner(s)[1]**: ${Owner}, **Mint Avatar[1]**: Nameless `)
+  
 
     message.channel.send(CreditsEmbed);
   },

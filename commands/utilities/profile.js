@@ -116,7 +116,7 @@ module.exports = {
         "rank.png"
       );
       message.channel.send(
-        "Like this? If you done like it, please re-run the command.",
+        "**Preview:**",
         attachment
       );
     } else if (
@@ -230,7 +230,7 @@ module.exports = {
         "rank.png"
       );
       message.channel.send(
-        "Like this? If you done like it, please re-run the command.",
+        "**Preview:**",
         attachment
       );
     } else if (
@@ -343,7 +343,7 @@ module.exports = {
         "rank.png"
       );
       message.channel.send(
-        "Like this? If you done like it, please re-run the command. (If your background didn't show up, it means its not supported for Mit.",
+        "**Preview:** (If your background didn't show up, it means its not supported for Mit.",
         attachment
       );
     } else if (message.content.toLowerCase().includes("reset".toLowerCase())) {
@@ -392,13 +392,13 @@ module.exports = {
 
     }else if (message.content.toLowerCase().includes("help".toLowerCase())) {
      const ProfileHelp = new Discord.MessageEmbed()
-     .setTitle('Profiles')
+     .setTitle('Settings of Profile')
      .addField('default', '`>profile default` - Profile card will use the default template.')
-     .addField('text-color', '`>profile text-color <color> or <color code> - Automatically change the color of the text.`')
+     .addField('text-color', '`>profile text-color <color> or <color code>` - Automatically change the color of the text.')
      .addField('username', '`>profile username <name>` - You can put a custom username for your card.')
      .addField('background', '`>profile background <url>` - You can change the background of your card by putting a link of it. Sometimes, the background would be the same if the URL was not supported for the bot.')
     .addField('reset', '`>profile reset` - You can reset your custom settings for the card.')
-    .setColor("WHITE")
+    .setColor("#339295")
     .setTimestamp()
     message.channel.send(ProfileHelp)
     }else message.channel.send(`>profile help ;)`)

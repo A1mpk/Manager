@@ -1,12 +1,14 @@
-const Discord = require("discord.js");
+const Discord = require("discord.js");  
+
 module.exports = {
   name: "say",
   description: "Say command.",
   disabled: false,
   execute(message, args) {
-    const Util = require("./../../node_modules/discord.js/src/util/Util");
+
+ 
     let args2 = message.content.slice(4);
-    const msg = Util.removeMentions(args2);
+    
     if (this.disabled === true)
       return message.channel.send(
         `This command has been disabled for further investigation.`
@@ -14,15 +16,26 @@ module.exports = {
 
     const everyone = "@everyone";
     const say = new Discord.MessageEmbed()
-      .setAuthor("SAY - FUN")
+      .setAuthor("What do you want me to say?")
       .setDescription(
-        "`>say <message>` - This is a say command, it repeats your message."
+        "Enter something you want me to say!"
       )
-      .setTimestamp()
+    
+
 
       .setColor("#339295");
     if (!args2) {
       message.channel.send(say);
-    } else message.channel.send(msg);
+    }else
+    if(args2){
+       const MEssage = new Discord.MessageEmbed()
+     
+      .setDescription(`"${args2}"`)
+      .setColor("#339295")
+      .setFooter(`From ${message.member.user.tag}`)
+   
+   
+      message.channel.send(MEssage)
+    }
   },
 };

@@ -1,16 +1,18 @@
 const Discord = require("discord.js");
 
 module.exports = {
-  name: "gaymeter",
+  name: "simpmeter",
   description: "Literally gay meters you",
   disabled: false,
   execute(message, args) {
     const randomXp = Math.floor(Math.random() * 100) + 1;
     const user = message.mentions.users.first() || message.author;
-    if (!user)
-      return message.channel.send(`Oops... You forgot to mention a user!`);
+    const Simp= new Discord.MessageEmbed()
+    .setTitle(`Let's see who's a simp...`)
+    .setDescription(`${user} is ${randomXp}% simping!`)
+     .setColor('#339295')
     message.channel.send(
-      `${user} has a rating of ${randomXp}% on the gaymeter!`
+      Simp
     );
   },
 };

@@ -8,6 +8,10 @@ module.exports = {
     disabled: false,
    async execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
+        const Permission = new Discord.MessageEmbed()
+        .setTitle('I need permissions!')
+        .setDescription('I\'m missing ``**MANAGE_CHANNELS**`` permissions!')
+        .setColor('#339295')
         if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){
     
             const LevelsSchema = require("../model/levels")
@@ -20,14 +24,31 @@ module.exports = {
            
                 try {
                   const result = await LevelsSchema.findOne({guildID: message.guild.id})
-                 if(!result)return message.channel.send(`Levelling for this guild has been disabled by default.`)
+                 if(!result){
+                   const OhNO = new Discord.MessageEmbed()
+                   .setTitle('Oh no!')
+                   .setDescription('Seems like levelling is disabled by default in this server!')
+                   .setFooter('Category - Utilities')
+                   .setColor("#339295")
+                   message.channel.send('**Help**: You can enable levelling to your server by using the `**>levels**` command.',OhNO)
+                   return undefined
+                 }else
                   cache[message.guild.id] = data = [result.levels]
                   
                 }catch(er){
                   console.log(er)
                 }
             }
-            if(data[0] === "disable")return message.channel.send(`Levelling system is currently disabled in this guild.`)
+            if(data[0] === "disable"){
+              const OhNO = new Discord.MessageEmbed()
+              .setTitle('Oh no!')
+              .setDescription('The owner of this server disabled levelling! Sorry.')
+              .setFooter('Category - Utilities')
+              .setColor("#339295")
+              message.channel.send('**Help**: You can enable levelling to your server by using the `**>levels**` command.',OhNO)
+              return undefined
+            }
+            // PROFILE DATA
             const ProfileData = require('../model/Profile')
             const cache2 = {};
             let data2 = cache2[message.member.id];
@@ -37,7 +58,14 @@ module.exports = {
                 const result2 = await ProfileData.findOne({
                   RealUser: message.member.id,
                 });
-                if (!result2) return message.channel.send(`Oh, seems like you didn't create yourself a rank card yet. You can do so by running >profile help.`)
+                if (!result2){
+                  const NeedToCreate = new Discord.MessageEmbed()
+                  .setTitle('Create yourself a profile!')
+                  .setColor("#339295")
+                  .setDescription('Hey! You need to create an profile.')
+                  message.channel.send('**Extra Tip**: A profile can be created by using `**>profile**`!', NeedToCreate)
+                  return undefined
+                }else
                 cache2[message.member.id] = data2 = [result2.username, result2.background, result2.textColor];
               } catch (er) {
                 console.log(er);
@@ -47,7 +75,11 @@ module.exports = {
           
             const target = message.author 
             const user = await Levels.fetch(target.id,message.guild.id)
-            if(!user) return message.channel.send(`You dont have any xp yet, be more active in this guild to gain more xp!`)
+            if(!user){
+              const XPNEEDEDT = new Discord.MessageEmbed()
+              .setTitle('Need something..')
+              .setDescriptipn(`You need to gain XPs before running this command. You can gain XP by being active in this server.`)
+            }
             const neededXP2 = Levels.xpFor(parseInt(user.level) + 1);
           
           
@@ -108,7 +140,10 @@ module.exports = {
             const attachment = new Discord.MessageAttachment(canvas.toBuffer() , "rank.png")
             message.channel.send(attachment)
         
-          }else message.member.send('I need `SEND_MESSAGE` permissions on the channel or in my role.')
+          }else   message.channel.send(Permission)
+          
+          
+        
        
     }
 }

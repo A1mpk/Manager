@@ -10,45 +10,47 @@ module.exports = {
         `This command has been disabled for further investigation.`
       );
 
-    const Ban = new Discord.MessageEmbed()
-      .setTitle("BAN - MODERATION")
-      .setDescription(
-        "`>ban <user> <reason>` - Ban a member. Add a reason."
-      )
-
-      .setTimestamp()
-      .setColor("#339295");
+      const Ban = new Discord.MessageEmbed()
+      .setTitle('Who are you banning?')
+      .setDescription('You didn\'t mention who you\'re banning.')
+      .setColor('#339295')
+   
+      const Permission = new Discord.MessageEmbed()
+      .setTitle('I need permissions!')
+      .setDescription('Im missing ``**BAN_MEMBERS**`` permissions!')
+      .setColor('#339295')
+      const Permission2 = new Discord.MessageEmbed()
+      .setTitle('You need permissions!')
+      .setDescription('You\'re missing ``**BAN_MEMBERS**`` permissions!')
+      .setColor('#339295')
     if (!message.guild.me.hasPermission(["BAN_MEMBERS"])){
-      const PermissionNeeded = new Discord.MessageEmbed()
-      .setTitle(`P E R M I S S I O N S`)
-      .setDescription('*M i n t\'s Needed Permission:* [`BAN_MEMBERS`](https://support.discord.com/hc/en-us/articles/214836687-Role-Management-101) ')
-      .setColor("#339295")
-      .setTimestamp()
-      message.channel.send(PermissionNeeded)
-      return;
+  
+      message.channel.send(Permission)
+      return undefined
     }
       if(!message.member.hasPermission("BAN_MEMBERS")){
-        const PermissionNeeded = new Discord.MessageEmbed()
-        .setTitle(`P E R M I S S I O N S`)
-        .setDescription('*Needed Permission:* [`BAN_MEMBERS`](https://support.discord.com/hc/en-us/articles/214836687-Role-Management-101) ')
-        .setColor("#339295")
-        .setTimestamp()
-        message.channel.send(PermissionNeeded)
-        return;
+        
+        message.channel.send(Permission2)
+        return undefined
     }
     const Buser = message.guild.member(message.mentions.users.first());
     if (!Buser) return message.channel.send(Ban);
-    let bReason = args;
+    let bReason = message.content.slice(27)
+
 
     const BanMod = new Discord.MessageEmbed()
-    .setTitle(`E R R O R S`)
+    .setTitle(`Woah buddy chill..`)
     .setDescription(`${Buser}'s permissions are the same as yours.`)
     .setColor("#339295")
     .setTimestamp()
     if (Buser.hasPermission("BAN_MEMBERS")) return message.channel.send(BanMod);
     try {
       message.guild.member(Buser).ban({ reason: bReason });
-      Buser.send(`You were banned ${Buser} with the reason of : ${bReason}`);
+      const Sucess = new Discord.MessageEmbed()
+      .setTitle('Banned em!')
+      .setDescription(`Sucessfully banned ${Buser.user.tag} for ${bReason|| 'No reason given'}`)
+      .setColor("#339295")
+    message.channel.send(Sucess)
       return;
     } catch (er) {
       message.channel.send(

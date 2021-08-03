@@ -10,14 +10,10 @@ module.exports = {
       );
 
     const GuildInfo = new Discord.MessageEmbed()
-      .setTitle(message.guild.name)
-      .addField("Owner", `<@${message.guild.ownerID}>`)
-      .addField("Members", message.guild.memberCount)
-      .addField("Created", message.guild.createdAt)
-      .addField("Channels", message.guild.channels.cache.size)
-      .addField("Roles", message.guild.roles.cache.size)
-      .setThumbnail(message.guild.iconURL())
-      .setFooter(`Command raised by ${message.member.user.tag}`)
+      
+ 
+      
+      .setDescription(`**Owner**: ${message.guild.ownerID}, **Members**: ${message.guild.memberCount}, **Created**: ${message.guild.createdAt}, **Channels**: ${message.guild.channels.cache.size}, **Roles**: ${message.guild.roles.cache.size}`)
       .setColor("#339295");
     message.channel.send(GuildInfo);
   },

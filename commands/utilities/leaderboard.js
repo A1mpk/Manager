@@ -4,7 +4,7 @@ Levels.setURL("mongodb+srv://admin:LmVUsNQeLiYCsJfr@manager.hd8gy.mongodb.net/<D
 module.exports = { 
     name: "leaderboard",
     description: "Leaderboard",
-    disabled: false,
+    disabled: true,
    async execute(message, args){
         if(this.disabled === true) return message.channel.send(`This command has been disabled for further investigation.`)
         if(message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")){

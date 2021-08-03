@@ -19,6 +19,7 @@
         "canvas": "^2.6.1",
         "discord-buttons": "^4.0.0",
         "discord-canvas": "^1.4.1",
+        "discord-fetcher": "^1.0.5",
         "discord-rpc": "^3.1.4",
         "discord-xp": "^1.1.7",
         "discord.js": "^12.3.1",
@@ -40,6 +41,6 @@
         "random-puppy": "^1.1.0",
         "simple-youtube-api": "^5.2.1",
         "youtube-notification": "^1.1.0",
-        "ytdl-core": "^4.8.3"
+        "ytdl-core": "^4.9.0"
     }
 }

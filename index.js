@@ -56,7 +56,7 @@ for (const file of commandFiles) {
 }
 
 /// PREFIX
-const x = ">";
+const x = "?";
 /// ALL THE LISTENERS :
 
 client.on("guildCreate", (guild) => {
@@ -69,52 +69,70 @@ client.on("guildCreate", (guild) => {
     }
   });
   try {
+    const MuteROle = guild.roles.cache.find(
+      (Role) => Role.name === "Muted"
+    );
+    if(!MuteROle){
+      guild.roles
+      .create({
+        data: {
+          name: "Muted",
+          color: "NONE",
+          permissions: ["VIEW_CHANNEL"],
+        },
+        reason: "Automatic Mute Role!",
+      })
+      .then(console.log())
+      .catch(console.error);
+    
+    }else
+   
+    guild.channels.cache.forEach((channel) => {
+      channel.updateOverwrite(MuteROle, {
+        SEND_MESSAGES: false,
+      });
+    });
     defaultChannel.send({
       embed: {
-        title: "List of commands ",
+        title: "List of commands",
         color: "#339295",
-        fields: [
+        description: '*What\'s new?* Brand new design for Mint. **Update: 2.0.9**',
+        fields:[
           {
-            name: "**😴 Moderation**",
+            name: "**⚙️ Configuration**",
             value:
-              " `>help Moderation || help m_list_2` - Help's moderating the server better with powerful commands.",
+              "`>help configs` - Update Mint's settings to your preference.",
           },
           {
-            name: "**🤩 Fun **",
-            value: "`>help fun` - A server also needs to have some fun ;)",
-          },
-          {
-            name: "🎵 Music ",
+            name: "**:sleeping: Moderation**",
             value:
-              "`>help music || help mu_list_2` - Everyone needs some type of music to listen to. ",
-          },
-          {
-            name: "**👂 LISTENERS **",
-            value:
-              "`>help listeners` - A brief description of what are listeners. Enable Logging for it to work.",
+              " `>help Moderation  ` - Help's moderating the server better with powerful commands.",
           },
           {
             name: "**🛠️ Utilities **",
             value:
-              "`>help Utilities || u_list_2` - Call it 'uncategorized' commands.",
-          },
-          {
-            name: "**⚙️ Configuration**",
-            value: "`>help configs` - Update Mint's configuration.",
+              "`>help Utilities ` - Commands that are uncategorized.",
           },
           {
             name: "**🏷️ Description**",
             value:
-              "`>help description` - Imagine not having a description for roles...",
+              "`>help description` - Mint's unique category! Add a description for your role.",
           },
-          {
-            name: "**📜 Report**",
-            value: "``>help report` - Try reporting a user with this lmao!",
-          }, {
+         {
             name: "**💌 Profile**",
             value:
               "``>help profile` - You can customize your rank card with these commands.",
-          }
+          },
+          {
+            name: "**🤩 Fun **",
+            value:
+              "`>help fun` - Fun commands to bring in a bit of joy.",
+          },
+          {
+            name: "🎵 Music ",
+            value:
+              "`>help music` - Listen to music through Mint.",
+          },
         ],
       },
     });
@@ -123,7 +141,7 @@ client.on("guildCreate", (guild) => {
   }
 });
 client.on('ready', () => {
-  client.user.setActivity({name: '>help || profile update. Do >help', type: 'STREAMING', url: "https://www.twitch.tv/discord"} )
+  client.user.setActivity({name: '>help'})
 })
 client.on("guildMemberAdd", async (member) => {
   const cache = {};
@@ -330,7 +348,7 @@ client.on("inviteCreate", async (invite) => {
     .setDescription(
       `[Created](${invite.url}) by *${invite.inviter}* in *${invite.channel}*.`
     )
-    .setFooter(`M I N T detected an invite link.`)
+    .setFooter(`Mint detected an invite link.`)
     .setColor("#339295");
 
   Channel.send(MessageEmbed2);
@@ -363,7 +381,7 @@ client.on("inviteDelete", async (invite) => {
     .setAuthor(`Invite`, invite.guild.me.user.displayAvatarURL())
     .setTimestamp()
     .setDescription(`An [invite](${invite.url}) has been deleted.`)
-    .setFooter(`M I N T detected a deleted invite.`)
+    .setFooter(`Mint detected a deleted invite.`)
     .setColor("#339295");
 
   Channel.send(MessageEmbed2);
@@ -400,7 +418,7 @@ client.on("messageDelete", async (message) => {
       .setDescription(`"${message.content}"`)
 
       .setTimestamp()
-      .setFooter(`M I N T detected a deleted message.`)
+      .setFooter(`Mint detected a deleted message.`)
 
       .setColor("#339295");
 
@@ -437,7 +455,7 @@ client.on("roleDelete", async (Role) => {
     .setAuthor(`Role `, Role.guild.me.user.displayAvatarURL())
     .setDescription(`**${Role.name}** was deleted.`)
     .setTimestamp()
-    .setFooter(`M I N T detected a deleted role.`)
+    .setFooter(`Mint detected a deleted role.`)
 
     .setColor("#339295");
   Channel.send(ROleInfo);
@@ -472,7 +490,7 @@ client.on("emojiCreate", async (emoji) => {
     .setAuthor(`Emoji`, emoji.url)
     .setTimestamp()
     .setDescription(`**${emoji.name}** has been created.`)
-    .setFooter("M I N T detected an emoji.")
+    .setFooter("Mint detected an emoji.")
     .setColor("#339295");
 
   Channel.send(MessageEmbed2);
@@ -508,7 +526,7 @@ client.on("emojiDelete", async (emoji) => {
     .setAuthor(`Emoji`, emoji.guild.me.user.displayAvatarURL())
     .setTimestamp()
     .setDescription(`**${emoji.name}** has been deleted.`)
-    .setFooter(`M I N T detected an emoji.`)
+    .setFooter(`Mint detected an emoji.`)
     .setColor("#339295");
   Channel.send(MessageEmbed2);
 });
@@ -550,6 +568,7 @@ client.on("message", async (message) => {
   }
 
   if (message.content.toLowerCase().includes(x + "play".toLowerCase())) {
+    
     if (message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")) {
       try {
         execute(message, serverQueue);
@@ -665,31 +684,39 @@ client.on("message", async (message) => {
     const searchString = message.content.slice(5);
     if (!args) {
       const Kick = new Discord.MessageEmbed()
-        .setTitle("PLAY - MUSIC")
+        .setTitle("What are you playing?")
         .setDescription(
-          "`>play <query>` - This is a play command, it plays music in a voice channel. The query can either be a link or a YouTube keyword."
+          "You need to enter an URL or a track title."
         )
 
         .setColor("#339295")
-        .setTimestamp();
+        
       return message.channel.send(Kick);
     }
     const url = args ? args.replace(/<(.+)>/g, "$1") : "";
     const voiceChannel = message.member.voice.channel;
 
-    if (!voiceChannel)
-      return message.channel.send(
-        "You need to be in a voice channel to play music!"
-      );
+    if (!voiceChannel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("Voice Channel..")
+      .setDescription("You need to be in a voice channel to play music!")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined
+    }
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (
       !permissions.has("CONNECT") ||
       !permissions.has("SPEAK") ||
       !permissions.has("VIEW_CHANNEL")
     ) {
-      return message.channel.send(
-        "I need the following permissionsin your voice channel. [`CONNECT`, `SPEAK`, `VIEW_CHANNEL`]"
-      );
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("An error...")
+      .setDescription("I need the following permissionsin your voice channel. [`CONNECT`, `SPEAK`, `VIEW_CHANNEL`]")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined
+    
     }
     try {
       var video = await youtube.getVideoByID(url);
@@ -698,7 +725,13 @@ client.on("message", async (message) => {
         var videos = await youtube.searchVideos(searchString, 1);
         var video = await youtube.getVideoByID(videos[0].id);
       } catch {
-        return message.channel.send(`I couldn't find any search results`);
+        const VoiceNee = new Discord.MessageEmbed()
+        .setTitle("What is that?")
+        .setDescription(" I couldn't find any search results")
+        .setColor("#339295")
+        message.channel.send(VoiceNee)
+        return undefined
+       
       }
     }
 
@@ -744,10 +777,14 @@ client.on("message", async (message) => {
     } else {
       try {
         if (!message.guild.me.voice.channel) {
-          message.channel.send(
-            `I am not in a voice channel, run the command >join to make me join`
-          );
-          console.log(serverQueue.playing);
+          const VoiceNee = new Discord.MessageEmbed()
+        .setTitle("What is that?")
+        .setDescription("Something went wrong ;-; Use the `>join` command & use the `play` command as normal.")
+        .setColor("#339295")
+        message.channel.send(VoiceNee)
+        return undefined
+         
+       
         } else if (message.guild.me.voice.channel) {
           const QueueAdded = new MessageEmbed()
             .setAuthor(
@@ -793,15 +830,38 @@ client.on("message", async (message) => {
 
   // LYRICS FINDER (DISMISSED PROJECT.)
   async function lyrics(message, serverQueue) {
-    if (!message.member.voice.channel)
-      return message.channel.send(`You are not connected to a voice channel.`);
-    if (!message.guild.me.voice.channel)
-      return message.channel.send(`I am not to a voice channel.`);
-    if (message.guild.me.voice.channel !== message.member.voice.channel)
-      return message.channel.send(
-        `You are not connected to the same Voice Channel as me. `
-      );
-    if (!serverQueue) return message.channel.send(`The queue is empty.`);
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+  }
+    if (!message.guild.me.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("I need to be in a VC!")
+      .setDescription("I am not in a voice channel")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (message.guild.me.voice.channel !== message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription(`You are not connected to the same Voice Channel as me. `)
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    } 
+    if (!serverQueue){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription('`**0** Track Listed in Queue!`')
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
 
     let artist = serverQueue.songs[0].author;
     let songName = serverQueue.songs[0].title;
@@ -865,97 +925,159 @@ client.on("message", async (message) => {
   // SKIP
 
   function skip(message, serverQueue) {
-    if (!message.member.voice.channel)
-      return message.channel.send(
-        "You have to be in a voice channel to stop the music!"
-      );
-    if (!message.guild.me.voice)
-      return message.channel.send(`There is nothing playing right now.`);
-    if (!serverQueue)
-      return message.channel.send(
-        "There is nothing in the queue to skip! Add some music!"
-      );
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (!message.guild.me.voice){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("I need to be in a VC!")
+      .setDescription("I am not in a voice channel")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (!serverQueue){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription('`**0** Track Listed in Queue!`')
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
     serverQueue.connection.dispatcher.end();
   }
   // LOOP
   function loop(message, serverQueue) {
     const LoopType = message.content.slice(5);
-    if (!message.member.voice.channel)
-      return message.channel.send(
-        `You need to be in a voice channel to loop the song.`
-      );
-    if (!serverQueue)
-      return message.channel.send("The song queue is empty! Add some music.");
-
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (!serverQueue){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription('`**0** Track Listed in Queue!`')
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
     if (!LoopType) {
       serverQueue.loop = !serverQueue.loop;
-      return message.channel.send(
-        `${serverQueue.loop ? `**✅Enabled**` : `**✅Disabled**`} looping.`
-      );
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("Looping: queue")
+      .setDescription(  `${
+        serverQueue.queueloop ? `**✅Enabled**` : `**✅Disabled**`
+      } looping **queue**.`)
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    
     }
     // LOOP THE WHOLE QUEUE
     else if (LoopType) {
       if (LoopType.toLowerCase().includes("queue".toLowerCase())) {
         serverQueue.queueloop = !serverQueue.queueloop;
-        return message.channel.send(
-          `${
-            serverQueue.queueloop ? `**✅Enabled**` : `**✅Disabled**`
-          } looping **queue**.`
-        );
+        const VoiceNee = new Discord.MessageEmbed()
+        .setTitle("Looping: queue")
+        .setDescription(  `${
+          serverQueue.queueloop ? `**✅Enabled**` : `**✅Disabled**`
+        } looping **queue**.`)
+        .setColor("#339295")
+        message.channel.send(VoiceNee)
+        return undefined 
+    
         // INVALID COMMAND
       } else message.channel.send(`"${LoopType}" is an invalid loop type.`);
     }
   }
   // STOP
   function stop(message, serverQueue) {
-    if (!message.member.voice.channel)
-      return message.channel.send(
-        "You have to be in a voice channel to stop the music!"
-      );
-
-    if (!serverQueue)
-      return message.channel.send("There is no song that I could stop!");
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (!serverQueue){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription('`**0** Track Listed in Queue!`')
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
 
     serverQueue.songs = [];
-    message.channel.send(`I have stopped the music for you.`);
+    const VoiceNee = new Discord.MessageEmbed()
+    .setTitle("Sucessfully done..")
+    .setDescription("Stopped the current music.")
+    .setColor("#339295")
+    message.channel.send(VoiceNee)
+  
     serverQueue.connection.dispatcher.end();
   }
-  // SHUFFLE
-  function shuffle(message, serverQueue) {
-    if (!message.member.voice.channel)
-      return message.channel.send(
-        `You are not in a voice channel, please join one.`
-      );
-    if (!serverQueue)
-      return message.channel.send(`There is no songs in the queue to shuffle.`);
 
-    serverQueue.shuffle = !serverQueue.shuffle;
-
-    return message.channel.send(
-      `${
-        serverQueue.shuffle ? `**✅Enabled**` : `**✅Disabled**`
-      } shuffle mode.`
-    );
-  }
   function leave(message, serverQueue) {
-    if (!message.member.voice.channel)
-      return message.channel.send(
-        `Connect to a voice channel for me to leave.`
-      );
-    if (!message.guild.me.voice.channel)
-      return message.channel.send(`I am not connected in a voice channel.`);
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (!message.guild.me.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("I need to be in a VC!")
+      .setDescription("I am not in a voice channel")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
     else queue.delete(message.guild.id);
     message.member.voice.channel.leave();
-
-    message.channel.send(`I have left the voice channel.`);
+    const VoiceNee = new Discord.MessageEmbed()
+    .setTitle("I left the VC..")
+    .setDescription("I just left the current voice channel I was connected to.")
+    .setColor("#339295")
+    message.channel.send(VoiceNee)
+    
+   
   }
   function join(message, serverQueue) {
-    if (!message.member.voice.channel)
-      return message.channel.send(`You are not in a voice channel.`);
-    if (message.guild.me.voice.channel)
-      return message.channel.send(`I am already connected to a voice channel.`);
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined
+    }
+    if (message.guild.me.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("I am already in a channel..")
+      .setDescription("I was already connected to an channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined
+    }
     else message.member.voice.channel.join();
-    message.channel.send(`Joining ${message.member.voice.channel.name}`);
+    const VoiceNee = new Discord.MessageEmbed()
+    .setTitle("Trying to join..")
+    .setDescription("Im possibly trying to join the channel!")
+    .setColor("#339295")
+    message.channel.send(VoiceNee)
     queue.delete(message.guild.id);
   }
 
@@ -970,16 +1092,36 @@ client.on("message", async (message) => {
       .setColor("#339295")
       .setTimestamp();
 
-    if (!message.member.voice.channel)
-      return message.channel.send(`You need to be in a voice channel`);
-    if (!serverQueue) return message.channel.send(`There is no music playing!`);
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (!serverQueue){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription('`**0** Track Listed in Queue!`')
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
 
     if (!volumeArgs)
       return message.channel.send(
-        `The current volume is **${serverQueue.volume}**!`
+        `The current volume is **${serverQueue.volume}0%**!`
       );
-    if (isNaN(volumeArgs)) return message.channel.send(`That is not a number!`);
-    if (volumeArgs > 5) return message.channel.send(`The maximum volume is 5!`);
+    if (isNaN(volumeArgs)){
+      const NumberNeeded = new Discord.MessageEmbed()
+      .setTitle("LETTERS?!!?")
+      .setDescription("You gotta enter a number man...")
+      .setColor("#339295");
+      message.channel.send(NumberNeeded)
+      return undefined
+    }
+    if (volumeArgs > 5) return message.channel.send(`The maximum volume is 50%!`);
     serverQueue.volume = volumeArgs;
     serverQueue.connection.dispatcher.setVolumeLogarithmic(volumeArgs / 5);
     message.channel.send(Playing);
@@ -993,7 +1135,14 @@ client.on("message", async (message) => {
       return message.channel.send(
         "Embed version containing duration is no longer supported due to an error."
       );
-    if (!serverQueue) return message.channel.send(`There is nothing playing!`);
+    if (!serverQueue){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription('`**0** Track Listed in Queue!`')
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined
+    }
     if (!serverQueue.songs[1])
       return message.channel.send(
         `Currently playing **${serverQueue.songs[0].title}** by **${serverQueue.songs[0].author}**`
@@ -1008,7 +1157,7 @@ client.on("message", async (message) => {
         { name: `Duration`, value: `Disabled`, inline: true },
         {
           name: `Coming Next`,
-          value: `[${serverQueue.songs[1].title}](${serverQueue.songs[1].url})`,
+          value: `[${serverQueue.songs[1].title || "No"}](${serverQueue.songs[1].url || "Tracks"})`,
           inline: true,
         },
         { name: `Looping`, value: serverQueue.loop, inline: true },
@@ -1020,32 +1169,73 @@ client.on("message", async (message) => {
 
   // RESUME
   function resume(message, serverQueue) {
-    if (!message.member.voice.channel)
-      return message.channel.send(
-        "You need to be in a voice channel to resume the music."
-      );
-    if (!serverQueue)
-      return message.channel.send(`There is no music to resume.`);
-    if (serverQueue.playing)
-      return message.channel.send(`The music is already playing.`);
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (!serverQueue){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription('`**0** Track Listed in Queue!`')
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined
+    }
+    if (serverQueue.playing){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("Already resumed")
+      .setDescription(`The music is already playing!`)
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+  return undefined
+    }
     serverQueue.playing = true;
     serverQueue.connection.dispatcher.resume();
-    message.channel.send(`I have resumed the music for you!`);
-    return undefined;
+    const VoiceNee = new Discord.MessageEmbed()
+    .setTitle("There!")
+    .setDescription(`I have resumed the music for you!`)
+    .setColor("#339295")
+    message.channel.send(VoiceNee)
+
   }
 
   // PAUSE
   function pause(message, serverQueue) {
-    if (!message.member.voice.channel)
-      return message.channel.send(
-        `You need to be in a voice channel to pause the music!`
-      );
-    if (!serverQueue) return message.channel.send(`There is no songs playing.`);
-    if (!serverQueue.playing)
-      return message.channel.send(`The music is already paused.`);
+    if (!message.member.voice.channel){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("You need to be in a VC!")
+      .setDescription("You are not connected to a voice channel.")
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined 
+    }
+    if (!serverQueue){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("No Tracks...")
+      .setDescription('`**0** Track Listed in Queue!`')
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+      return undefined
+    }
+    if (!serverQueue.playing){
+      const VoiceNee = new Discord.MessageEmbed()
+      .setTitle("Already paused")
+      .setDescription(`The music is already paused!`)
+      .setColor("#339295")
+      message.channel.send(VoiceNee)
+  return undefined
+    }
     serverQueue.playing = false;
     serverQueue.connection.dispatcher.pause();
-    message.channel.send(`I have paused the music.`);
+    const VoiceNee = new Discord.MessageEmbed()
+    .setTitle("There!")
+    .setDescription(`I have paused the music for you!`)
+    .setColor("#339295")
+    message.channel.send(VoiceNee)
     return undefined;
   }
   // PLAY
@@ -1056,18 +1246,23 @@ client.on("message", async (message) => {
       queue.delete(guild.id);
       return;
     }
+if(serverQueue.loop === false){
+  const Playing = new MessageEmbed()
+  .setAuthor(
+    `Now Playing`,
+    `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`
+  )
+  .setDescription(
+    `> [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!`
+  )
+  .setThumbnail(serverQueue.songs[0].thumbnail.url)
+  .setColor("#339295")
+  .setFooter(message.author.tag, message.author.displayAvatarURL());
+  serverQueue.textChannel.send(Playing);
 
-    const Playing = new MessageEmbed()
-      .setAuthor(
-        `Now Playing`,
-        `https://www.freeiconspng.com/uploads/youtube-logo-png-hd-14.png`
-      )
-      .setDescription(
-        `> [${song.title}](${serverQueue.songs[0].url}) by [${song.author}](${serverQueue.songs[0].url})!`
-      )
-      .setThumbnail(serverQueue.songs[0].thumbnail.url)
-      .setColor("#339295")
-      .setFooter(message.author.tag, message.author.displayAvatarURL());
+}
+
+   
 
     const dispatcher = serverQueue.connection
       .play(ytdl(song.url))
@@ -1096,7 +1291,7 @@ client.on("message", async (message) => {
       })
       .on("error", (error) => console.error(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-    serverQueue.textChannel.send(Playing);
+   
   }
 
   const args = message.content.slice(x.length).split(/ +/);
@@ -1278,23 +1473,16 @@ client.on("message", async (message) => {
       );
   }
 
-  if (command === "getid") {
+  if (command === "searchid") {
     if (message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")) {
-      client.commands.get("getid").execute(message, args);
+      client.commands.get("searchid").execute(message, args);
     } else
       message.member.send(
         "I need `SEND_MESSAGE` permissions on the channel or in my role."
       );
   }
 
-  if (command === "getuserid") {
-    if (message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")) {
-      client.commands.get("getuserid").execute(message, args);
-    } else
-      message.member.send(
-        "I need `SEND_MESSAGE` permissions on the channel or in my role."
-      );
-  }
+
 
   if (command === "clear") {
     if (message.guild.me.permissionsIn(message.channel).has("SEND_MESSAGES")) {

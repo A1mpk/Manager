@@ -19,7 +19,7 @@ module.exports = {
         const ARGSNEEDED = new Discord.MessageEmbed()
           .setTitle("ANNOUNCE - MODERATION")
           .setDescription(
-            "`>announce <announcement>` - Post your announcement as an [embed](https://gyazo.com/b91ebad4add6fd5233dfbec22d2170eb)!"
+            "`>announce <announcement>` - Post your announcement as an ``[embed](https://gyazo.com/b91ebad4add6fd5233dfbec22d2170eb)``!"
           )
 
           .setTimestamp()

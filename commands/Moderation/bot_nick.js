@@ -8,36 +8,51 @@ module.exports = {
       return message.channel.send(
         `This command has been disabled for further investigation.`
       );
-
+      const Permission = new Discord.MessageEmbed()
+      .setTitle('I need permissions!')
+      .setDescription('Im missing ``**MANAGE_NICKNAMES**`` permissions!')
+      .setColor('#339295')
+      const Permission2 = new Discord.MessageEmbed()
+      .setTitle('You need permissions!')
+      .setDescription('You\'re missing ``**MANAGE_NICKNAMES**`` permissions!')
+      .setColor('#339295')
     const lol = message.content.slice(9);
     const LOL = new Discord.MessageEmbed()
-      .setColor("#339295")
-      .setAuthor("BOT_NICK - MODERATION")
-      .setDescription(
-        "`>bot_nick <nickname>` - Changes nickname of [Mint](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot)."
-      )
-      .setTimestamp();
-    if (!message.guild.me.hasPermission(["MANAGE_NICKNAMES"]))
-      return message.channel.send(
-        "I don`t have enough permissions. [`MANAGE_NICKNAMES]"
-      );
+    .setTitle('Missing Nickname..')
+    .setDescription('You didnt write my new nickname!')
+    .setColor('#339295')
+   
+    const OwnerPriv = new Discord.MessageEmbed()
+    .setTitle('Max Characters')
+    .setDescription('My nickname contains more than 32 characters!')
+    .setColor('#339295')
+ 
+    const ChangedNick = new Discord.MessageEmbed()
+    .setTitle('Changed Nickname')
+    .setDescription('I just changed my nickname as you wanted.')
+    .setColor('#339295')
+    
+    if (!message.guild.me.hasPermission(["MANAGE_NICKNAMES"])){
+      message.channel.send(Permission)
+    }
     try {
       if (message.member.hasPermission("ADMINISTRATOR")) {
         if (!lol) {
           message.channel.send(LOL);
         }
         if (lol) {
-          if (lol.length > 32)
-            return message.channel.send(
-              `My nickname has more than 32characters, 32 is the max!`
-            );
+          if (lol.length > 32){
+            message.channel.send(OwnerPriv)
+            return undefined
+          }
           if (lol.length < 32) {
             message.guild.me.setNickname(lol);
-            message.channel.send(`My nickname is now **${lol}**.`);
+            message.channel.send(ChangedNick);
+            return undefined
           }
         }
       } else
-        message.channel.send("You need `ADMINISTRATOR` to use this command.");
+        message.channel.send(Permission2);
     } catch (er) {
       message.channel.send(`Something went wrong, please re-run this command.`);
     }

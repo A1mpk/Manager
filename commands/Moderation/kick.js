@@ -10,37 +10,34 @@ module.exports = {
         `This command has been disabled for further investigation.`
       );
 
-    const Kick = new Discord.MessageEmbed()
-      .setTitle("KICK - MODERATION")
-      .setDescription(
-        "`>kick <user> <reason>` - Kicks a member. Add a reason."
-      )
-
-      .setColor("#339295")
-      .setTimestamp();
+      const Kick = new Discord.MessageEmbed()
+      .setTitle('Who are you kicking?')
+      .setDescription('You didn\'t mention who you\'re kicking.')
+      .setColor('#339295')
+   
+      const Permission = new Discord.MessageEmbed()
+      .setTitle('I need permissions!')
+      .setDescription('Im missing ``**KICK_MEMBERS**`` permissions!')
+      .setColor('#339295')
+      const Permission2 = new Discord.MessageEmbed()
+      .setTitle('You need permissions!')
+      .setDescription('You\'re missing ``**KICK_MEMBERS**`` permissions!')
+      .setColor('#339295')
     if (!message.guild.me.hasPermission(["KICK_MEMBERS"])){
-      const PermissionNeeded = new Discord.MessageEmbed()
-      .setTitle(`P E R M I S S I O N S`)
-      .setDescription('*M i nt\'s Needed Permission:* [`KICK_MEMBERS`](https://support.discord.com/hc/en-us/articles/214836687-Role-Management-101) ')
-      .setColor("#339295")
-      .setTimestamp()
-      message.channel.send(PermissionNeeded)
-      return;
+  
+      message.channel.send(Permission)
+      return undefined
     }
-    if (!message.member.hasPermission("KICK_MEMBERS")){
-      const PermissionNeeded = new Discord.MessageEmbed()
-      .setTitle(`P E R M I S S I O N S`)
-      .setDescription('*Needed Permission:* [`KICK_MEMBERS`](https://support.discord.com/hc/en-us/articles/214836687-Role-Management-101) ')
-      .setColor("#339295")
-      .setTimestamp()
-      message.channel.send(PermissionNeeded)
-      return;
+      if(!message.member.hasPermission("KICK_MEMBERS")){
+        
+        message.channel.send(Permission2)
+        return undefined
     }
     const Kuser = message.guild.member(message.mentions.users.first());
     if (!Kuser) return message.channel.send(Kick);
-    let kReason = args.join(" ").slice(22);
+    let kReason = message.content.slice(28)
     const KickMod = new Discord.MessageEmbed()
-    .setTitle(`E R R O R S`)
+    .setTitle(`Woah buddy chill..`)
     .setDescription(`${Kuser}'s permissions are the same as yours.`)
     .setColor("#339295")
     .setTimestamp()
@@ -48,10 +45,11 @@ module.exports = {
       return message.channel.send(KickMod);
 
     message.guild.member(Kuser).kick(kReason);
-    Kuser.send(
-      `You were kicked from the server with the reason of  ${kReason}`
-    );
-    message.channel.send(`I have kicked ${Kuser} for  ${kReason}`);
-    return;
+    const Sucess = new Discord.MessageEmbed()
+    .setTitle('Banned em!')
+    .setDescription(`Sucessfully kicked ${Kuser.user.tag} for ${kReason|| 'No reason given'}`)
+    .setColor("#339295")
+    message.channel.send(Sucess);
+    return undefined
   },
 };

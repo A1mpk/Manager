@@ -7,8 +7,10 @@ module.exports = {
   execute(message, args) {
     const randomXp = Math.floor(Math.random() * 100) + 1;
     const user = message.mentions.users.first() || message.author;
-    if (!user)
-      return message.channel.send(`Oops... You forgot to mention a user!`);
-    message.channel.send(`${user} is ${randomXp}% dogwater!`);
+  const Dogwater = new Discord.MessageEmbed()
+  .setTitle(`Let's see who's dogwater...`)
+  .setDescription(`${user} is ${randomXp}% dogwater!`)
+   .setColor('#339295')
+   message.channel.send(Dogwater)
   },
 };

@@ -13,19 +13,19 @@ module.exports = {
         )
         .setFooter(`Thank you for using Mint.`)
         .addFields(
-          { name: "Version", value: "2.0.8", inline: true },
+          { name: "🎀Version", value: "2.0.0", inline: true },
           {
-            name: `Guilds`,
+            name: `Ⓜ️Guilds`,
             value: message.client.guilds.cache.size,
             inline: true,
           },
           {
-            name: "Users",
+            name: "🧑Users",
             value: message.client.users.cache.size,
             inline: true,
           },
           {
-            name: "Links",
+            name: "🔗Links",
             value:
               "[Invite](https://discord.com/api/oauth2/authorize?client_id=725787532008095744&permissions=8&scope=bot) |** ** | [Support Server](https://discord.gg/fBbnrRe8gg) |** ** | [Vote for me](https://top.gg/bot/725787532008095744/vote) |** ** | [Website](https://sites.google.com/view/Mint2020-com/home) ",
             inline: true,

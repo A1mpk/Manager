@@ -1,10 +1,11 @@
 const Discord = require("discord.js");
 const e = require("express");
+const {MessageButton} = require('discord-buttons')
 module.exports = {
   name: "help",
   description: "HELP COMMAND ",
   disabled: false,
-  execute(message, args) {
+ async execute(message, args) {
     if (this.disabled === true)
       return message.channel.send(
         `This command has been disabled for further investigation.`
@@ -16,108 +17,119 @@ module.exports = {
         embed: {
           title: "List of commands",
           color: "#339295",
-          description: 'All of the explanations of the commands are followed by another. So make sure to read the first command definition til the last to understand what it does.',
+          description: '*What\'s new?* Brand new design for Mint. **Update: 2.0.9**',
           fields:[
             {
-              name: "**😴 Moderation**",
+              name: "**⚙️ Configuration**",
               value:
-                " `>help Moderation || help m_list_2` - Help's moderating the server better with powerful commands.",
+                "`>help configs` - Update Mint's settings to your preference.",
             },
             {
-              name: "**🤩 Fun **",
+              name: "**:sleeping: Moderation**",
               value:
-                "`>help fun` - A server also needs to have some fun ;)",
-            },
-            {
-              name: "🎵 Music ",
-              value:
-                "`>help music || help mu_list_2` - Everyone needs some type of music to listen to. ",
-            },
-            {
-              name: "**👂 LISTENERS **",
-              value:
-                "`>help listeners` - A brief description of what are listeners. Enable Logging for it to work.",
+                " `>help Moderation  ` - Help's moderating the server better with powerful commands.",
             },
             {
               name: "**🛠️ Utilities **",
               value:
-                "`>help Utilities || u_list_2` - Call it 'uncategorized' commands.",
-            },
-            {
-              name: "**⚙️ Configuration**",
-              value:
-                "`>help configs` - Update Mint's configuration.",
+                "`>help Utilities ` - Commands that are uncategorized.",
             },
             {
               name: "**🏷️ Description**",
               value:
-                "`>help description` - Imagine not having a description for roles...",
+                "`>help description` - Mint's unique category! Add a description for your role.",
             },
-            {
-              name: "**📜 Report**",
-              value:
-                "``>help report` - Try reporting a user with this lmao!",
-            }, {
+             {
               name: "**💌 Profile**",
               value:
                 "``>help profile` - You can customize your rank card with these commands.",
+            },
+            {
+              name: "**🤩 Fun **",
+              value:
+                "`>help fun` - Fun commands to bring in a bit of joy.",
+            },
+            {
+              name: "🎵 Music ",
+              value:
+                "`>help music` - Listen to music through Mint.",
             },
           ],
         },
       });
     } else if (Words.toLowerCase().includes("Moderation".toLowerCase())) {
+      const button = new MessageButton()
+      .setStyle("grey")
+      .setID("1")
+      .setLabel(`Page 1`);
+    const button2 = new MessageButton()
+      .setStyle("grey")
+      .setID("2")
+      .setLabel(`Page 2 `);
       const ModerationHelp = new Discord.MessageEmbed()
         .setAuthor(`MODERATION - CATEGORY`)
         .addField(
           `ban`,
-          "`>ban <user> <reason>` - Banning a member couldn't be this easy. "
+          "`>ban <user> <reason>` - Ban a member with this powerful command."
         )
         .addField(
           `kick`,
-          "`>kick <user> <reason>` - Easily kick a member out of the guild."
+          "`>kick <user> <reason>` - Easily kick a member with an appropriate reason."
         )
         .addField(
           `mute`,
-          "`>mute <user> <reason>` - Someone runnin their mouth a lot? You know it, mute em."
+          "`>mute <user> <reason>` - Mute's the member. Be aware that this is a permanent mute. To undo, use the command below."
         )
         .addField(
           `unmute`,
-          "`>unmute <user> <reason>` - You feel bad for muting that person? Easily unmute them."
+          "`>unmute <user> <reason>` - Unmute's the member from the permanent mute."
         )
         .addField(
           `bot_nick`,
-          "`>bot_nick <nickname>` - Don't like my username? Fine, use this to change my nickname!"
+          "`>bot_nick <nickname>` - Change Mint's username to your liking."
         )
 
         .setColor("#339295")
         .setTimestamp();
-      message.channel.send(ModerationHelp);
-    } else if (Words.toLowerCase().includes("M_list_2".toLowerCase())) {
-      const ModerationHelp2 = new Discord.MessageEmbed()
+        const ModerationHelp2 = new Discord.MessageEmbed()
         .setColor("#339295")
         .setAuthor(`MODERATION 2 - CATEGORY`)
-        .setFooter(`To Note: The descriptions are examples.`)
+       
         .addField(
           `slowmode`,
-          "`slowmode <seconds>` - Chat spammin' a lot? Okay, set a timeout for chat."
+          "`slowmode <seconds>` - Set a slowmode for the chat."
         )
         .addField(
           `clear`,
-          "`>clear <amount>` - Some guy just spammed 32 messages. What I did was use this command which deleted those 32 messages!"
+          "`>clear <amount>` - Easily delete 100 or less messages!"
         )
         .addField(
           `announce`,
-          "`>announce <message>` - Admin needs to announce something so he uses this command."
+          "`>announce <message>` - You can use this command to make your announcement as an embed."
         );
-      message.channel.send(ModerationHelp2);
-    } else if (Words.toLowerCase().includes("fun".toLowerCase())) {
+        let fullmessage = await message.channel.send(ModerationHelp, {
+          buttons: [button, button2],
+        });
+        const collector = fullmessage.createButtonCollector(
+          (button) => button.clicker.id === message.author.id,
+          { time: 360e3 }
+        );
+        collector.on("collect", async (b) => {
+          b.reply.defer();
+          if (b.id == "1") {
+            fullmessage.edit(ModerationHelp)
+          }else if(b.id == "2"){
+            fullmessage.edit(ModerationHelp2)
+          }
+        })
+    }  else if (Words.toLowerCase().includes("fun".toLowerCase())) {
       const Fun = new Discord.MessageEmbed()
         .setColor("#339295")
         .setAuthor(`FUN - CATEGORY`)
-        .setFooter(`To Note: The descriptions are examples.`)
+        
         .addField(
           `karen`,
-          "`>karen` - Finally a time for you to fight Karen."
+          "`>karen` - Fight Karen"
         )
         .addField(
           `8ball`,
@@ -129,7 +141,7 @@ module.exports = {
         )
         .addField(
           `simpmeter`,
-          "`>simpmeter <user>` - Need to know if your friends are simps? Use this command man!"
+          "`>simpmeter <user>` - Need to know if your friends are simps? Use this command."
         )
         .addField(
           `dogwater`,
@@ -137,102 +149,120 @@ module.exports = {
         )
         .addField(
           `gaymeter`,
-          "`>gaymeter <user>` - Seems sus. I need to find out how sus they are!"
+          "`>gaymeter <user>` - How gay are you?"
         );
         
       message.channel.send(Fun);
     } else if (Words.toLowerCase().includes("Music".toLowerCase())) {
+      const button = new MessageButton()
+      .setStyle("grey")
+      .setID("1")
+      .setLabel(`Page 1`);
+    const button2 = new MessageButton()
+      .setStyle("grey")
+      .setID("2")
+      .setLabel(`Page 2 `);
       const Music = new Discord.MessageEmbed()
         .setColor("#339295")
         .setAuthor(`MUSIC- CATEGORY`)
-        .setFooter(`To Note: Read the first command to understand the rest.`)
+       
         .addField(
           `play`,
-          "`>play <query>` - Im gonna play a song with this command by simply add the title of it or the URL."
+          "`>play <query>` - Play a track with the URl or simply with the track title."
         )
         .addField(
           `skip`,
-          "`>skip` - But you know, I don't like this song..so im gonna skip it."
+          "`>skip` - Skip the current track."
         )
         .addField(
           `stop`,
-          "`>stop` - Brb. I gotta do something. I must stop the song!"
+          "`>stop` - Stop's the track."
         )
         .addField(
           `pause`,
-          "`>pause` - Someone is speaking and I can't hear them well. Hold on, let me pause it for ya!"
+          "`>pause` - Pause's the track."
         )
         .addField(
           `resume`,
-          "`>resume` - Alright, he done talkin' so I can finally play the song back."
+          "`>resume` - Resume's the track if paused."
         )
         .addField(
           `lyrics`,
-          "`>lyrics` - Man, I wanna sing this song so bad... I wonder what are the lyrics of it!"
+          "`>lyrics` - Tries to find the lyrics of the current track."
         );
-     
-      message.channel.send(Music);
-    } else if (Words.toLowerCase().includes("Mu_list_2".toLowerCase())) {
-      const Music2 = new Discord.MessageEmbed()
+        const Music2 = new Discord.MessageEmbed()
         .setColor("#339295")
         .setAuthor(`MUSIC 2 - CATEGORY`)
-        .setFooter(`To Note: Read the first command to understand the rest.`)
+       
         .addField(
           "np",
-          "`>np` - I forgot what is the current song... Let me use this command."
+          "`>np` - Find out the current track's name, duration, looped?, queue looped?"
         )
         .addField(
           `queue`,
-          "`>queue` - Wonderin' what are the next up songs! *uses command*"
+          "`>queue` - Keep track of the queue."
         )
         .addField(
           `volume`,
-          "`>volume` - The volume of this track is so loud. Let me lower it."
+          "`>volume` - Turn up the volume up to 5."
         )
         .addField(
           `loop`,
-          "`>loop` - Gosh, I love this song! Im gonna loop it over and over."
+          "`>loop` - Loop's the song. "
         )
         .addField(
           "leave",
-          "`>leave` - Man im done with this bot, makin' him leave."
+          "`>leave` - Reset's queue + leaves channel."
         )
         .addField(
           `join`,
-          "`>join` - Nvm, im sorry Mint. Come back. *uses command*"
+          "`>join` - Reset's queue + join's channel."
         );
-      message.channel.send(Music2);
+        let fullmessage = await message.channel.send(Music, {
+          buttons: [button, button2],
+        });
+        const collector = fullmessage.createButtonCollector(
+          (button) => button.clicker.id === message.author.id,
+          { time: 360e3 }
+        );
+        collector.on("collect", async (b) => {
+          b.reply.defer();
+          if (b.id == "1") {
+            fullmessage.edit(Music)
+          }else if(b.id == "2"){
+            fullmessage.edit(Music2)
+          }
+        })
     } else if (Words.toLowerCase().includes("listeners".toLowerCase())) {
       const Listeners = new Discord.MessageEmbed()
-        .setAuthor(`LISTENERS - CATEGORY`)
-        .setFooter(`To Note: The descriptions are examples.`)
-        .setColor("#339295")
-        .addField(
-          "MessageDelete",
-          "Whenever someone deletes a message, im gonna log it in the log channel."
-        )
-        .addField(
-          `InviteCreate/Delete`,
-          "When someone creates or deletes an invite link, im also logging it."
-        )
-        .addField(
-          "RoleDelete",
-          "Poof! Deleted the Role."
-        )
-        .addField(
-          "EmojiCreate/Delete",
-          "Emoji created or Deleted will be logged as well."
-        )
-        .addField(
-          "GuildMemberAdd/Remove",
-          "When they join or leave too."
-        )
+      .setAuthor(`LISTENERS - CATEGORY`)
+      
+      .setColor("#339295")
+      .addField("MessageDelete", "Logs all the deleted messages.")
+      .addField(`InviteCreate/Delete`, "Logs all the deleted invites!")
+      .addField("RoleDelete", "Logs all the deleted roles.")
+      .addField(
+        "EmojiCreate/Delete",
+        "Logs all the created/deleted emojies."
+      )
+      .addField(
+        "GuildMemberAdd/Remove",
+        "Logs when a member joins (or) leaves the guild."
+      );
         
       message.channel.send(Listeners);
     } else if (Words.toLowerCase().includes("Utilities".toLowerCase())) {
+      const button = new MessageButton()
+      .setStyle("grey")
+      .setID("1")
+      .setLabel(`Page 1`);
+    const button2 = new MessageButton()
+      .setStyle("grey")
+      .setID("2")
+      .setLabel(`Page 2 `);
       const Utilities = new Discord.MessageEmbed()
         .setAuthor(`UTILITIES - CATEGORY`)
-        .setFooter(`To Note: The descriptions are examples.`)
+       
         .setColor("#339295")
         .addField(
           "invite",
@@ -249,61 +279,68 @@ module.exports = {
         .addField(
           "info",
           "`>info` - Stats and information about Mint."
-        );
-      message.channel.send(Utilities);
-    } else if (Words.toLowerCase().includes("u_list_2".toLowerCase())) {
-      const u_list_2 = new Discord.MessageEmbed()
-        .setAuthor(`UTILITIES 2 - CATEGORY`)
-        .setFooter(`To Note: The descriptions are examples.`)
-        .setColor("#339295")
-        .addField(
-          "avatar",
-          "`>avatar <mentionuser>` - Shows the avatar of the person."
         )
-        .addField(
-          `guild`,
-          "`>guild` - Information about server."
-        )
-        .addField(
-          "getID",
-          "`>getID <channel>` - Get ID of the channel you wanted."
-        )
-        .addField(
-          "getuserID",
-          "`>getuserID <user>` - Get the ID of an user."
-        )
-        .addField(
-          "report",
-          "`>report <issue>` - Report something."
-        )
-        .addField(
-          "credits",
-          "`>credits` - Credits of Mint."
-        )
-        .addField(
-          "credit",
-          "`>credit <user> <reason>` - To credit someone's work."
-        )
-        .addField(
-          "spotify",
-          "`>spotify <user>` - Find what song is the person listening to."
-        );
-      message.channel.send(u_list_2);
+          const u_list_2 = new Discord.MessageEmbed()
+          .setAuthor(`UTILITIES 2 - CATEGORY`)
+          
+          .setColor("#339295")
+          .addField(
+            "avatar",
+            "`>avatar <mentionuser>` - Shows the avatar of the person."
+          )
+          .addField(
+            `guild`,
+            "`>guild` - Information about server."
+          )
+          .addField(
+            "getID",
+            "`>getID <channel>` - Get ID of the channel you wanted."
+          )
+          .addField(
+            "getuserID",
+            "`>getuserID <user>` - Get the ID of an user."
+          )
+          .addField(
+            "report",
+            "`>report <issue>` - Report something."
+          )
+          .addField(
+            "credits",
+            "`>credits` - Credits of Mint."
+          )
+          .addField(
+            "credit",
+            "`>credit <user> <reason>` - To credit someone's work."
+          )
+          let fullmessage = await message.channel.send(Utilities, {
+            buttons: [button, button2],
+          });
+          const collector = fullmessage.createButtonCollector(
+            (button) => button.clicker.id === message.author.id,
+            { time: 360e3 }
+          );
+          collector.on("collect", async (b) => {
+            b.reply.defer();
+            if (b.id == "1") {
+              fullmessage.edit(Utilities)
+            }else if(b.id == "2"){
+              fullmessage.edit(u_list_2)
+            }
+          })
     } else if (Words.toLowerCase().includes("configs".toLowerCase())) {
       const Config = new Discord.MessageEmbed()
         .setAuthor(`CONFIGS - CATEGORY`)
         .setColor("#339295")
-        .setFooter(`To Note: The descriptions are examples.`)
         .addField(
           `premium`,
-          "**THIS COMMAND WILL ONLY WORK ON UPDATE 3.0!**`>premium` - This is a premium command, the bot will think of a number in it's and if you guess it, you get premium for your guild for free."
+          "Coming soon. At Update 3.0"
         )
         .addField(
           "levels",
-          "`>levels (enable/disable)` - Enable/Disable 'Levels' category for this server"
+          "`>levels` - Enable/Disable 'Levels' category for this server"
         )
         .addField(
-          `autorole_add]`,
+          `autorole_add`,
           "`>autorole_add` - Select a role to give to every member that joins."
         )
         .addField(
@@ -312,7 +349,7 @@ module.exports = {
         )
         .addField(
           `loggings`,
-          "`>loggings <enable/disable>` - Enable/Disable logging category."
+          "`>loggings ` - Enable/Disable logging category."
         )
         .addField(
           `welcome-message-set`,
@@ -328,7 +365,7 @@ module.exports = {
       message.channel.send(`📸📸Caught on 4K`, attachment);
     } else if (Words.toLowerCase().includes("description".toLowerCase())) {
       const Config = new Discord.MessageEmbed()
-      .setFooter(`To Note: The descriptions are examples.`)
+    
         .setAuthor(`DESCRIPTION- CATEGORY`)
         .setColor("#339295")
         .addField(
@@ -337,7 +374,7 @@ module.exports = {
         )
         .addField(
           `role_description_remove`,
-          "`>roles_description_remove <@Role>` -  Now remove that description."
+          "`>roles_description_remove <@Role>` - Removes that description."
         )
         .addField(
           `role_description`,
@@ -366,14 +403,14 @@ module.exports = {
       message.channel.send(Config);
     } else if (Words.toLowerCase().includes("profile".toLowerCase())){
       const ProfileHelp = new Discord.MessageEmbed()
-      .setFooter(`To Note: The descriptions are examples.`)
+    
       .setTitle('Profiles')
       .addField('default', '`>profile default` - Profile card will use the default template.')
       .addField('text-color', '`>profile text-color <color> or <color code> - Automatically change the color of the text.`')
       .addField('username', '`>profile username <name>` - You can put a custom username for your card.')
       .addField('background', '`>profile background <url>` - You can change the background of your card by putting a link of it. Sometimes, the background would be the same if the URL was not supported for the bot.')
      .addField('reset', '`>profile reset` - You can reset your custom settings for the card.')
-     .setColor("WHITE")
+     .setColor("#339295")
      .setTimestamp()
      message.channel.send(ProfileHelp)
     }else

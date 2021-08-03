@@ -1,10 +1,10 @@
 const Discord = require("discord.js");
-const guild = require("./guild");
+
 
 module.exports = {
   name: "rule_add",
   description: "Shows member's rank.",
-  disabled: false,
+  disabled: true,
   execute(message, args) {
     if (this.disabled === true)
       return message.channel.send(

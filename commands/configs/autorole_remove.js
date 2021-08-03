@@ -7,8 +7,13 @@ module.exports = {
   description: "a",
   disabled: false,
   async execute(message, args, client) {
-    if (!message.member.hasPermission("ADMINISTRATOR"))
-      return message.channel.send(`You cannot use this command.`);
+    if (!message.member.hasPermission("ADMINISTRATOR")){
+      const Permission = new Discord.MessageEmbed()
+.setTitle('You need permissions!')
+.setDescription('You\'re missing ``**ADMINISTRATOR**`` permissions!')
+.setColor('#339295')
+message.channel.send(Permission)
+    }
 
     try {
       try {
