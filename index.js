@@ -56,7 +56,7 @@ for (const file of commandFiles) {
 }
 
 /// PREFIX
-const x = "?";
+const x = ">";
 /// ALL THE LISTENERS :
 
 client.on("guildCreate", (guild) => {
